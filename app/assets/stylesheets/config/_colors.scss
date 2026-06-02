@@ -5,6 +5,9 @@ $primary: #2563EB;
 $primary-dark: #1D4ED8;
 $primary-light: #DBEAFE;
 
+$light-gray: #F8FAFC;
+$gray: #64748B;
+
 $background: #F8FAFC;
 $surface: #FFFFFF;
 
@@ -20,10 +23,11 @@ $danger: #EF4444;
 
 $shadow-soft: 0 8px 20px rgba(37, 99, 235, 0.08);
 
-$red: #FD1015;
-$blue: #0D6EFD;
-$yellow: #FFC65A;
-$orange: #E67E22;
-$green: #1EDD88;
-$gray: #0E0000;
-$light-gray: #F4F4F4;
+// Legacy Le Wagon / Bootstrap compatibility
+$blue: $primary;
+$red: $danger;
+$yellow: $warning;
+$green: $success;
+$orange: #f97316;
+$gray: $text-secondary;
+$light-gray: $background;

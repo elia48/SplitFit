@@ -1,12 +1,41 @@
-.navbar-lewagon {
-  justify-content: space-between;
+.navbar-splitfit {
+  height: 72px;
   background: white;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 20px;
+
+  border-bottom: 1px solid $border;
 }
 
-.navbar-lewagon .navbar-collapse {
-  flex-grow: 0;
+.navbar-splitfit-logo {
+  font-size: 28px;
+  font-weight: 900;
+  color: $text-primary;
+
+  span {
+    color: $primary;
+  }
 }
 
-.navbar-lewagon .navbar-brand img {
-  width: 40px;
+.navbar-splitfit-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+
+  a {
+    text-decoration: none;
+    color: $text-primary;
+    font-weight: 600;
+  }
+}
+
+.navbar-splitfit-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
 }

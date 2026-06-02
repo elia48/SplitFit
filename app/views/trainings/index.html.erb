@@ -1,0 +1,63 @@
+<div class="trainings-index-page">
+  <div class="trainings-index-container">
+
+    <h1 class="trainings-index-title">Trainings</h1>
+
+    <div class="trainings-index-search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" placeholder="Search for sessions, workouts or places">
+    </div>
+
+    <div class="trainings-index-tags">
+      <span class="trainings-index-pill active">All</span>
+      <span class="trainings-index-pill">Weight Lifting</span>
+      <span class="trainings-index-pill">Yoga</span>
+      <span class="trainings-index-pill">HIIT</span>
+      <span class="trainings-index-pill">More⌄</span>
+    </div>
+
+    <div class="trainings-index-list">
+      <% @trainings.each do |training| %>
+        <%= link_to training_path(training), class: "trainings-index-card-link" do %>
+          <div class="trainings-index-card">
+
+            <img
+              class="trainings-index-card-image"
+              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600"
+              alt="Training image"
+            >
+
+            <div class="trainings-index-card-content">
+              <span class="trainings-index-badge"><%= training.workout_type %></span>
+
+              <h2><%= training.workout_type %></h2>
+
+              <p class="trainings-index-coach">
+                with <%= training.user.email %>
+              </p>
+
+              <div class="trainings-index-meta">
+                <span>⭐ 4.8/5</span>
+                <span>📍 <%= training.place %></span>
+              </div>
+
+              <p class="trainings-index-price">
+                €<%= training.coach_price %>
+              </p>
+            </div>
+
+            <div class="trainings-index-side">
+              <i class="fa-regular fa-heart trainings-index-heart"></i>
+
+              <p class="trainings-index-spots">
+                <%= training.min_people %>-<%= training.max_people %> people
+              </p>
+            </div>
+
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+</div>

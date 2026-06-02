@@ -1,0 +1,258 @@
+.trainings-index-title {
+  font-size: 42px;
+  font-weight: 900;
+  color: $text-primary;
+  margin-bottom: 24px;
+}
+
+.trainings-index-container {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.trainings-index-brand {
+  color: $primary;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 28px;
+}
+
+.trainings-index-title {
+  font-size: 48px;
+  font-weight: 900;
+  color: $text-primary;
+  margin-bottom: 28px;
+}
+
+.trainings-index-search {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 18px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: $shadow-soft;
+
+  i {
+    color: $text-muted;
+    font-size: 20px;
+  }
+
+  input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    width: 100%;
+    font-size: 16px;
+    color: $text-primary;
+  }
+}
+
+.trainings-index-tags {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 32px;
+  overflow-x: auto;
+}
+
+.trainings-index-pill {
+  padding: 12px 24px;
+  border-radius: $radius-pill;
+  border: 1px solid $border;
+  background: $surface;
+  color: $text-primary;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &.active {
+    background: $primary;
+    color: white;
+    border-color: $primary;
+  }
+}
+
+.trainings-index-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.trainings-index-card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.trainings-index-card {
+  display: grid;
+  grid-template-columns: 220px 1fr 120px;
+  gap: 28px;
+  align-items: center;
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 16px 40px rgba(37, 99, 235, 0.08);
+}
+
+.trainings-index-card-image {
+  width: 220px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+.trainings-index-badge {
+  display: inline-block;
+  background: $primary-light;
+  color: $primary;
+  padding: 4px 10px;
+  border-radius: $radius-pill;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.trainings-index-card-content h2 {
+  font-size: 28px;
+  font-weight: 900;
+  color: $text-primary;
+  margin-bottom: 4px;
+}
+
+.trainings-index-coach {
+  color: $text-secondary;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.trainings-index-meta {
+  display: flex;
+  gap: 20px;
+  color: $text-secondary;
+  font-size: 15px;
+  margin-bottom: 14px;
+}
+
+.trainings-index-price {
+  color: $primary;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.trainings-index-side {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: end;
+}
+
+.trainings-index-heart {
+  color: $primary;
+  font-size: 26px;
+}
+
+.trainings-index-spots {
+  color: $primary;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .trainings-index-page {
+    padding: 28px 16px 96px;
+    background: linear-gradient(180deg, #ffffff 0%, $background 100%);
+  }
+
+  .trainings-index-container {
+    max-width: 390px;
+    margin: 0 auto;
+  }
+
+  .trainings-index-title {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+
+  .trainings-index-search {
+    padding: 14px 16px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+  }
+
+  .trainings-index-tags {
+    gap: 10px;
+    margin-bottom: 28px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .trainings-index-tags::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trainings-index-pill {
+    padding: 10px 18px;
+    font-size: 13px;
+    box-shadow: none;
+  }
+
+  .trainings-index-list {
+    gap: 16px;
+  }
+
+  .trainings-index-card {
+    grid-template-columns: 120px 1fr 24px;
+    gap: 14px;
+    padding: 14px;
+    border-radius: 18px;
+    min-height: 150px;
+    box-shadow: 0 10px 28px rgba(37, 99, 235, 0.08);
+  }
+
+  .trainings-index-card-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 14px;
+  }
+
+  .trainings-index-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    margin-bottom: 6px;
+  }
+
+  .trainings-index-card-content h2 {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .trainings-index-coach {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .trainings-index-meta {
+    font-size: 11px;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .trainings-index-price {
+    font-size: 16px;
+  }
+
+  .trainings-index-heart {
+    font-size: 20px;
+  }
+
+  .trainings-index-spots {
+    font-size: 10px;
+    line-height: 1.1;
+    text-align: right;
+  }
+}

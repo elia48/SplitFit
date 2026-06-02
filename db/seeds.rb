@@ -8,29 +8,24 @@ Booking.destroy_all
 Training.destroy_all
 User.destroy_all
 
-# User model validates :name and :is_coach but those columns are not yet in the schema.
-# Using save(validate: false) until the migration is added.
-
 puts "Creating coaches..."
 coaches = [
-  { email: "alice@splitfit.com" },
-  { email: "marco@splitfit.com" },
+  { email: "alice@splitfit.com",  name: "Alice Carter" },
+  { email: "marco@splitfit.com",  name: "Marco Rossi" },
 ].map do |attrs|
-  user = User.new(email: attrs[:email], password: "password123", password_confirmation: "password123")
-  user.save(validate: false)
-  user
+  User.create!(email: attrs[:email], name: attrs[:name], is_coach: true,
+               password: "password123", password_confirmation: "password123")
 end
 
 puts "Creating clients..."
 clients = [
-  { email: "client1@splitfit.com" },
-  { email: "client2@splitfit.com" },
-  { email: "client3@splitfit.com" },
-  { email: "client4@splitfit.com" },
+  { email: "client1@splitfit.com", name: "Jordan Lee" },
+  { email: "client2@splitfit.com", name: "Sam Taylor" },
+  { email: "client3@splitfit.com", name: "Riley Morgan" },
+  { email: "client4@splitfit.com", name: "Casey Brooks" },
 ].map do |attrs|
-  user = User.new(email: attrs[:email], password: "password123", password_confirmation: "password123")
-  user.save(validate: false)
-  user
+  User.create!(email: attrs[:email], name: attrs[:name], is_coach: false,
+               password: "password123", password_confirmation: "password123")
 end
 
 puts "Creating trainings..."

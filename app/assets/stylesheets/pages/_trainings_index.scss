@@ -134,15 +134,25 @@
 .trainings-index-price {
   position: absolute;
   right: 12px;
-  bottom: 18px;
+  bottom: 0px;
 
   color: #b83700;
   font-size: 17px;
   font-weight: 900;
 }
 
+.trainings-index-fullprice {
+  position: absolute;
+  right: 12px;
+  bottom: 20px;
+
+  color: #a7a09d;
+  font-size: 15px;
+  font-weight: 600;
+}
+
 .trainings-index-price::after {
-  content: "/pp";
+  content: "/person";
   font-size: 11px;
   color: #3b241d;
   font-weight: 500;

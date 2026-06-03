@@ -7,5 +7,5 @@ class User < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :trainings, dependent: :destroy
   has_many :messages, dependent: :destroy
-  validates :name, :is_coach, presence: true
+  validates :name, presence: true
 end

@@ -1,0 +1,53 @@
+
+<div style="border: 1px solid #000; padding: 30px">
+    <h1><%= @training.workout_type %></h1>
+    <h2>with <%= @coach.name %></h2>    
+</div>
+<div class="d-flex">
+    <div>
+        <h3>date</h3>
+        <%= @training.date %>
+    </div>
+    <div>
+        <h3>duration</h3>
+        <%= @training.duration %> min
+    </div>
+</div>
+<div style="border: 1px solid #000; padding: 30px">
+    <h2><%= @training.place %></h2>    
+</div>
+<div class="d-flex">
+    <div><h3>joined participants</h3></div>
+    <div><h3><%= @training.bookings.size %> / <%= @training.max_people %></h3></div>
+</div>
+<div>
+    <div style="border: 1px solid #000; padding: 30px">
+        <div class="d-flex">
+            <div>
+                <h2>Dynamic Pricing</h2>
+                <p>The more people join, the less you pay.</p>
+            </div>
+            <div>
+                <%= @training.status %>
+            </div>
+        </div>
+        <div class="d-flex">
+            <div>
+                <div><s><%= @training.coach_price %>€</s></div>
+                <div><h2><%= @training.price_per_person %>€</h2></div>
+            </div>
+        </div>
+        <div  style="border: 1px solid #000; padding: 30px" class="d-flex">
+            <div>
+                <i class="fa-solid fa-circle-info"></i>
+            </div>
+            <div>
+                <p>Final price will be locked 2 hours before the session.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <h2>About the session</h2>
+    <p>This high-intensity calisthenics session focuses on core stability and explosive power. Alex Rivers will guide you through advanced movements like muscle-ups, L-sits, and dynamic plank variations. Suitable for intermediate to advanced fitness enthusiasts.</p>
+</div>

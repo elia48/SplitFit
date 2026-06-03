@@ -7,6 +7,7 @@ class TrainingsController < ApplicationController
 
   def show
     authorize @training
+    @coach = @training.user
   end
 
   def new

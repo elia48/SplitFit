@@ -65,17 +65,18 @@
               <h2><%= training.workout_type %></h2>
 
               <p class="trainings-index-coach">
-                with <%= training.user.email %>
+                with <%= training.user.name %>
               </p>
 
               <div class="trainings-index-meta">
                 <span>⭐ 4.8/5</span>
-                <span>📍 <%= training.place %></span>
+                <span>📍 <%=training.place %></span>
               </div>
 
               <p class="trainings-index-price">
-                €<%= training.coach_price %>
+                €<%= training.price_per_person %>
               </p>
+              <p class="trainings-index-fullprice"><s>€<%= training.coach_price %></s></p>
             </div>
 
             <div class="trainings-index-side">

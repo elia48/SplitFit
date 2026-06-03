@@ -1,0 +1,53 @@
+.splitfit-header {
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 18px;
+
+  background: #fffaf7;
+
+  border-bottom: 1px solid #f0d6cd;
+}
+
+.splitfit-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.splitfit-header-left i {
+  font-size: 22px;
+  color: #b55c3a;
+}
+
+.splitfit-header-logo {
+  font-family: $headers-font;
+
+  font-size: 17px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.04em;
+
+  text-transform: uppercase;
+
+  color: #b55c3a;
+}
+
+.splitfit-header-logo span {
+  color: $tertiary;
+  font-weight: 600;
+}
+
+.splitfit-header-avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 2px solid #f0d6cd;
+}

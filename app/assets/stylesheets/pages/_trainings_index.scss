@@ -17,29 +17,151 @@
   margin-bottom: 18px;
 }
 
+.trainings-search-form {
+  margin-bottom: 18px;
+}
+
 .trainings-index-search {
+  position: relative;
+
   display: flex;
   align-items: center;
   gap: 10px;
+
+  width: 100%;
+
   background: #fffaf7;
   border: 1px solid #f0b9a8;
-  border-radius: 10px;
-  padding: 12px 14px;
-  margin-bottom: 16px;
+  border-radius: 12px;
 
-  i {
-    color: #7a4f43;
-    font-size: 14px;
-  }
+  padding: 12px 12px;
+}
 
-  input {
-    border: 0;
-    outline: 0;
-    background: transparent;
-    width: 100%;
-    font-size: 11px;
-    color: #3b241d;
-  }
+.trainings-search-icon {
+  color: #7a4f43;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.trainings-index-search-input {
+  flex: 1;
+
+  border: none;
+  outline: none;
+  background: transparent;
+
+  color: #3b241d;
+  font-size: 12px;
+
+  min-width: 0;
+}
+
+.trainings-filter-dropdown {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.trainings-filter-dropdown summary {
+  list-style: none;
+}
+
+.trainings-filter-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.trainings-filter-button {
+  border: none;
+  background: transparent;
+
+  color: #de4800;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.trainings-filter-panel {
+  position: absolute;
+  top: 46px;
+  right: 0;
+  z-index: 100;
+
+  width: 340px;
+  max-width: calc(100vw - 32px);
+
+  background: #fffaf7;
+  border: 1px solid #f0d2c7;
+  border-radius: 18px;
+
+  padding: 20px;
+
+  box-shadow: 0 18px 40px rgba(59, 36, 29, 0.16);
+}
+
+.trainings-filter-panel label {
+  display: block;
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  color: #5c4038;
+}
+
+.trainings-filter-input,
+.trainings-filter-select {
+  width: 100%;
+
+  border: 1px solid #f0d2c7;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  padding: 14px 16px;
+  margin-bottom: 22px;
+
+  font-size: 15px;
+  color: #3b241d;
+}
+
+.trainings-filter-input::placeholder {
+  color: #7b7280;
+}
+
+.trainings-filter-price-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+
+  margin-bottom: 18px;
+}
+
+.trainings-filter-price-row .trainings-filter-input {
+  margin-bottom: 0;
+}
+
+.trainings-filter-submit {
+  width: 100%;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #ff6428;
+  color: white;
+
+  padding: 16px;
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  box-shadow: 0 12px 24px rgba(255, 100, 40, 0.22);
 }
 
 .trainings-index-tags {

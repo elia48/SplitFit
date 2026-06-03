@@ -1,0 +1,27 @@
+<div class="bottom-nav">
+
+  <%= link_to trainings_path,
+      class: "bottom-nav-item #{'active' if controller_name == 'trainings'}" do %>
+
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span>Explore</span>
+
+  <% end %>
+
+  <%= link_to bookings_path,
+      class: "bottom-nav-item #{'active' if controller_name == 'bookings'}" do %>
+
+    <i class="fa-regular fa-calendar"></i>
+    <span>Sessions</span>
+
+  <% end %>
+
+  <%= link_to messages_path,
+      class: "bottom-nav-item #{'active' if controller_name == 'messages'}" do %>
+
+    <i class="fa-regular fa-comment"></i>
+    <span>Chat</span>
+
+  <% end %>
+
+</div>

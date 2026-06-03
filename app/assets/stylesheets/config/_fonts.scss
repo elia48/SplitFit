@@ -3,41 +3,22 @@
 
 // Define fonts for body and headers
 $body-font: "Inter", "Helvetica", "Arial", sans-serif;
-$headers-font: "Inter", "Helvetica", "Arial", sans-serif;
-$font-main: $body-font;
+$headers-font: "Hanken Grotesk", "Inter", sans-serif;
+$label-font: "JetBrains Mono", monospace;
 
 body {
-  font-family: $font-main;
+  font-family: $body-font;
   background: $background;
   color: $text-primary;
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: $headers-font;
   color: $text-primary;
   margin: 0;
 }
 
 p {
-  color: $text-secondary;
   margin: 0;
-}
-
-h1 {
-  font-size: 32px;
-  font-weight: 800;
-}
-
-h2 {
-  font-size: 24px;
-  font-weight: 700;
-}
-
-h3 {
-  font-size: 18px;
-  font-weight: 700;
-}
-
-p {
-  font-size: 14px;
-  line-height: 1.5;
+  color: $text-secondary;
 }

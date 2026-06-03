@@ -3,10 +3,42 @@
 
     <h1 class="trainings-index-title">Trainings</h1>
 
-    <div class="trainings-index-search">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" placeholder="Search for sessions, workouts or places">
-    </div>
+<%= form_with url: trainings_path, method: :get, class: "trainings-search-form" do %>
+  <div class="trainings-index-search">
+
+    <i class="fa-solid fa-magnifying-glass trainings-search-icon"></i>
+
+    <%= text_field_tag :query,
+        params[:query],
+        placeholder: "Search for sessions, workouts or places",
+        class: "trainings-index-search-input" %>
+
+    <details class="trainings-filter-dropdown">
+      <summary class="trainings-filter-button">
+        <i class="fa-solid fa-sliders"></i>
+      </summary>
+
+      <div class="trainings-filter-panel">
+        <label>Location</label>
+        <%= text_field_tag :location, params[:location], placeholder: "Current location", class: "trainings-filter-input" %>
+
+        <label>Workout type</label>
+        <%= select_tag :workout_type,
+            options_for_select(["", "Strength", "HIIT", "Yoga", "Pilates", "Crossfit"], params[:workout_type]),
+            class: "trainings-filter-select" %>
+
+        <label>Price range (your split)</label>
+        <div class="trainings-filter-price-row">
+          <%= number_field_tag :min_price, params[:min_price], placeholder: "Min", class: "trainings-filter-input" %>
+          <%= number_field_tag :max_price, params[:max_price], placeholder: "Max", class: "trainings-filter-input" %>
+        </div>
+
+        <%= submit_tag "Show results", class: "trainings-filter-submit" %>
+      </div>
+    </details>
+
+  </div>
+<% end %>
 
     <div class="trainings-index-tags">
       <span class="trainings-index-pill active">All</span>
@@ -15,7 +47,7 @@
       <span class="trainings-index-pill">HIIT</span>
       <span class="trainings-index-pill">More⌄</span>
     </div>
-    
+
     <div class="trainings-index-list">
       <% @trainings.each do |training| %>
         <%= link_to training_path(training), class: "trainings-index-card-link" do %>

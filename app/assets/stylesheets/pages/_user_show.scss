@@ -1,0 +1,123 @@
+.coach-show-page {
+  min-height: 100vh;
+  background: #f8f5f2;
+  padding: 16px 16px 96px;
+}
+
+.coach-show-container {
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.coach-show-hero,
+.coach-show-card {
+  width: 100%;
+}
+
+.coach-show-hero {
+  position: relative;
+  height: 280px;
+  border-radius: 22px;
+  overflow: hidden;
+  margin-bottom: 18px;
+  background: #2f1d17;
+}
+
+.coach-show-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.coach-show-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.78));
+}
+
+.coach-show-hero-content {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  z-index: 2;
+}
+
+.coach-show-hero-content h1 {
+  font-size: clamp(24px, 8vw, 34px);
+  line-height: 1;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.coach-show-score {
+  display: inline-flex;
+  gap: 6px;
+  background: rgba(255,250,247,0.18);
+  color: white;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.coach-show-speciality {
+  display: inline-block;
+  background: #ff6428;
+  color: white;
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.coach-show-card {
+  background: #fffaf7;
+  border: 1px solid #f0d6cd;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 22px rgba(59,36,29,0.06);
+}
+
+.coach-show-card h2 {
+  color: #2f1d17;
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.coach-show-card p {
+  color: #6b4a40;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .coach-show-page {
+    max-width: 430px;
+    margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 430px) {
+  .coach-show-page {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .coach-show-container {
+    max-width: none;
+  }
+
+  .coach-show-hero {
+    height: 260px;
+  }
+}

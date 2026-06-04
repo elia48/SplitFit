@@ -10,12 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_03_155720) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_04_104659) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "bookings", force: :cascade do |t|
+    t.integer "amount_cents", default: 0, null: false
+    t.string "checkout_session_id"
     t.datetime "created_at", null: false
+    t.integer "estimated_people_count_at_payment"
+    t.integer "final_amount_cents"
+    t.string "payment_intent_id"
+    t.integer "refunded_cents", default: 0, null: false
     t.string "status"
     t.bigint "training_id", null: false
     t.datetime "updated_at", null: false
@@ -35,12 +41,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_155720) do
   end
 
   create_table "reviews", force: :cascade do |t|
+    t.bigint "coach_id"
     t.datetime "created_at", null: false
     t.text "description"
     t.integer "score"
-    t.bigint "training_id", null: false
+    t.bigint "training_id"
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
+    t.index ["coach_id"], name: "index_reviews_on_coach_id"
     t.index ["training_id"], name: "index_reviews_on_training_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
@@ -188,7 +196,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_155720) do
   end
 
   create_table "trainings", force: :cascade do |t|
-    t.integer "coach_price"
+    t.integer "coach_price_cents"
     t.datetime "created_at", null: false
     t.datetime "date"
     t.integer "duration"
@@ -227,6 +235,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_03_155720) do
   add_foreign_key "messages", "users"
   add_foreign_key "reviews", "trainings"
   add_foreign_key "reviews", "users"
+  add_foreign_key "reviews", "users", column: "coach_id"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade

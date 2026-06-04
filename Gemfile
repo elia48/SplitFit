@@ -75,3 +75,8 @@ end
 
 # adding pundit for authorisation
 gem "pundit"
+
+# stripe integration
+gem "stripe"
+gem "stripe_event"
+gem "money-rails"

@@ -5,7 +5,7 @@
   transform: translateX(-50%);
 
   width: 100%;
-  max-width: 390px;
+  max-width: 430px;
   height: 72px;
 
   background: #fffaf7;
@@ -31,7 +31,6 @@
 
   min-width: 72px;
   height: 52px;
-
   border-radius: 999px;
 
   font-size: 11px;
@@ -44,11 +43,5 @@
 
 .bottom-nav-item.active {
   background: #ff6428;
-  color: white;
-  box-shadow: 0 8px 18px rgba(255, 100, 40, 0.25);
-}
-
-.bottom-nav-item.active i,
-.bottom-nav-item.active span {
   color: white;
 }

@@ -1,5 +1,8 @@
 .splitfit-header {
   height: 72px;
+  width: 100%;
+  max-width: 430px;
+  margin: 0 auto;
 
   display: flex;
   align-items: center;
@@ -8,7 +11,6 @@
   padding: 0 18px;
 
   background: #fffaf7;
-
   border-bottom: 1px solid #f0d6cd;
 }
 
@@ -24,30 +26,17 @@
 }
 
 .splitfit-header-logo {
-  font-family: $headers-font;
-
   font-size: 17px;
-
   font-weight: 500;
-
   letter-spacing: 0.04em;
-
   text-transform: uppercase;
-
   color: #b55c3a;
-}
-
-.splitfit-header-logo span {
-  color: $tertiary;
-  font-weight: 600;
 }
 
 .splitfit-header-avatar {
   width: 42px;
   height: 42px;
-
   border-radius: 50%;
   object-fit: cover;
-
   border: 2px solid #f0d6cd;
 }

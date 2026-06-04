@@ -44,6 +44,7 @@ class TrainingsController < ApplicationController
   def create
     @training = Training.new(training_params)
     @training.user = current_user
+    @training.coach_price_cents = price_in_cents
     authorize @training
     if @training.save
       redirect_to @training, notice: "Training created."
@@ -58,6 +59,7 @@ class TrainingsController < ApplicationController
 
   def update
     authorize @training
+    @training.coach_price_cents = price_in_cents
     if @training.update(training_params)
       redirect_to @training, notice: "Training updated."
     else
@@ -73,7 +75,11 @@ class TrainingsController < ApplicationController
 
   def training_params
     params.require(:training).permit(
-      :coach_price_cents, :duration, :date, :place, :workout_type, :min_people, :max_people, :status
+      :duration, :date, :place, :workout_type, :min_people, :max_people, :status
     )
+  end
+
+  def price_in_cents
+    (params.dig(:training, :price).to_f * 100).to_i
   end
 end

@@ -1,0 +1,75 @@
+<div class="training-new-page">
+  <div class="training-new-container">
+
+    <div class="training-new-header">
+      <h1>New Training Session</h1>
+      <p>Set up your session details and pricing</p>
+    </div>
+
+    <%= simple_form_for @training do |f| %>
+      <%= f.error_notification message: "Please fix the errors below:" %>
+
+      <div class="training-new-card">
+        <h2>Session Details</h2>
+
+        <%= f.input :workout_type,
+            as: :select,
+            collection: ["HIIT", "Yoga", "CrossFit", "Boxing", "Pilates", "Strength", "Running", "Cycling"],
+            include_blank: "Select type",
+            label: "Workout Type" %>
+
+        <%= f.input :place,
+            label: "Location",
+            placeholder: "e.g. Central Park, Chelsea Studio, Online..." %>
+
+        <%= f.input :date,
+            as: :string,
+            label: "Date & Time",
+            input_html: { type: "datetime-local", min: Time.current.strftime("%Y-%m-%dT%H:%M") } %>
+
+        <%= f.input :duration,
+            label: "Duration (minutes)",
+            placeholder: "e.g. 60",
+            input_html: { min: 1 } %>
+      </div>
+
+      <div class="training-new-card">
+        <h2>Pricing & Capacity</h2>
+
+        <div class="training-new-price-group">
+          <label class="training-new-label">Price per session (€)</label>
+          <div class="training-new-price-wrap">
+            <span class="training-new-currency">€</span>
+            <input
+              type="number"
+              name="training[price]"
+              step="0.01"
+              min="0"
+              placeholder="85.00"
+              class="form-control training-new-price-input"
+            >
+          </div>
+          <small class="training-new-hint">Clients split this equally — more participants means lower price per person.</small>
+        </div>
+
+        <%= f.input :min_people,
+            label: "Minimum participants",
+            placeholder: "e.g. 2",
+            input_html: { min: 2 } %>
+
+        <%= f.input :max_people,
+            label: "Maximum participants",
+            placeholder: "e.g. 10",
+            input_html: { min: 1 } %>
+      </div>
+
+      <%= f.hidden_field :status, value: "open" %>
+
+      <div class="training-new-actions">
+        <%= f.button :submit, "Create Session", class: "training-new-submit" %>
+        <%= link_to "Cancel", user_path(current_user), class: "training-new-cancel" %>
+      </div>
+    <% end %>
+
+  </div>
+</div>

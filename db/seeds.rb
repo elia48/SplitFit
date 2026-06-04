@@ -47,15 +47,39 @@ base_time = Time.now
 
 trainings = trainings_data.each_with_index.map do |data, i|
   Training.create!(
-    user:         coaches[i % coaches.size],
-    workout_type: data[:workout_type],
-    place:        data[:place],
-    status:       statuses.sample,
-    coach_price_cents:  data[:coach_price],
-    duration:     data[:duration],
-    date:         base_time + (i * 2 + rand(1..5)).days + rand(8..18).hours,
-    min_people:   data[:min_people],
-    max_people:   data[:max_people]
+    user:              coaches[i % coaches.size],
+    workout_type:      data[:workout_type],
+    place:             data[:place],
+    status:            statuses.sample,
+    coach_price_cents: data[:coach_price_cents],
+    duration:          data[:duration],
+    date:              base_time + (i * 2 + rand(1..5)).days + rand(8..18).hours,
+    min_people:        data[:min_people],
+    max_people:        data[:max_people]
+  )
+end
+
+puts "Creating past/completed trainings..."
+past_trainings_data = [
+  { workout_type: "HIIT",     place: "Brooklyn Gym",  coach_price_cents: 8000,  duration: 45, min_people: 2, max_people: 8  },
+  { workout_type: "Yoga",     place: "Chelsea Studio", coach_price_cents: 7000,  duration: 60, min_people: 3, max_people: 12 },
+  { workout_type: "CrossFit", place: "Central Park",   coach_price_cents: 9500,  duration: 60, min_people: 4, max_people: 10 },
+  { workout_type: "Boxing",   place: "Brooklyn Gym",   coach_price_cents: 10000, duration: 60, min_people: 2, max_people: 6  },
+  { workout_type: "Pilates",  place: "Online",         coach_price_cents: 6500,  duration: 50, min_people: 2, max_people: 15 },
+  { workout_type: "Strength", place: "Central Park",   coach_price_cents: 11000, duration: 60, min_people: 2, max_people: 5  },
+]
+
+past_trainings = past_trainings_data.each_with_index.map do |data, i|
+  Training.create!(
+    user:              coaches[i % coaches.size],
+    workout_type:      data[:workout_type],
+    place:             data[:place],
+    status:            "closed",
+    coach_price_cents: data[:coach_price_cents],
+    duration:          data[:duration],
+    date:              base_time - (i * 10 + rand(3..15)).days - rand(8..18).hours,
+    min_people:        data[:min_people],
+    max_people:        data[:max_people]
   )
 end
 
@@ -68,6 +92,17 @@ clients.each do |client|
       user:     client,
       training: training,
       status:   booking_statuses.sample
+    )
+  end
+end
+
+puts "Creating bookings for past trainings..."
+clients.each do |client|
+  past_trainings.sample(3).each do |training|
+    Booking.create!(
+      user:     client,
+      training: training,
+      status:   "confirmed"
     )
   end
 end

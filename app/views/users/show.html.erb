@@ -5,7 +5,7 @@
       <img
         src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900"
         class="coach-show-hero-image"
-        alt="Coach"
+        alt="Profile"
       >
 
       <div class="coach-show-hero-overlay"></div>
@@ -15,57 +15,157 @@
       <% end %>
 
       <div class="coach-show-hero-content">
-        <div class="coach-show-score">
-          <i class="fa-solid fa-star"></i>
-          <span><%= @user.score.presence || "4.8" %></span>
-        </div>
+        <% if @user.is_coach? %>
+          <div class="coach-show-score">
+            <i class="fa-solid fa-star"></i>
+            <span><%= @user.score.presence || "4.8" %></span>
+          </div>
+        <% end %>
 
         <h1><%= @user.name.presence || @user.email %></h1>
 
-        <p class="coach-show-speciality">
-          <%= @user.speciality.presence || "Personal Trainer" %>
-        </p>
+        <% if @user.is_coach? %>
+          <p class="coach-show-speciality">
+            <%= @user.speciality.presence || "Personal Trainer" %>
+          </p>
+        <% end %>
       </div>
     </section>
 
     <section class="coach-show-card">
       <h2>About</h2>
       <p>
-        <%= @user.description.presence || "This coach has not added a description yet." %>
+        <%= @user.description.presence || "No description yet." %>
       </p>
     </section>
 
-    <section class="coach-show-card">
-      <div class="coach-show-section-title">
-        <h2>Active Trainings</h2>
-        <% if @own_profile %>
-          <%= link_to "New", new_training_path, class: "coach-show-small-link" %>
-        <% end %>
-      </div>
+    <% if @user.is_coach? %>
 
-      <div class="coach-show-trainings">
-        <% @trainings.each do |training| %>
-          <%= link_to training_path(training), class: "coach-show-training-card" do %>
-            <img
-              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
-              alt="Training"
-            >
-
-            <div class="coach-show-training-content">
-              <h3><%= training.workout_type %></h3>
-              <p><%= training.place %></p>
-              <span>€<%= training.coach_price %>/pp</span>
-            </div>
-
-            <i class="fa-regular fa-heart"></i>
+      <section class="coach-show-card">
+        <div class="coach-show-section-title">
+          <h2>Active Trainings</h2>
+          <% if @own_profile %>
+            <%= link_to "New", new_training_path, class: "coach-show-small-link" %>
           <% end %>
-        <% end %>
+        </div>
 
-        <% if @trainings.empty? %>
-          <p class="coach-show-empty">No active trainings yet.</p>
-        <% end %>
-      </div>
-    </section>
+        <div class="coach-show-trainings">
+          <% @trainings.each do |training| %>
+            <%= link_to training_path(training), class: "coach-show-training-card" do %>
+              <img
+                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
+                alt="Training"
+              >
+              <div class="coach-show-training-content">
+                <h3><%= training.workout_type %></h3>
+                <p><%= training.place %></p>
+                <span>€<%= training.coach_price_cents %>/pp</span>
+              </div>
+              <i class="fa-regular fa-heart"></i>
+            <% end %>
+          <% end %>
+
+          <% if @trainings.empty? %>
+            <p class="coach-show-empty">No active trainings yet.</p>
+          <% end %>
+        </div>
+      </section>
+
+      <section class="coach-show-card">
+        <h2>Training History</h2>
+        <div class="coach-show-trainings">
+          <% @past_trainings.each do |training| %>
+            <%= link_to training_path(training), class: "coach-show-training-card" do %>
+              <img
+                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
+                alt="Training"
+              >
+              <div class="coach-show-training-content">
+                <h3><%= training.workout_type %></h3>
+                <p><%= training.place %></p>
+                <span><%= training.date.strftime("%d %b %Y") %></span>
+              </div>
+              <span class="badge bg-secondary">Past</span>
+            <% end %>
+          <% end %>
+          <% if @past_trainings.empty? %>
+            <p class="coach-show-empty">No past trainings yet.</p>
+          <% end %>
+        </div>
+      </section>
+
+    <% else %>
+
+      <section class="coach-show-card">
+        <h2>Confirmed Trainings</h2>
+        <div class="coach-show-trainings">
+          <% @confirmed_bookings.each do |booking| %>
+            <%= link_to training_path(booking.training), class: "coach-show-training-card" do %>
+              <img
+                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
+                alt="Training"
+              >
+              <div class="coach-show-training-content">
+                <h3><%= booking.training.workout_type %></h3>
+                <p><%= booking.training.place %></p>
+                <span><%= booking.training.date.strftime("%d %b %Y") %></span>
+              </div>
+              <span class="badge bg-success">Confirmed</span>
+            <% end %>
+          <% end %>
+          <% if @confirmed_bookings.empty? %>
+            <p class="coach-show-empty">No confirmed trainings.</p>
+          <% end %>
+        </div>
+      </section>
+
+      <section class="coach-show-card">
+        <h2>Pending Trainings</h2>
+        <div class="coach-show-trainings">
+          <% @pending_bookings.each do |booking| %>
+            <%= link_to training_path(booking.training), class: "coach-show-training-card" do %>
+              <img
+                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
+                alt="Training"
+              >
+              <div class="coach-show-training-content">
+                <h3><%= booking.training.workout_type %></h3>
+                <p><%= booking.training.place %></p>
+                <span><%= booking.training.date.strftime("%d %b %Y") %></span>
+              </div>
+              <span class="badge bg-warning text-dark">Pending</span>
+            <% end %>
+          <% end %>
+          <% if @pending_bookings.empty? %>
+            <p class="coach-show-empty">No pending trainings.</p>
+          <% end %>
+        </div>
+      </section>
+
+      <section class="coach-show-card">
+        <h2>Training History</h2>
+        <div class="coach-show-trainings">
+          <% @past_bookings.each do |booking| %>
+            <%= link_to training_path(booking.training), class: "coach-show-training-card" do %>
+              <img
+                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
+                alt="Training"
+              >
+              <div class="coach-show-training-content">
+                <h3><%= booking.training.workout_type %></h3>
+                <p><%= booking.training.place %></p>
+                <span><%= booking.training.date.strftime("%d %b %Y") %></span>
+              </div>
+              <span class="badge bg-secondary">Past</span>
+            <% end %>
+          <% end %>
+          <% if @past_bookings.empty? %>
+            <p class="coach-show-empty">No past trainings yet.</p>
+          <% end %>
+        </div>
+      </section>
+
+    <% end %>
 
     <% if @own_profile %>
       <section class="coach-show-card coach-show-private-card">

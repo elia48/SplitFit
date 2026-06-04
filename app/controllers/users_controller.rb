@@ -5,11 +5,26 @@ class UsersController < ApplicationController
   def show
     authorize @user
 
-    @trainings = @user.trainings.where(status: "active")
+    @own_profile = current_user == @user
 
-    @own_profile =
-      current_user == @user &&
-      current_user.is_coach?
+    if @user.is_coach?
+      @draft_trainings = @user.trainings.where(status: "draft")
+      @trainings       = @user.trainings.where.not(status: %w[closed cancelled draft]).where("date > ?", Time.current)
+      @past_trainings  = @user.trainings.where("date <= ?", Time.current).where.not(status: "draft").order(date: :desc)
+    else
+      now = Time.current
+      @confirmed_bookings = @user.bookings.joins(:training)
+                                 .where(status: "confirmed")
+                                 .where("trainings.date > ?", now)
+                                 .includes(:training)
+      @pending_bookings   = @user.bookings.joins(:training)
+                                 .where(status: "pending")
+                                 .where("trainings.date > ?", now)
+                                 .includes(:training)
+      @past_bookings      = @user.bookings.joins(:training)
+                                 .where("trainings.date <= ?", now)
+                                 .includes(:training)
+    end
   end
 
   def edit

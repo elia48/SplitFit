@@ -1,0 +1,15 @@
+<div class="training-new-page">
+  <div class="training-new-container">
+
+    <div class="training-new-header">
+      <h1>Edit Session</h1>
+      <p>Update your session details</p>
+    </div>
+
+    <%= render "form",
+        training: @training,
+        submit_label: "Save Changes",
+        cancel_path: training_path(@training) %>
+
+  </div>
+</div>

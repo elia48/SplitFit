@@ -6,6 +6,7 @@ class Training < ApplicationRecord
   has_many :reviews, dependent: :nullify
   validates :coach_price_cents, :duration, :date, :place, :workout_type, :status, :min_people, :max_people,
             presence: true
+  validates :min_people, numericality: { greater_than_or_equal_to: 2 }
 
   def current_price_cents
     people_count = bookings.paid.count + 1

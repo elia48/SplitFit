@@ -1,5 +1,5 @@
 class TrainingsController < ApplicationController
-  before_action :set_training, only: %i[show edit update]
+  before_action :set_training, only: %i[show edit update cancel reopen publish]
 
   def index
     @trainings = policy_scope(Training)
@@ -44,6 +44,7 @@ class TrainingsController < ApplicationController
   def create
     @training = Training.new(training_params)
     @training.user = current_user
+    @training.coach_price_cents = price_in_cents
     authorize @training
     if @training.save
       redirect_to @training, notice: "Training created."
@@ -58,11 +59,30 @@ class TrainingsController < ApplicationController
 
   def update
     authorize @training
+    @training.coach_price_cents = price_in_cents
     if @training.update(training_params)
       redirect_to @training, notice: "Training updated."
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def cancel
+    authorize @training
+    @training.update!(status: "cancelled")
+    redirect_to @training, notice: "Session cancelled."
+  end
+
+  def reopen
+    authorize @training
+    @training.update!(status: "open")
+    redirect_to @training, notice: "Session reopened."
+  end
+
+  def publish
+    authorize @training
+    @training.update!(status: "open")
+    redirect_to user_path(current_user), notice: "Session published! It's now visible to clients."
   end
 
   private
@@ -73,7 +93,11 @@ class TrainingsController < ApplicationController
 
   def training_params
     params.require(:training).permit(
-      :coach_price_cents, :duration, :date, :place, :workout_type, :min_people, :max_people, :status
+      :duration, :date, :place, :workout_type, :min_people, :max_people, :status
     )
+  end
+
+  def price_in_cents
+    (params.dig(:training, :price).to_f * 100).to_i
   end
 end

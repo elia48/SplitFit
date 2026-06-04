@@ -27,7 +27,11 @@ Rails.application.routes.draw do
     resources :reviews, only: [:create]
     resources :messages, only: [:create]
   end
-  resources :bookings, only: [:destroy, :index]
+  resources :bookings, only: [:show, :destroy, :index] do
+    resources :payments, only: [:new]
+  end
   resources :reviews, only: [:destroy, :index]
   resources :messages, only: [:index]
+
+  mount StripeEvent::Engine, at: "/stripe-webhooks"
 end

@@ -23,11 +23,11 @@ class TrainingsController < ApplicationController
     end
 
     if params[:min_price].present?
-    @trainings = @trainings.where("coach_price >= ?", params[:min_price])
+    @trainings = @trainings.where("coach_price_cents >= ?", params[:min_price].to_i * 100)
     end
 
     if params[:max_price].present?
-    @trainings = @trainings.where("coach_price <= ?", params[:max_price])
+    @trainings = @trainings.where("coach_price_cents <= ?", params[:max_price].to_i * 100)
     end
   end
 
@@ -73,7 +73,7 @@ class TrainingsController < ApplicationController
 
   def training_params
     params.require(:training).permit(
-      :coach_price, :duration, :date, :place, :workout_type, :min_people, :max_people, :status
+      :coach_price_cents, :duration, :date, :place, :workout_type, :min_people, :max_people, :status
     )
   end
 end

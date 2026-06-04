@@ -54,7 +54,7 @@
             <div class="coach-show-training-content">
               <h3><%= training.workout_type %></h3>
               <p><%= training.place %></p>
-              <span>€<%= training.coach_price %>/pp</span>
+              <span>€<%= sprintf("%.2f", training.coach_price_cents / 100.0) %>/pp</span>
             </div>
 
             <i class="fa-regular fa-heart"></i>

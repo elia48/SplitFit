@@ -34,11 +34,11 @@
         <div class="d-flex">
             <div>
                 <div><s><%= sprintf("%.2f", @training.coach_price_cents / 100.0) %>€</s></div>
-                <div><h2><%= sprintf("%.2f", @training.price_per_person_cents / 100.0) %>€</h2></div>
+                <div><h2><%= sprintf("%.2f", @training.current_price_cents / 100.0) %>€</h2></div>
             </div>
         </div>
             <% if policy(Booking.new(training: @training)).create? %>
-            <%= button_to "Book this session", training_bookings_path(@training), method: :post %>
+            <%= button_to "Book this training", training_bookings_path(@training), method: :post, class: "btn btn-primary" %>
             <% end %>
         <div  style="border: 1px solid #000; padding: 30px" class="d-flex">
             <div>

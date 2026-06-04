@@ -1,0 +1,7 @@
+<h1>Booking #<%= @booking.id %></h1>
+
+<p>Status: <%= @booking.status %></p>
+<p>Training: <%= @booking.training.workout_type %></p>
+<p>Place: <%= @booking.training.place %></p>
+<p>Date: <%= @booking.training.date %></p>
+<p>Paid amount: <%= @booking.amount_cents / 100.0 %>€</p>

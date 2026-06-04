@@ -1,5 +1,5 @@
 class TrainingsController < ApplicationController
-  before_action :set_training, only: %i[show edit update]
+  before_action :set_training, only: %i[show edit update cancel reopen publish]
 
   def index
     @trainings = policy_scope(Training)
@@ -65,6 +65,24 @@ class TrainingsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def cancel
+    authorize @training
+    @training.update!(status: "cancelled")
+    redirect_to @training, notice: "Session cancelled."
+  end
+
+  def reopen
+    authorize @training
+    @training.update!(status: "open")
+    redirect_to @training, notice: "Session reopened."
+  end
+
+  def publish
+    authorize @training
+    @training.update!(status: "open")
+    redirect_to user_path(current_user), notice: "Session published! It's now visible to clients."
   end
 
   private

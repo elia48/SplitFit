@@ -16,12 +16,24 @@ class TrainingPolicy < ApplicationPolicy
   end
 
   def update?
-    user.is_coach && record.user == user
+    user.is_coach && record.user == user && record.status == "draft"
+  end
+
+  def publish?
+    user.is_coach && record.user == user && record.status == "draft"
+  end
+
+  def cancel?
+    user.is_coach && record.user == user && record.status != "cancelled" && record.status != "draft"
+  end
+
+  def reopen?
+    user.is_coach && record.user == user && record.status == "cancelled"
   end
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.all
+      scope.where.not(status: "draft")
     end
   end
 end

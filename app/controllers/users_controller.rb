@@ -8,8 +8,9 @@ class UsersController < ApplicationController
     @own_profile = current_user == @user
 
     if @user.is_coach?
-      @trainings      = @user.trainings.where.not(status: "closed").where("date > ?", Time.current)
-      @past_trainings = @user.trainings.where("date <= ?", Time.current).order(date: :desc)
+      @draft_trainings = @user.trainings.where(status: "draft")
+      @trainings       = @user.trainings.where.not(status: %w[closed cancelled draft]).where("date > ?", Time.current)
+      @past_trainings  = @user.trainings.where("date <= ?", Time.current).where.not(status: "draft").order(date: :desc)
     else
       now = Time.current
       @confirmed_bookings = @user.bookings.joins(:training)

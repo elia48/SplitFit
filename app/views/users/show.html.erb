@@ -41,6 +41,28 @@
 
     <% if @user.is_coach? %>
 
+      <% if @own_profile && @draft_trainings.any? %>
+        <section class="coach-show-card">
+          <div class="coach-show-section-title">
+            <h2>Drafts</h2>
+            <span class="badge bg-warning text-dark"><%= @draft_trainings.count %></span>
+          </div>
+          <div class="coach-show-trainings">
+            <% @draft_trainings.each do |training| %>
+              <%= link_to training_path(training), class: "coach-show-training-card" do %>
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400" alt="Training">
+                <div class="coach-show-training-content">
+                  <h3><%= training.workout_type %></h3>
+                  <p><%= training.place %></p>
+                  <span><%= training.date&.strftime("%d %b %Y") || "No date set" %></span>
+                </div>
+                <span class="badge bg-warning text-dark">Draft</span>
+              <% end %>
+            <% end %>
+          </div>
+        </section>
+      <% end %>
+
       <section class="coach-show-card">
         <div class="coach-show-section-title">
           <h2>Active Trainings</h2>

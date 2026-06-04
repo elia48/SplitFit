@@ -1,6 +1,18 @@
 class BookingPolicy < ApplicationPolicy
+  def new?
+    show?
+  end
+
   def create?
-    record.training.user != user
+    return false if record.training.user == user
+    return false if record.training.bookings.paid.count >= record.training.max_people
+    return false if Booking.exists?(user: user, training: record.training)
+
+    true
+  end
+
+  def show?
+    record.user == user
   end
 
   def destroy?

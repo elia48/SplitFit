@@ -1,15 +1,49 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: [:destroy]
-
   def create
     @training = Training.find(params[:training_id])
-    @booking = Booking.new(training: @training, user: current_user, status: "pending")
+
+    @booking = Booking.new(training: @training, user: current_user, status: "pending",
+                           amount_cents: @training.current_price_cents, 
+                           estimated_people_count_at_payment: @training.bookings.paid.count + 1)
     authorize @booking
     if @booking.save
-      redirect_to training_path(@training), notice: "Booking confirmed!"
+      session = Stripe::Checkout::Session.create(
+        payment_method_types: ["card"],
+        line_items: [{
+          quantity: 1,
+          price_data: {
+            unit_amount: @booking.amount_cents,
+            currency: "eur",
+            product_data: {
+              name: @training.workout_type
+            }
+          }
+        }],
+        mode: "payment",
+        success_url: booking_url(@booking),
+        cancel_url: training_url(@training),
+        metadata: {
+          booking_id: @booking.id
+        },
+        payment_intent_data: {
+          metadata: {
+            booking_id: @booking.id
+          }
+        }
+      )
+
+      @booking.update!(checkout_session_id: session.id)
+
+      redirect_to new_booking_payment_path(@booking)
     else
       redirect_to training_path(@training), alert: "Could not complete booking."
     end
+  end
+
+  def show
+    @booking = current_user.bookings.find(params[:id])
+    authorize @booking
   end
 
   def index

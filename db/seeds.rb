@@ -51,7 +51,7 @@ trainings = trainings_data.each_with_index.map do |data, i|
     workout_type: data[:workout_type],
     place:        data[:place],
     status:       statuses.sample,
-    coach_price_cents:  data[:coach_price],
+    coach_price_cents:  data[:coach_price_cents],
     duration:     data[:duration],
     date:         base_time + (i * 2 + rand(1..5)).days + rand(8..18).hours,
     min_people:   data[:min_people],

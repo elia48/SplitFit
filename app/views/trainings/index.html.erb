@@ -74,7 +74,7 @@
               </div>
 
               <p class="trainings-index-price">
-                €<%= sprintf("%.2f", training.price_per_person_cents / 100.0) %>
+                €<%= sprintf("%.2f", training.current_price_cents / 100.0) %>
               </p>
               <p class="trainings-index-fullprice"><s>€<%= sprintf("%.2f", training.coach_price_cents / 100.0) %></s></p>
             </div>

@@ -1,5 +1,5 @@
 class TrainingsController < ApplicationController
-  before_action :set_training, only: %i[show edit update cancel reopen publish]
+  before_action :set_training, only: %i[show edit update cancel reopen publish close]
 
   def index
     @trainings = policy_scope(Training)
@@ -88,6 +88,17 @@ class TrainingsController < ApplicationController
     authorize @training
     @training.update!(status: "open")
     redirect_to user_path(current_user), notice: "Session published! It's now visible to clients."
+  end
+
+  def close
+    authorize @training
+
+    TrainingRefundService.new(@training).call
+    @training.update!(status: "closed")
+
+    redirect_to @training, notice: "Session closed and refunds processed."
+  rescue Stripe::StripeError => e
+    redirect_to @training, alert: "Stripe error: #{e.message}"
   end
 
   private

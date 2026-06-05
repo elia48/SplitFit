@@ -31,6 +31,11 @@ class TrainingPolicy < ApplicationPolicy
     user.is_coach && record.user == user && record.status == "cancelled"
   end
 
+  def access_chat?
+    return true if record.user == user
+    record.bookings.paid.exists?(user: user)
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.where.not(status: "draft")

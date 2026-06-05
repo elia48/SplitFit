@@ -1,0 +1,12 @@
+<div class="chat-message"
+     id="<%= dom_id(message) %>"
+     data-message-user-id="<%= message.user_id %>">
+  <div class="chat-message__avatar" data-avatar>
+    <%= message.user.name.first.upcase %>
+  </div>
+  <div class="chat-message__bubble">
+    <span class="chat-message__author"><%= message.user.name.split.first %></span>
+    <p class="chat-message__content"><%= message.content %></p>
+    <span class="chat-message__time"><%= message.created_at.strftime("%H:%M") %></span>
+  </div>
+</div>

@@ -1,7 +1,119 @@
-<h1>Booking #<%= @booking.id %></h1>
+<div class="booking-show">
 
-<p>Status: <%= @booking.status %></p>
-<p>Training: <%= @booking.training.workout_type %></p>
-<p>Place: <%= @booking.training.place %></p>
-<p>Date: <%= @booking.training.date %></p>
-<p>Paid amount: <%= @booking.amount_cents / 100.0 %>€</p>
+  <div class="booking-show__hero">
+    <img class="booking-show__hero-img"
+         src="<%= training_image(@booking.training) %>"
+         alt="<%= @booking.training.workout_type %>">
+    <div class="booking-show__hero-overlay"></div>
+    <div class="booking-show__hero-content">
+      <h1 class="booking-show__type"><%= @booking.training.workout_type %></h1>
+      <p class="booking-show__coach">with <%= @booking.training.user.name %></p>
+    </div>
+  </div>
+
+  <div class="booking-show__body">
+
+    <div class="booking-show__card">
+      <p class="booking-show__card-title">Session details</p>
+
+      <div class="booking-show__row">
+        <i class="fa-regular fa-calendar"></i>
+        <div class="booking-show__row-content">
+          <span class="booking-show__row-label">Date & time</span>
+          <span class="booking-show__row-value">
+            <%= @booking.training.date.strftime("%A, %d %b %Y · %H:%M") %>
+          </span>
+        </div>
+      </div>
+
+      <div class="booking-show__row">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="booking-show__row-content">
+          <span class="booking-show__row-label">Location</span>
+          <span class="booking-show__row-value"><%= @booking.training.place %></span>
+        </div>
+      </div>
+
+      <div class="booking-show__row">
+        <i class="fa-solid fa-clock"></i>
+        <div class="booking-show__row-content">
+          <span class="booking-show__row-label">Duration</span>
+          <span class="booking-show__row-value"><%= @booking.training.duration %> min</span>
+        </div>
+      </div>
+
+      <div class="booking-show__row">
+        <i class="fa-solid fa-users"></i>
+        <div class="booking-show__row-content">
+          <span class="booking-show__row-label">Participants</span>
+          <span class="booking-show__row-value">
+            <%= @booking.training.bookings.paid.count %> / <%= @booking.training.max_people %>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-show__card">
+      <p class="booking-show__card-title">Booking details</p>
+
+      <div class="booking-show__row">
+        <i class="fa-solid fa-tag"></i>
+        <div class="booking-show__row-content">
+          <span class="booking-show__row-label">Status</span>
+          <span class="booking-status booking-status--<%= @booking.status %>">
+            <% if @booking.status == "paid" %>
+              <i class="fa-solid fa-circle-check"></i>
+            <% elsif @booking.status == "pending" %>
+              <i class="fa-solid fa-clock"></i>
+            <% end %>
+            <%= @booking.status.capitalize %>
+          </span>
+        </div>
+      </div>
+
+      <div class="booking-show__row">
+        <i class="fa-solid fa-euro-sign"></i>
+        <div class="booking-show__row-content">
+          <span class="booking-show__row-label">
+            <% if @booking.status == "paid" %>Amount paid<% else %>Estimated price<% end %>
+          </span>
+          <span class="booking-show__amount">
+            €<%= format_price(@booking.status == "paid" ? @booking.amount_cents : @booking.training.current_price_cents) %>
+          </span>
+        </div>
+      </div>
+
+      <div class="booking-show__row">
+        <i class="fa-solid fa-hashtag"></i>
+        <div class="booking-show__row-content">
+          <span class="booking-show__row-label">Booking ID</span>
+          <span class="booking-show__row-value">#<%= @booking.id %></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="booking-show__actions">
+      <%= link_to training_path(@booking.training), class: "booking-show__btn booking-show__btn--secondary" do %>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        View session
+      <% end %>
+
+      <% if policy(@booking.training).access_chat? %>
+        <%= link_to training_messages_path(@booking.training), class: "booking-show__btn booking-show__btn--primary" do %>
+          <i class="fa-regular fa-comment"></i>
+          Open group chat
+        <% end %>
+      <% end %>
+
+      <% if policy(@booking).destroy? %>
+        <%= button_to booking_path(@booking),
+              method: :delete,
+              data: { turbo_confirm: "Are you sure you want to cancel this booking?" },
+              class: "booking-show__btn booking-show__btn--danger" do %>
+          Cancel booking
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+</div>

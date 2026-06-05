@@ -36,6 +36,12 @@ class TrainingPolicy < ApplicationPolicy
     record.bookings.paid.exists?(user: user)
   end
 
+  def close?
+    record.user == user &&
+      record.date + record.duration.minutes < Time.current &&
+      record.status != "closed"
+  end
+
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.where.not(status: "draft")

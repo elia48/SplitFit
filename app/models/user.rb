@@ -14,6 +14,8 @@ class User < ApplicationRecord
     return nil if received_reviews.empty?
 
     received_reviews.average(:score).round(1)
+  end
+
   def accessible_chat_trainings
     coach_ids = trainings.joins(:bookings).where(bookings: { status: "paid" }).distinct.pluck(:id)
     member_ids = Training.joins(:bookings).where(bookings: { user: self, status: "paid" }).pluck(:id)

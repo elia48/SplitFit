@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       patch :cancel
       patch :reopen
       patch :publish
+      patch :close
     end
     resources :bookings, only: [:create]
     resources :reviews, only: [:create]

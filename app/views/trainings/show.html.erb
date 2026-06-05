@@ -1,109 +1,188 @@
+<div class="training-show">
 
-<img src="<%= training_image(@training) %>" alt="Training" style="width:100%;height:200px;object-fit:cover;border-radius:18px;margin-bottom:16px;">
-<div style="border: 1px solid #000; padding: 30px">
-    <h1><%= @training.workout_type %></h1>
-    <h2>with <%= @coach.name %></h2>
+  <%# ── Hero ──────────────────────────────────────────────────────── %>
+  <div class="training-show__hero">
+    <img class="training-show__hero-img"
+         src="<%= training_image(@training) %>"
+         alt="<%= @training.workout_type %>">
+    <div class="training-show__hero-overlay"></div>
 
-    <% if policy(@training).update? %>
-      <%= link_to "Edit", edit_training_path(@training), class: "btn btn-outline-secondary btn-sm me-2" %>
-    <% end %>
-    <% if policy(@training).publish? %>
-      <%= button_to "Publish Session", publish_training_path(@training), method: :patch,
-          class: "btn btn-success btn-sm me-2" %>
-    <% end %>
-    <% if policy(@training).cancel? %>
-      <%= button_to "Cancel Session", cancel_training_path(@training), method: :patch,
-          data: { turbo_confirm: "Are you sure you want to cancel this session?" },
-          class: "btn btn-outline-danger btn-sm" %>
-    <% end %>
-    <% if policy(@training).reopen? %>
-      <%= button_to "Reopen Session", reopen_training_path(@training), method: :patch,
-          class: "btn btn-outline-success btn-sm" %>
-    <% end %>
-    <% if policy(@training).close? %>
-        <%= button_to "Close Session & Process Refunds",
-                        close_training_path(@training),
-                        method: :patch,
-                        data: { turbo_confirm: "Close this session and process refunds?" },
-                        class: "btn btn-warning btn-sm" %>
-    <% end %>
-</div>
-<div class="d-flex">
-    <div>
-        <h3>date</h3>
-        <%= @training.date %>
+    <div class="training-show__coach-actions">
+      <% if policy(@training).update? %>
+        <%= link_to "Edit", edit_training_path(@training), class: "training-show__coach-btn training-show__coach-btn--edit" %>
+      <% end %>
+      <% if policy(@training).publish? %>
+        <%= button_to "Publish", publish_training_path(@training), method: :patch,
+            class: "training-show__coach-btn training-show__coach-btn--publish" %>
+      <% end %>
+      <% if policy(@training).cancel? %>
+        <%= button_to "Cancel", cancel_training_path(@training), method: :patch,
+            data: { turbo_confirm: "Cancel this session?" },
+            class: "training-show__coach-btn training-show__coach-btn--cancel" %>
+      <% end %>
+      <% if policy(@training).reopen? %>
+        <%= button_to "Reopen", reopen_training_path(@training), method: :patch,
+            class: "training-show__coach-btn training-show__coach-btn--reopen" %>
+      <% end %>
+      <% if policy(@training).close? %>
+        <%= button_to "Close & refund", close_training_path(@training), method: :patch,
+            data: { turbo_confirm: "Close this session and process refunds?" },
+            class: "training-show__coach-btn training-show__coach-btn--close" %>
+      <% end %>
     </div>
-    <div>
-        <h3>duration</h3>
-        <%= @training.duration %> min
+
+    <div class="training-show__hero-content">
+      <span class="training-show__status-badge"><%= @training.status.upcase %></span>
+      <h1 class="training-show__type"><%= @training.workout_type %></h1>
+      <p class="training-show__coach">
+        <% if @coach.avatar.present? %>
+          <%= image_tag @coach.avatar, alt: @coach.name %>
+        <% end %>
+        with <%= @coach.name %>
+      </p>
     </div>
-</div>
-<div style="border: 1px solid #000; padding: 30px">
-    <h2><%= @training.place %></h2>
-</div>
-<div class="d-flex">
-    <div><h3>joined participants</h3></div>
-    <div><h3><%= @training.bookings.size %> / <%= @training.max_people %></h3></div>
-</div>
-<div>
-    <div style="border: 1px solid #000; padding: 30px">
-        <div class="d-flex">
-            <div>
-                <h2>Dynamic Pricing</h2>
-                <p>The more people join, the less you pay.</p>
-            </div>
-            <div>
-                <%= @training.status %>
-            </div>
-        </div>
-        <div class="d-flex">
-            <div>
-                <div><s><%= sprintf("%.2f", @training.coach_price_cents / 100.0) %>€</s></div>
-                <div><h2><%= sprintf("%.2f", @training.current_price_cents / 100.0) %>€</h2></div>
-            </div>
-        </div>
-            <% if policy(Booking.new(training: @training)).create? %>
-            <%= button_to "Book this training", training_bookings_path(@training), method: :post, class: "btn btn-primary" %>
-            <% end %>
-        <div  style="border: 1px solid #000; padding: 30px" class="d-flex">
-            <div>
-                <i class="fa-solid fa-circle-info"></i>
-            </div>
-            <div>
-                <p>Final price will be locked 2 hours before the session.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div>
-    <h2>About the session</h2>
-    <p>This high-intensity calisthenics session focuses on core stability and explosive power. Alex Rivers will guide you through advanced movements like muscle-ups, L-sits, and dynamic plank variations. Suitable for intermediate to advanced fitness enthusiasts.</p>
-</div>
-
-<% if policy(@review).create? %>
-  <h2>Let us know if the coach did a good job</h2>
-
-  <%= simple_form_for [@training, @review] do |f| %>
-    <%= f.input :score,
-                collection: 1..5,
-                prompt: "Select a rating" %>
-
-    <%= f.input :description %>
-
-    <%= f.submit "Submit review",
-                 class: "btn btn-primary" %>
-  <% end %>
-<% end %>
-
-<h3>Coach reviews</h3>
-
-<% @coach.received_reviews.each do |review| %>
-  <div class="review-card">
-    <p><strong>Rating:</strong> <%= review.score %>/5</p>
-    <p><%= review.description %></p>
-    <small>
-      By <%= review.user&.name || "Deleted user" %>
-    </small>
   </div>
-<% end %>
+
+  <div class="training-show__body">
+
+    <%# ── Stats grid ─────────────────────────────────────────────── %>
+    <div class="training-show__stats">
+      <div class="training-show__stat">
+        <div class="training-show__stat-icon"><i class="fa-regular fa-calendar"></i></div>
+        <div class="training-show__stat-content">
+          <span class="training-show__stat-label">Date</span>
+          <span class="training-show__stat-value"><%= @training.date.strftime("%d %b %Y") %></span>
+        </div>
+      </div>
+
+      <div class="training-show__stat">
+        <div class="training-show__stat-icon"><i class="fa-solid fa-clock"></i></div>
+        <div class="training-show__stat-content">
+          <span class="training-show__stat-label">Time</span>
+          <span class="training-show__stat-value"><%= @training.date.strftime("%H:%M") %></span>
+        </div>
+      </div>
+
+      <div class="training-show__stat">
+        <div class="training-show__stat-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="training-show__stat-content">
+          <span class="training-show__stat-label">Location</span>
+          <span class="training-show__stat-value"><%= @training.place %></span>
+        </div>
+      </div>
+
+      <div class="training-show__stat">
+        <div class="training-show__stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div class="training-show__stat-content">
+          <span class="training-show__stat-label">Duration</span>
+          <span class="training-show__stat-value"><%= @training.duration %> min</span>
+        </div>
+      </div>
+    </div>
+
+    <%# ── About ──────────────────────────────────────────────────── %>
+    <div class="training-show__card">
+      <p class="training-show__card-title">About this session</p>
+      <p class="training-show__about-text">
+        <%= @training.description.presence || "No description provided yet." %>
+      </p>
+    </div>
+
+    <%# ── Pricing & booking ──────────────────────────────────────── %>
+    <div class="training-show__card">
+      <p class="training-show__card-title">Pricing</p>
+
+      <div class="training-show__pricing-row">
+        <div>
+          <div class="training-show__price-current">
+            €<%= format_price(@training.current_price_cents) %>
+            <span class="training-show__price-unit">/person</span>
+          </div>
+          <div class="training-show__price-original">
+            €<%= format_price(@training.coach_price_cents) %> full price
+          </div>
+        </div>
+      </div>
+
+      <div class="training-show__participants-bar">
+        <div class="training-show__participants-label">
+          <span>Spots filled</span>
+          <strong><%= @training.bookings.paid.count %> / <%= @training.max_people %></strong>
+        </div>
+        <div class="training-show__bar-bg">
+          <div class="training-show__bar-fill"
+               style="width: <%= [(@training.bookings.paid.count.to_f / @training.max_people * 100).round, 100].min %>%">
+          </div>
+        </div>
+      </div>
+
+      <div class="training-show__pricing-note">
+        <i class="fa-solid fa-circle-info"></i>
+        <p>The more people join, the lower the price per person. Final price locks 2 hours before the session.</p>
+      </div>
+
+      <% if policy(Booking.new(training: @training)).create? %>
+        <%= button_to "Book this session", training_bookings_path(@training),
+            method: :post, class: "training-show__book-btn" %>
+      <% end %>
+    </div>
+
+    <%# ── Coach ──────────────────────────────────────────────────── %>
+    <div class="training-show__card">
+      <p class="training-show__card-title">Coach</p>
+      <div class="training-show__coach-card">
+        <% avatar_src = @coach.avatar.present? ? asset_path(@coach.avatar) : "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200" %>
+        <img class="training-show__coach-avatar" src="<%= avatar_src %>" alt="<%= @coach.name %>">
+        <div class="training-show__coach-info">
+          <h3><%= @coach.name %></h3>
+          <p><%= @coach.speciality.presence || "Personal Trainer" %></p>
+        </div>
+        <%= link_to "View profile", user_path(@coach), class: "training-show__coach-link" %>
+      </div>
+    </div>
+
+    <%# ── Reviews ────────────────────────────────────────────────── %>
+    <div class="training-show__card">
+      <p class="training-show__card-title">
+        Reviews (<%= @coach.received_reviews.count %>)
+      </p>
+
+      <% if @coach.received_reviews.any? %>
+        <% @coach.received_reviews.order(created_at: :desc).limit(5).each do |review| %>
+          <div class="training-show__review-card">
+            <div class="training-show__review-header">
+              <span class="training-show__review-author"><%= review.user&.name&.split&.first || "Member" %></span>
+              <div class="training-show__review-stars">
+                <% review.score.times do %><i class="fa-solid fa-star"></i><% end %>
+                <% (5 - review.score).times do %><i class="fa-regular fa-star"></i><% end %>
+              </div>
+            </div>
+            <p class="training-show__review-text"><%= review.description %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="training-show__no-reviews">No reviews yet.</p>
+      <% end %>
+
+      <% if policy(@review).create? %>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid #f0e0d8;">
+          <p class="training-show__card-title">Leave a review</p>
+          <%= simple_form_for [@training, @review], html: { class: "training-show__review-form" } do |f| %>
+            <%= f.input :score,
+                collection: 1..5,
+                prompt: "Rating",
+                label: false,
+                input_html: { class: "form-select form-select-sm" } %>
+            <%= f.input :description,
+                as: :text,
+                label: false,
+                placeholder: "How was the session?",
+                input_html: { class: "form-control form-control-sm", rows: 3 } %>
+            <%= f.submit "Submit review", class: "training-show__book-btn" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>

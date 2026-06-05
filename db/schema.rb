@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_05_123652) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_143759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -199,6 +199,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_123652) do
     t.integer "coach_price_cents"
     t.datetime "created_at", null: false
     t.datetime "date"
+    t.text "description"
     t.integer "duration"
     t.integer "max_people"
     t.integer "min_people"

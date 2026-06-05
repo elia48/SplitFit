@@ -49,6 +49,12 @@
         label: "Duration (minutes)",
         placeholder: "e.g. 60",
         input_html: { min: 1 } %>
+
+    <%= f.input :description,
+        as: :text,
+        label: "About this session",
+        placeholder: "Describe what clients will do, the intensity level, what to bring...",
+        input_html: { rows: 4 } %>
   </div>
 
   <div class="training-new-card">

@@ -17,7 +17,6 @@ class BookingPolicy < ApplicationPolicy
 
   def destroy?
     record.user == user && record.training.bookings.size < record.training.min_people
-  end
 
   class Scope < ApplicationPolicy::Scope
     def resolve

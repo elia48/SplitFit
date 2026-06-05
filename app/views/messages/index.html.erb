@@ -1,0 +1,47 @@
+<div class="chat-index">
+  <div class="chat-index__header">
+    <h1 class="chat-index__title">Chats</h1>
+  </div>
+
+  <% if @chats.empty? %>
+    <div class="chat-index__empty">
+      <i class="fa-regular fa-comment fa-2x mb-3"></i>
+      <p>No chats yet. Once you book and pay for a session, the group chat will appear here.</p>
+    </div>
+  <% else %>
+    <div class="chat-index__list">
+      <% @chats.each do |training| %>
+        <%= link_to training_messages_path(training), class: "chat-item" do %>
+          <div class="chat-item__icon">
+            <i class="fa-solid fa-dumbbell"></i>
+          </div>
+          <div class="chat-item__body">
+            <div class="chat-item__top">
+              <span class="chat-item__name"><%= training.workout_type %></span>
+              <% if training.messages.any? %>
+                <span class="chat-item__time"><%= training.messages.last.created_at.strftime("%d/%m") %></span>
+              <% end %>
+            </div>
+            <div class="chat-item__bottom">
+              <% if training.messages.any? %>
+                <span class="chat-item__preview">
+                  <strong><%= training.messages.last.user.name.split.first %>:</strong>
+                  <%= truncate(training.messages.last.content, length: 40) %>
+                </span>
+              <% else %>
+                <span class="chat-item__preview chat-item__preview--empty">No messages yet</span>
+              <% end %>
+              <span class="chat-item__role">
+                <% if training.user == current_user %>
+                  <span class="chat-badge chat-badge--coach">Coach</span>
+                <% else %>
+                  <span class="chat-badge chat-badge--member">Member</span>
+                <% end %>
+              </span>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

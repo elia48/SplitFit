@@ -19,7 +19,12 @@
   <%= link_to messages_path,
       class: "bottom-nav-item #{'active' if controller_name == 'messages'}" do %>
 
-    <i class="fa-regular fa-comment"></i>
+    <div class="bottom-nav-icon-wrap">
+      <i class="fa-regular fa-comment"></i>
+      <% if user_signed_in? && current_user.chat_count > 0 %>
+        <span class="chat-badge-dot"></span>
+      <% end %>
+    </div>
     <span>Chat</span>
 
   <% end %>

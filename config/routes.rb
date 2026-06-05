@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     end
     resources :bookings, only: [:create]
     resources :reviews, only: [:create]
-    resources :messages, only: [:create]
+    resources :messages, only: [:create, :index]
   end
   resources :bookings, only: [:show, :destroy, :index] do
     resources :payments, only: [:new]

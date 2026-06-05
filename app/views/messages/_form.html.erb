@@ -1,0 +1,19 @@
+<%= turbo_frame_tag "new_message_form" do %>
+  <%= simple_form_for [training, message],
+        html: { class: "chat-form" } do |f| %>
+    <div class="chat-form__row">
+      <%= f.input :content,
+            label: false,
+            placeholder: "Send a message...",
+            input_html: {
+              class: "chat-form__input",
+              autocomplete: "off",
+              data: { "chat-form-target": "input" }
+            },
+            wrapper: false %>
+      <button type="submit" class="chat-form__send">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  <% end %>
+<% end %>

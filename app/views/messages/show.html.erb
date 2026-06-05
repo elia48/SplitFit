@@ -1,0 +1,25 @@
+<div class="chat-show"
+     data-controller="chat-form"
+     data-chat-form-current-user-value="<%= current_user.id %>">
+  <div class="chat-show__header">
+    <%= link_to messages_path, class: "chat-show__back" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+    <div class="chat-show__info">
+      <span class="chat-show__title"><%= @training.workout_type %></span>
+      <span class="chat-show__subtitle">
+        with <%= @training.user.name %> · <%= @training.bookings.paid.count + 1 %> participants
+      </span>
+    </div>
+  </div>
+
+  <%= turbo_stream_from "training_chat_#{@training.id}" %>
+
+  <div class="chat-show__messages" id="messages">
+    <%= render @messages %>
+  </div>
+
+  <div class="chat-show__compose">
+    <%= render "messages/form", message: @message, training: @training %>
+  </div>
+</div>

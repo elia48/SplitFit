@@ -1,0 +1,213 @@
+// ── Empty state ──────────────────────────────────────────────────────
+.bookings-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 20px;
+  text-align: center;
+  color: #a07060;
+
+  i { font-size: 40px; opacity: 0.5; }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+// ── Status pill ──────────────────────────────────────────────────────
+.booking-status-pill {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+
+  &--paid       { background: #d4f5e2; color: #1a7a45; }
+  &--pending    { background: #fff3cd; color: #856404; }
+  &--confirmed  { background: #d4edda; color: #155724; }
+  &--cancelled  { background: #f5e0e0; color: #7a1a1a; }
+}
+
+// ── Cancel row ───────────────────────────────────────────────────────
+.booking-card-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.booking-cancel-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px 10px 8px;
+}
+
+.booking-cancel-btn {
+  background: none;
+  border: 1.5px solid #f0d6cd;
+  border-radius: 999px;
+  color: #c0564a;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  cursor: pointer;
+
+  &:hover { background: #fdf0ee; }
+}
+
+// ── Booking show ─────────────────────────────────────────────────────
+.booking-show {
+  min-height: 100vh;
+  background: #f8f5f2;
+  padding-bottom: 96px;
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.booking-show__hero {
+  position: relative;
+  height: 200px;
+}
+
+.booking-show__hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.booking-show__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(30,12,6,0.7) 0%, transparent 60%);
+}
+
+.booking-show__hero-content {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+}
+
+.booking-show__type {
+  font-size: 22px;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 4px;
+}
+
+.booking-show__coach {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  margin: 0;
+}
+
+.booking-show__body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.booking-show__card {
+  background: #fffaf7;
+  border: 1px solid #f0d6cd;
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(59, 36, 29, 0.05);
+}
+
+.booking-show__card-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #a07060;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+
+.booking-show__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f5ece8;
+
+  &:last-child { border-bottom: none; padding-bottom: 0; }
+  &:first-child { padding-top: 0; }
+
+  i {
+    width: 20px;
+    text-align: center;
+    color: #ff6428;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+}
+
+.booking-show__row-content {
+  flex: 1;
+}
+
+.booking-show__row-label {
+  font-size: 11px;
+  color: #a07060;
+  display: block;
+  margin-bottom: 1px;
+}
+
+.booking-show__row-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: #2d1a15;
+}
+
+.booking-show__amount {
+  font-size: 22px;
+  font-weight: 900;
+  color: #ff6428;
+}
+
+.booking-show__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.booking-show__btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+
+  &--primary {
+    background: #ff6428;
+    color: white;
+    &:hover { background: #e0541f; color: white; }
+  }
+
+  &--secondary {
+    background: #f0e8e4;
+    color: #5c4038;
+    text-decoration: none;
+    &:hover { background: #e8dcd8; color: #5c4038; }
+  }
+
+  &--danger {
+    background: none;
+    border: 1.5px solid #f0d6cd;
+    color: #c0564a;
+    &:hover { background: #fdf0ee; }
+  }
+}

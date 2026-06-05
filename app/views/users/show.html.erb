@@ -18,7 +18,13 @@
         <% if @user.is_coach? %>
           <div class="coach-show-score">
             <i class="fa-solid fa-star"></i>
-            <span><%= @user.score.presence || "4.9" %></span>
+            <span>
+              <% if @user.average_rating.present? %>
+                <p>⭐ <%= @user.average_rating %>/5</p>
+              <% else %>
+                <p>No reviews yet</p>
+              <% end %>
+            </span>
           </div>
         <% end %>
 

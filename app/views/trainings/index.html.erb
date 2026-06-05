@@ -41,11 +41,21 @@
 <% end %>
 
     <div class="trainings-index-tags">
-      <span class="trainings-index-pill active">All</span>
-      <span class="trainings-index-pill">Weight Lifting</span>
-      <span class="trainings-index-pill">Yoga</span>
-      <span class="trainings-index-pill">HIIT</span>
-      <span class="trainings-index-pill">More⌄</span>
+      <% workout_pills = [
+           ["All",            nil],
+           ["Weight Lifting", "Strength"],
+           ["Yoga",           "Yoga"],
+           ["HIIT",           "HIIT"],
+           ["CrossFit",       "CrossFit"],
+           ["Pilates",        "Pilates"],
+           ["Boxing",         "Boxing"]
+         ] %>
+      <% workout_pills.each do |label, type| %>
+        <%= link_to trainings_path(workout_type: type, query: params[:query], location: params[:location]),
+              class: "trainings-index-pill #{ params[:workout_type] == type || (type.nil? && params[:workout_type].blank?) ? 'active' : '' }" do %>
+          <%= label %>
+        <% end %>
+      <% end %>
     </div>
 
     <div class="trainings-index-list">
@@ -55,7 +65,7 @@
 
             <img
               class="trainings-index-card-image"
-              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600"
+              src="<%= training_image(training) %>"
               alt="Training image"
             >
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_04_104659) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_123652) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -202,6 +202,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_104659) do
     t.integer "duration"
     t.integer "max_people"
     t.integer "min_people"
+    t.string "photo"
     t.string "place"
     t.string "status"
     t.datetime "updated_at", null: false
@@ -212,6 +213,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_104659) do
 
   create_table "users", force: :cascade do |t|
     t.string "address"
+    t.string "avatar"
     t.datetime "created_at", null: false
     t.text "description"
     t.string "email", default: "", null: false

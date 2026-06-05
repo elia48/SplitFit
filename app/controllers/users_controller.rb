@@ -54,9 +54,9 @@ class UsersController < ApplicationController
       :name,
       :speciality,
       :description,
-      :score,
       :address,
-      :payment_method
+      :payment_method,
+      :avatar
     )
   end
 end

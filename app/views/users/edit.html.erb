@@ -1,2 +1,56 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<div class="coach-show-page">
+  <div class="coach-show-container">
+
+    <section class="coach-show-card">
+      <h2>Edit Profile</h2>
+
+      <%= simple_form_for @user, url: user_path(@user), method: :patch do |f| %>
+
+        <div class="user-edit-field">
+          <%= f.label :name, "Name" %>
+          <%= f.input :name, label: false, input_html: { class: "user-edit-input" }, wrapper: false %>
+        </div>
+
+        <% if @user.is_coach? %>
+          <div class="user-edit-field">
+            <%= f.label :speciality, "Speciality" %>
+            <%= f.input :speciality, label: false, placeholder: "e.g. Strength & Conditioning",
+                  input_html: { class: "user-edit-input" }, wrapper: false %>
+          </div>
+
+          <div class="user-edit-field">
+            <%= f.label :description, "About you" %>
+            <%= f.input :description, as: :text, label: false, placeholder: "Tell clients about your style and experience",
+                  input_html: { class: "user-edit-input user-edit-textarea", rows: 4 }, wrapper: false %>
+          </div>
+        <% end %>
+
+        <div class="user-edit-field">
+          <%= f.label :address, "Address" %>
+          <%= f.input :address, label: false, placeholder: "Your city or neighborhood",
+                input_html: { class: "user-edit-input" }, wrapper: false %>
+        </div>
+
+        <div class="user-edit-field">
+          <%= f.label :payment_method, "Payment method" %>
+          <%= f.input :payment_method, label: false, placeholder: "e.g. Bizum, Revolut, PayPal",
+                input_html: { class: "user-edit-input" }, wrapper: false %>
+        </div>
+
+        <div class="user-edit-field">
+          <%= f.label :avatar, "Profile photo" %>
+          <p class="user-edit-hint">Enter the filename of your image (e.g. my_photo.jpg). Upload the file to app/assets/images/.</p>
+          <%= f.input :avatar, label: false, placeholder: "filename.jpg",
+                input_html: { class: "user-edit-input" }, wrapper: false %>
+        </div>
+
+        <div class="user-edit-actions">
+          <%= f.button :submit, "Save changes", class: "coach-show-main-btn" %>
+          <%= link_to "Cancel", user_path(@user), class: "user-edit-cancel" %>
+        </div>
+
+      <% end %>
+    </section>
+
+  </div>
+</div>

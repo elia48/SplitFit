@@ -2,6 +2,28 @@
   <%= f.error_notification message: "Please fix the errors below:" %>
 
   <div class="training-new-card">
+    <h2>Session Photo</h2>
+    <div class="training-new-photo-field">
+      <% if training.photo.present? %>
+        <%= image_tag training.photo, class: "training-new-photo-preview", alt: "Session photo" %>
+      <% elsif training.user&.avatar.present? %>
+        <%= image_tag training.user.avatar, class: "training-new-photo-preview training-new-photo-preview--fallback", alt: "Coach photo (fallback)" %>
+        <p class="training-new-hint">No session photo — your profile photo will be shown.</p>
+      <% else %>
+        <div class="training-new-photo-placeholder">
+          <i class="fa-solid fa-image"></i>
+          <span>No photo yet</span>
+        </div>
+      <% end %>
+      <%= f.input :photo,
+          label: "Photo filename",
+          placeholder: "e.g. my_workout.jpg",
+          hint: "Upload the file to app/assets/images/ and enter its filename here.",
+          input_html: { class: "form-control" } %>
+    </div>
+  </div>
+
+  <div class="training-new-card">
     <h2>Session Details</h2>
 
     <%= f.input :workout_type,

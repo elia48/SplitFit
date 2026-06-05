@@ -2,11 +2,12 @@
   <div class="coach-show-container">
 
     <section class="coach-show-hero">
-      <img
-        src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900"
-        class="coach-show-hero-image"
-        alt="Profile"
-      >
+      <% if @user.avatar.present? %>
+        <%= image_tag @user.avatar, class: "coach-show-hero-image", alt: "Profile" %>
+      <% else %>
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900"
+             class="coach-show-hero-image" alt="Profile">
+      <% end %>
 
       <div class="coach-show-hero-overlay"></div>
 
@@ -40,9 +41,7 @@
 
     <section class="coach-show-card">
       <h2>About</h2>
-      <p>
-        <%= @user.description.presence || "No description yet." %>
-      </p>
+      <p><%= @user.description.presence || "No description yet." %></p>
     </section>
 
     <% if @user.is_coach? %>
@@ -56,13 +55,13 @@
           <div class="coach-show-trainings">
             <% @draft_trainings.each do |training| %>
               <%= link_to training_path(training), class: "coach-show-training-card" do %>
-                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400" alt="Training">
+                <img src="<%= training_image(training) %>" alt="Training">
                 <div class="coach-show-training-content">
                   <h3><%= training.workout_type %></h3>
                   <p><%= training.place %></p>
                   <span><%= training.date&.strftime("%d %b %Y") || "No date set" %></span>
                 </div>
-                <span class="badge bg-warning text-dark">Draft</span>
+                <span class="coach-show-training-badge coach-show-training-badge--draft">Draft</span>
               <% end %>
             <% end %>
           </div>
@@ -80,16 +79,13 @@
         <div class="coach-show-trainings">
           <% @trainings.each do |training| %>
             <%= link_to training_path(training), class: "coach-show-training-card" do %>
-              <img
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
-                alt="Training"
-              >
+              <img src="<%= training_image(training) %>" alt="Training">
               <div class="coach-show-training-content">
                 <h3><%= training.workout_type %></h3>
                 <p><%= training.place %></p>
-                <span>€<%= training.coach_price_cents %>/pp</span>
+                <span>€<%= format_price(training.coach_price_cents) %>/pp</span>
               </div>
-              <i class="fa-regular fa-heart"></i>
+              <i class="fa-regular fa-heart" style="margin-right:12px; color:#e8b4a0;"></i>
             <% end %>
           <% end %>
 
@@ -104,16 +100,13 @@
         <div class="coach-show-trainings">
           <% @past_trainings.each do |training| %>
             <%= link_to training_path(training), class: "coach-show-training-card" do %>
-              <img
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
-                alt="Training"
-              >
+              <img src="<%= training_image(training) %>" alt="Training">
               <div class="coach-show-training-content">
                 <h3><%= training.workout_type %></h3>
                 <p><%= training.place %></p>
                 <span><%= training.date.strftime("%d %b %Y") %></span>
               </div>
-              <span class="badge bg-secondary">Past</span>
+              <span class="coach-show-training-badge coach-show-training-badge--past">Past</span>
             <% end %>
           <% end %>
           <% if @past_trainings.empty? %>
@@ -129,16 +122,13 @@
         <div class="coach-show-trainings">
           <% @confirmed_bookings.each do |booking| %>
             <%= link_to training_path(booking.training), class: "coach-show-training-card" do %>
-              <img
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
-                alt="Training"
-              >
+              <img src="<%= training_image(booking.training) %>" alt="Training">
               <div class="coach-show-training-content">
                 <h3><%= booking.training.workout_type %></h3>
                 <p><%= booking.training.place %></p>
                 <span><%= booking.training.date.strftime("%d %b %Y") %></span>
               </div>
-              <span class="badge bg-success">Confirmed</span>
+              <span class="coach-show-training-badge coach-show-training-badge--confirmed">Confirmed</span>
             <% end %>
           <% end %>
           <% if @confirmed_bookings.empty? %>
@@ -152,16 +142,13 @@
         <div class="coach-show-trainings">
           <% @pending_bookings.each do |booking| %>
             <%= link_to training_path(booking.training), class: "coach-show-training-card" do %>
-              <img
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
-                alt="Training"
-              >
+              <img src="<%= training_image(booking.training) %>" alt="Training">
               <div class="coach-show-training-content">
                 <h3><%= booking.training.workout_type %></h3>
                 <p><%= booking.training.place %></p>
                 <span><%= booking.training.date.strftime("%d %b %Y") %></span>
               </div>
-              <span class="badge bg-warning text-dark">Pending</span>
+              <span class="coach-show-training-badge coach-show-training-badge--pending">Pending</span>
             <% end %>
           <% end %>
           <% if @pending_bookings.empty? %>
@@ -175,16 +162,13 @@
         <div class="coach-show-trainings">
           <% @past_bookings.each do |booking| %>
             <%= link_to training_path(booking.training), class: "coach-show-training-card" do %>
-              <img
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
-                alt="Training"
-              >
+              <img src="<%= training_image(booking.training) %>" alt="Training">
               <div class="coach-show-training-content">
                 <h3><%= booking.training.workout_type %></h3>
                 <p><%= booking.training.place %></p>
                 <span><%= booking.training.date.strftime("%d %b %Y") %></span>
               </div>
-              <span class="badge bg-secondary">Past</span>
+              <span class="coach-show-training-badge coach-show-training-badge--past">Past</span>
             <% end %>
           <% end %>
           <% if @past_bookings.empty? %>

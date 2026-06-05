@@ -20,9 +20,17 @@
   gap: 14px;
 }
 
-.splitfit-header-left i {
-  font-size: 22px;
+.splitfit-header-back {
   color: #b55c3a;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+
+  i { font-size: 22px; }
+}
+
+.splitfit-header-logo-link {
+  text-decoration: none;
 }
 
 .splitfit-header-logo {

@@ -1,18 +1,22 @@
 <div class="splitfit-header">
 
   <div class="splitfit-header-left">
-    <i class="fa-solid fa-arrow-left"></i>
+    <% if !(controller_name == 'trainings' && action_name == 'index') %>
+      <%= link_to "javascript:history.back()", class: "splitfit-header-back" do %>
+        <i class="fa-solid fa-arrow-left"></i>
+      <% end %>
+    <% end %>
 
-    <div class="splitfit-header-logo">
-      SPLITFIT
-    </div>
+    <%= link_to trainings_path, class: "splitfit-header-logo-link" do %>
+      <div class="splitfit-header-logo">SPLITFIT</div>
+    <% end %>
   </div>
 
   <% if user_signed_in? %>
     <div class="dropdown">
-      <%= image_tag "retrato-hombre-blanco-aislado_53876-40306.avif",
+      <%= image_tag(current_user.avatar.presence || "retrato-hombre-blanco-aislado_53876-40306.avif",
           class: "splitfit-header-avatar",
-          data: { bs_toggle: "dropdown" } %>
+          data: { bs_toggle: "dropdown" }) %>
 
       <ul class="dropdown-menu dropdown-menu-end">
         <li><%= link_to "My profile", user_path(current_user), class: "dropdown-item" %></li>

@@ -98,6 +98,159 @@
   line-height: 1.6;
 }
 
+// ── Training cards in profile ────────────────────────────────────────
+.coach-show-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+
+  h2 { margin-bottom: 0; }
+}
+
+.coach-show-small-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ff6428;
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #ffe8df;
+}
+
+.coach-show-trainings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.coach-show-training-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fdf5f0;
+  border: 1px solid #f0d6cd;
+  transition: opacity 0.15s;
+
+  &:active { opacity: 0.75; }
+
+  img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+}
+
+.coach-show-training-content {
+  flex: 1;
+  padding: 10px 0;
+  min-width: 0;
+
+  h3 {
+    font-size: 14px;
+    font-weight: 800;
+    color: #2d1a15;
+    margin: 0 0 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  p {
+    font-size: 12px;
+    color: #a07060;
+    margin: 0 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ff6428;
+  }
+}
+
+.coach-show-training-badge {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-right: 12px;
+
+  &--draft    { background: #fff3cd; color: #856404; }
+  &--past     { background: #e8e0d8; color: #7a5048; }
+  &--active   { background: #d4edda; color: #155724; }
+  &--pending  { background: #fff3cd; color: #856404; }
+  &--confirmed { background: #d4edda; color: #155724; }
+}
+
+.coach-show-empty {
+  font-size: 13px;
+  color: #a07060;
+  font-style: italic;
+  padding: 4px 0;
+}
+
+.coach-show-data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0e0d8;
+  font-size: 14px;
+
+  &:last-of-type { border-bottom: none; }
+
+  span { color: #a07060; }
+  strong { color: #2d1a15; }
+  a { color: #ff6428; font-weight: 600; text-decoration: none; }
+}
+
+.coach-show-main-btn {
+  display: block;
+  width: 100%;
+  background: #ff6428;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 16px;
+  cursor: pointer;
+
+  &:hover { background: darken(#ff6428, 8%); color: white; }
+}
+
+.coach-show-edit-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(255,255,255,0.9);
+  color: #5c4038;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  z-index: 2;
+}
+
+.coach-show-private-card {
+  background: #fdf5f0;
+}
+
 @media (min-width: 768px) {
   .coach-show-page {
     max-width: 430px;
@@ -120,4 +273,64 @@
   .coach-show-hero {
     height: 260px;
   }
+}
+
+// ── Edit form ────────────────────────────────────────────────────────
+.user-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+
+  label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #a07060;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+}
+
+.user-edit-input {
+  width: 100%;
+  border: 1.5px solid #e8d4cc;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 14px;
+  color: #2d1a15;
+  background: #fffaf7;
+  outline: none;
+
+  &:focus {
+    border-color: #ff6428;
+  }
+}
+
+.user-edit-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.user-edit-hint {
+  font-size: 11px;
+  color: #a07060;
+  margin: 0;
+}
+
+.user-edit-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.user-edit-cancel {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #a07060;
+  text-decoration: none;
+  padding: 12px;
+
+  &:hover { color: #5c4038; }
 }

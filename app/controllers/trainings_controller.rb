@@ -112,7 +112,7 @@ class TrainingsController < ApplicationController
 
   def training_params
     params.require(:training).permit(
-      :duration, :date, :place, :workout_type, :min_people, :max_people, :status, :photo
+      :duration, :date, :place, :workout_type, :min_people, :max_people, :status, :photo, :description
     )
   end
 

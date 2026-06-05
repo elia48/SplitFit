@@ -4,7 +4,7 @@
     <section class="coach-show-card">
       <h2>Edit Profile</h2>
 
-      <%= simple_form_for @user, url: user_path(@user), method: :patch do |f| %>
+      <%= simple_form_for @user, url: user_path(@user), method: :patch, html: { multipart: true } do |f| %>
 
         <div class="user-edit-field">
           <%= f.label :name, "Name" %>
@@ -39,9 +39,23 @@
 
         <div class="user-edit-field">
           <%= f.label :avatar, "Profile photo" %>
-          <p class="user-edit-hint">Enter the filename of your image (e.g. my_photo.jpg). Upload the file to app/assets/images/.</p>
-          <%= f.input :avatar, label: false, placeholder: "filename.jpg",
-                input_html: { class: "user-edit-input" }, wrapper: false %>
+
+          <div class="user-edit-avatar-preview" id="avatar-preview-wrapper">
+            <% if @user.avatar.attached? %>
+              <%= image_tag @user.avatar, class: "user-edit-avatar-img", id: "avatar-preview-img" %>
+            <% else %>
+              <div class="user-edit-avatar-placeholder" id="avatar-preview-img">
+                <i class="fa-solid fa-user"></i>
+              </div>
+            <% end %>
+          </div>
+
+          <%= f.input :avatar, as: :file, label: false,
+                input_html: {
+                  class: "user-edit-file-input",
+                  accept: "image/*",
+                  id: "avatar-file-input"
+                }, wrapper: false %>
         </div>
 
         <div class="user-edit-actions">
@@ -54,3 +68,16 @@
 
   </div>
 </div>
+
+<script>
+  document.getElementById("avatar-file-input").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      const wrapper = document.getElementById("avatar-preview-wrapper");
+      wrapper.innerHTML = '<img src="' + ev.target.result + '" class="user-edit-avatar-img" id="avatar-preview-img">';
+    };
+    reader.readAsDataURL(file);
+  });
+</script>

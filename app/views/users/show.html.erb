@@ -2,11 +2,12 @@
   <div class="coach-show-container">
 
     <section class="coach-show-hero">
-      <% if @user.avatar.present? %>
+      <% if @user.avatar.attached? %>
         <%= image_tag @user.avatar, class: "coach-show-hero-image", alt: "Profile" %>
       <% else %>
-        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900"
-             class="coach-show-hero-image" alt="Profile">
+        <div class="coach-show-hero-image coach-show-hero-image--placeholder">
+          <i class="fa-solid fa-user"></i>
+        </div>
       <% end %>
 
       <div class="coach-show-hero-overlay"></div>

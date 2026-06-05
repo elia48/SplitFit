@@ -72,3 +72,30 @@
     <h2>About the session</h2>
     <p>This high-intensity calisthenics session focuses on core stability and explosive power. Alex Rivers will guide you through advanced movements like muscle-ups, L-sits, and dynamic plank variations. Suitable for intermediate to advanced fitness enthusiasts.</p>
 </div>
+
+<% if policy(@review).create? %>
+  <h2>Let us know if the coach did a good job</h2>
+
+  <%= simple_form_for [@training, @review] do |f| %>
+    <%= f.input :score,
+                collection: 1..5,
+                prompt: "Select a rating" %>
+
+    <%= f.input :description %>
+
+    <%= f.submit "Submit review",
+                 class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
+<h3>Coach reviews</h3>
+
+<% @coach.received_reviews.each do |review| %>
+  <div class="review-card">
+    <p><strong>Rating:</strong> <%= review.score %>/5</p>
+    <p><%= review.description %></p>
+    <small>
+      By <%= review.user&.name || "Deleted user" %>
+    </small>
+  </div>
+<% end %>

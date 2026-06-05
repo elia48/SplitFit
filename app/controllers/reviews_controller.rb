@@ -5,10 +5,17 @@ class ReviewsController < ApplicationController
     @review.user = current_user
     @review.training = @training
     @review.coach = @training.user
+    if @review.coach.nil?
+      redirect_to training_path(@training), alert: "Cannot create a review without a coach."
+      return
+    end
     authorize @review
-      # 7. save
-      # 8. redirect/render
-    
+    if @review.save
+      redirect_to training_path(@training), notice: "Review created"
+    else
+      @coach = @training.user
+      render "trainings/show", status: :unprocessable_entity
+    end
   end
 
   private

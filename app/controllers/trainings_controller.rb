@@ -34,6 +34,11 @@ class TrainingsController < ApplicationController
   def show
     authorize @training
     @coach = @training.user
+    @review = Review.new(
+      training: @training,
+      user: current_user,
+      coach: @training.user
+)
   end
 
   def new

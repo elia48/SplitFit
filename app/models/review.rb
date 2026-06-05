@@ -3,6 +3,8 @@ class Review < ApplicationRecord
   belongs_to :user, optional: true
   belongs_to :coach, class_name: "User", optional: true
   validates :score, :description, presence: true
+  validates :score,
+            inclusion: { in: 1..5 }
   validates :user_id,
             uniqueness: {
               scope: :training_id,

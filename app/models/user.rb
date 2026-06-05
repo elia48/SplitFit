@@ -9,4 +9,10 @@ class User < ApplicationRecord
   has_many :trainings, dependent: :destroy
   has_many :messages, dependent: :destroy
   validates :name, presence: true
+
+  def average_rating
+    return nil if received_reviews.empty?
+
+    received_reviews.average(:score).round(1)
+  end
 end

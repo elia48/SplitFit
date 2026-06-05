@@ -60,45 +60,59 @@
 
     <div class="trainings-index-list">
       <% @trainings.each do |training| %>
-        <%= link_to training_path(training), class: "trainings-index-card-link" do %>
-          <div class="trainings-index-card">
+        <% coach = training.user %>
+        <% paid_count = training.bookings.count { |b| b.status == "paid" } %>
+        <% already_joined = @my_booked_training_ids.include?(training.id) %>
+        <div class="trainings-index-card">
 
-            <img
-              class="trainings-index-card-image"
-              src="<%= training_image(training) %>"
-              alt="Training image"
-            >
+          <img
+            class="trainings-index-card-image"
+            src="<%= training_image(training) %>"
+            alt="Training image"
+          >
 
-            <div class="trainings-index-card-content">
+          <div class="trainings-index-card-content">
+            <div class="trainings-index-card-top-row">
               <span class="trainings-index-badge"><%= training.workout_type %></span>
-
-              <h2><%= training.workout_type %></h2>
-
-              <p class="trainings-index-coach">
-                with <%= training.user.name %>
-              </p>
-
-              <div class="trainings-index-meta">
-                <span>⭐ 4.8/5</span>
-                <span>📍 <%=training.place %></span>
-              </div>
-
-              <p class="trainings-index-price">
-                €<%= sprintf("%.2f", training.current_price_cents / 100.0) %>
-              </p>
-              <p class="trainings-index-fullprice"><s>€<%= sprintf("%.2f", training.coach_price_cents / 100.0) %></s></p>
+              <span class="trainings-index-status-badge trainings-index-status-<%= training.status %>"><%= training.status.capitalize %></span>
             </div>
 
-            <div class="trainings-index-side">
-              <i class="fa-regular fa-heart trainings-index-heart"></i>
+            <h2><%= training.workout_type %></h2>
 
-              <p class="trainings-index-spots">
-                <%= training.min_people %>-<%= training.max_people %> people
-              </p>
+            <p class="trainings-index-coach">
+              with <%= link_to coach.name, user_path(coach), class: "trainings-index-coach-link" %>
+            </p>
+
+            <div class="trainings-index-meta">
+              <% avg = coach.average_rating %>
+              <span>⭐ <%= avg ? "#{avg}/5" : "No reviews" %></span>
+              <span>📍 <%= training.place %></span>
             </div>
 
+            <div class="trainings-index-participants">
+              <span><%= paid_count %> / <%= training.max_people %> joined</span>
+              <% if already_joined %>
+                <span class="trainings-index-joined-badge">You're in!</span>
+              <% end %>
+            </div>
+
+            <p class="trainings-index-price">
+              €<%= sprintf("%.2f", training.current_price_cents / 100.0) %>
+            </p>
+            <p class="trainings-index-fullprice"><s>€<%= sprintf("%.2f", training.coach_price_cents / 100.0) %></s></p>
           </div>
-        <% end %>
+
+          <div class="trainings-index-side">
+            <i class="fa-regular fa-heart trainings-index-heart"></i>
+
+            <p class="trainings-index-spots">
+              <%= training.min_people %>-<%= training.max_people %> people
+            </p>
+
+            <%= link_to "View session", training_path(training), class: "trainings-index-view-btn" %>
+          </div>
+
+        </div>
       <% end %>
     </div>
 

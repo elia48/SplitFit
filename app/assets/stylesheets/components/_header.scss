@@ -47,4 +47,14 @@
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #f0d6cd;
+  cursor: pointer;
+
+  &--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0d6cd;
+    color: #b55c3a;
+    font-size: 18px;
+  }
 }

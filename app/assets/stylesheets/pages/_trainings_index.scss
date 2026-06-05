@@ -205,17 +205,12 @@
   gap: 12px;
 }
 
-.trainings-index-card-link {
-  text-decoration: none;
-  color: inherit;
-}
-
 .trainings-index-card {
   position: relative;
   display: grid;
-  grid-template-columns: 76px 1fr 54px;
+  grid-template-columns: 76px 1fr auto;
   gap: 12px;
-  align-items: center;
+  align-items: start;
 
   background: #ffffff;
   border-radius: 12px;
@@ -232,8 +227,41 @@
   border-radius: 8px;
 }
 
+.trainings-index-card-top-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+}
+
 .trainings-index-badge {
   display: none;
+}
+
+.trainings-index-status-badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  color: #6b7280;
+
+  &.trainings-index-status-open {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  &.trainings-index-status-closed {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  &.trainings-index-status-cancelled {
+    background: #fef3c7;
+    color: #92400e;
+  }
 }
 
 .trainings-index-card-content h2 {
@@ -252,53 +280,102 @@
   margin-bottom: 5px;
 }
 
+.trainings-index-coach-link {
+  color: #b13a13;
+  font-weight: 700;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    color: #7c2008;
+  }
+}
+
 .trainings-index-meta {
   display: flex;
   flex-direction: column;
   gap: 2px;
   font-size: 10px;
   color: #2f1d17;
+  margin-bottom: 4px;
+}
+
+.trainings-index-participants {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: #5c4038;
+  margin-bottom: 4px;
+}
+
+.trainings-index-joined-badge {
+  background: #dcfce7;
+  color: #166534;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
 }
 
 .trainings-index-price {
-  position: absolute;
-  right: 12px;
-  bottom: 0px;
-
   color: #b83700;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: 900;
+  margin: 0;
 }
 
 .trainings-index-fullprice {
-  position: absolute;
-  right: 12px;
-  bottom: 20px;
-
   color: #a7a09d;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 600;
+  margin: 0;
 }
 
 .trainings-index-price::after {
   content: "/person";
-  font-size: 11px;
+  font-size: 10px;
   color: #3b241d;
   font-weight: 500;
 }
 
 .trainings-index-side {
-  height: 100%;
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px;
+  height: 100%;
+  min-width: 64px;
 }
 
 .trainings-index-heart {
   color: #5b4038;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .trainings-index-spots {
   display: none;
+}
+
+.trainings-index-view-btn {
+  display: block;
+  background: #ff6428;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  text-align: center;
+  white-space: nowrap;
+  margin-top: auto;
+
+  &:hover {
+    background: #e0521a;
+    color: #ffffff;
+  }
 }

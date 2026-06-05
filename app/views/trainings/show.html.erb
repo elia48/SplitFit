@@ -20,6 +20,13 @@
       <%= button_to "Reopen Session", reopen_training_path(@training), method: :patch,
           class: "btn btn-outline-success btn-sm" %>
     <% end %>
+    <% if policy(@training).close? %>
+        <%= button_to "Close Session & Process Refunds",
+                        close_training_path(@training),
+                        method: :patch,
+                        data: { turbo_confirm: "Close this session and process refunds?" },
+                        class: "btn btn-warning btn-sm" %>
+    <% end %>
 </div>
 <div class="d-flex">
     <div>

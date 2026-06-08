@@ -34,5 +34,9 @@ Rails.application.routes.draw do
   resources :reviews, only: [:destroy, :index]
   resources :messages, only: [:index]
 
+  resources :private_chats, only: [:show, :create] do
+    resources :private_messages, only: [:create]
+  end
+
   mount StripeEvent::Engine, at: "/stripe-webhooks"
 end

@@ -298,6 +298,106 @@
   align-self: flex-end;
 }
 
+// ── Chat index section labels ─────────────────────────────────────────
+.chat-index__section-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #a07060;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 20px 0 8px;
+
+  &:first-of-type {
+    margin-top: 4px;
+  }
+}
+
+.chat-item__icon--dm {
+  border-radius: 50%;
+  font-size: 17px;
+  font-weight: 700;
+  color: #ff6428;
+}
+
+// ── Private chat header avatar ────────────────────────────────────────
+.chat-show__avatar-circle {
+  width: 36px;
+  height: 36px;
+  background: #ffe8df;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ff6428;
+  flex-shrink: 0;
+}
+
+// ── Author popover (group chat click-to-DM) ───────────────────────────
+.chat-message__author-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.chat-message__author {
+  cursor: pointer;
+
+  &:hover {
+    color: #ff6428;
+  }
+}
+
+.chat-message--own .chat-message__author-wrap {
+  display: none !important;
+}
+
+.author-popover {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: #fffaf7;
+  border: 1px solid #f0d6cd;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(45, 26, 21, 0.12);
+  padding: 10px 12px;
+  z-index: 30;
+  min-width: 170px;
+  flex-direction: column;
+  gap: 8px;
+
+  &--open {
+    display: flex;
+  }
+}
+
+.author-popover__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2d1a15;
+  white-space: nowrap;
+}
+
+.author-popover__btn {
+  background: #ff6428;
+  color: white !important;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  text-decoration: none !important;
+
+  &:hover {
+    background: #e0541f;
+  }
+}
+
 // ── Compose form ─────────────────────────────────────────────────────
 .chat-form__row {
   display: flex;

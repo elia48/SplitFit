@@ -59,6 +59,106 @@
   &:hover { background: #fdf0ee; }
 }
 
+// ── Participants dropdown ─────────────────────────────────────────────
+.booking-show__row--participants {
+  align-items: flex-start;
+}
+
+.participants-details {
+  width: 100%;
+}
+
+// Hide the native browser disclosure arrow (all browsers)
+summary.participants-summary {
+  display: flex;
+  list-style: none;
+}
+
+.participants-summary::-webkit-details-marker {
+  display: none;
+}
+
+.participants-summary {
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  gap: 8px;
+}
+
+.participants-summary__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.participants-chevron {
+  color: #a07060;
+  font-size: 12px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.participants-details[open] .participants-chevron {
+  transform: rotate(180deg);
+}
+
+.participants-empty {
+  font-size: 13px;
+  color: #a07060;
+  font-style: italic;
+  padding: 10px 0 2px;
+}
+
+.participant-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid #f5ece8;
+  width: 100%;
+}
+
+.participant-item__avatar {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  background: #ffe8df;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #ff6428;
+}
+
+.participant-item__name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d1a15;
+}
+
+.participant-item__chat-btn {
+  width: 34px;
+  height: 34px;
+  min-width: 34px;
+  background: #ff6428;
+  color: white;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  text-decoration: none;
+
+  &:hover {
+    background: #e0541f;
+    color: white;
+  }
+}
+
 // ── Booking show ─────────────────────────────────────────────────────
 .booking-show {
   min-height: 100vh;

@@ -83,3 +83,6 @@ gem "money-rails"
 
 # cloudinary integration
 gem 'cloudinary'
+
+# geocoder integration
+gem "geocoder"

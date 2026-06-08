@@ -228,6 +228,17 @@
           <strong><%= @user.payment_method.presence || "Not added" %></strong>
         </div>
 
+        <% if @user.is_coach? %>
+          <div class="coach-show-data-row">
+            <span>Stripe payouts</span>
+            <% if @user.stripe_account_id.present? %>
+              <strong class="text-success"><i class="fa-solid fa-circle-check"></i> Connected</strong>
+            <% else %>
+              <%= link_to "Connect Stripe", stripe_connect_onboard_path, class: "btn btn-sm btn-outline-primary" %>
+            <% end %>
+          </div>
+        <% end %>
+
         <%= link_to "Edit profile", edit_user_path(@user), class: "coach-show-main-btn" %>
       </section>
     <% end %>

@@ -1,8 +1,17 @@
 class TrainingsController < ApplicationController
-  before_action :set_training, only: %i[show edit update cancel reopen publish close]
-
+  before_action :set_training, only: %i[show edit update cancel publish close]
   def index
-    @trainings = policy_scope(Training)
+    @trainings = policy_scope(Training).where(status: %w[open full])
+    @markers = @trainings.geocoded.map do |training|
+      {
+        lat: training.latitude,
+        lng: training.longitude,
+        info_window_html: render_to_string(
+          partial: "info_window",
+          locals: { training: training }
+        )
+      }
+    end
 
     if params[:query].present?
     @trainings = @trainings.where(
@@ -12,26 +21,33 @@ class TrainingsController < ApplicationController
     end
 
     if params[:location].present?
-    @trainings = @trainings.where(
-      "place ILIKE :location",
-      location: "%#{params[:location]}%"
-    )
+      @trainings = @trainings.near(
+        params[:location],
+        params[:distance].presence || 5
+      )
+    end
+
+    if params[:within_hours].present?
+      @trainings = @trainings.where(
+        date: Time.current..params[:within_hours].to_i.hours.from_now
+      )
     end
 
     if params[:workout_type].present?
-    @trainings = @trainings.where(workout_type: params[:workout_type])
+      @trainings = @trainings.where(workout_type: params[:workout_type])
     end
 
     if params[:min_price].present?
-    @trainings = @trainings.where("coach_price_cents >= ?", params[:min_price].to_i * 100)
+      @trainings = @trainings.where("coach_price_cents >= ?", params[:min_price].to_i * 100)
     end
 
     if params[:max_price].present?
-    @trainings = @trainings.where("coach_price_cents <= ?", params[:max_price].to_i * 100)
+      @trainings = @trainings.where("coach_price_cents <= ?", params[:max_price].to_i * 100)
     end
 
+    booked_scope = @trainings.unscope(:select, :order).select(:id)
+    @my_booked_training_ids = current_user.bookings.where(training_id: booked_scope).pluck(:training_id).to_set
     @trainings = @trainings.includes(:bookings, :photo_attachment, user: %i[received_reviews avatar_attachment])
-    @my_booked_training_ids = current_user.bookings.where(training_id: @trainings).pluck(:training_id).to_set
   end
 
   def show
@@ -41,7 +57,17 @@ class TrainingsController < ApplicationController
       training: @training,
       user: current_user,
       coach: @training.user
-)
+    )
+    @markers = [
+      {
+        lat: @training.latitude,
+        lng: @training.longitude,
+        info_window_html: render_to_string(
+          partial: "info_window",
+          locals: { training: @training }
+        )
+      }
+    ]
   end
 
   def new
@@ -67,8 +93,7 @@ class TrainingsController < ApplicationController
 
   def update
     authorize @training
-    @training.coach_price_cents = price_in_cents
-    if @training.update(training_params)
+    if @training.update(update_params)
       redirect_to @training, notice: "Training updated."
     else
       render :edit, status: :unprocessable_entity
@@ -77,14 +102,14 @@ class TrainingsController < ApplicationController
 
   def cancel
     authorize @training
-    @training.update!(status: "cancelled")
-    redirect_to @training, notice: "Session cancelled."
-  end
 
-  def reopen
-    authorize @training
-    @training.update!(status: "open")
-    redirect_to @training, notice: "Session reopened."
+    TrainingCancellationService.new(@training).call
+    SolidQueue::Job.find_by(active_job_id: @training.close_job_id)&.destroy if @training.close_job_id.present?
+    @training.update!(status: "cancelled")
+
+    redirect_to @training, notice: "Session cancelled and all members fully refunded."
+  rescue Stripe::StripeError => e
+    redirect_to @training, alert: "Stripe error: #{e.message}"
   end
 
   def publish
@@ -97,9 +122,10 @@ class TrainingsController < ApplicationController
     authorize @training
 
     TrainingRefundService.new(@training).call
+    CoachPayoutService.new(@training).call
     @training.update!(status: "closed")
 
-    redirect_to @training, notice: "Session closed and refunds processed."
+    redirect_to @training, notice: "Session closed, refunds and payout processed."
   rescue Stripe::StripeError => e
     redirect_to @training, alert: "Stripe error: #{e.message}"
   end
@@ -114,6 +140,10 @@ class TrainingsController < ApplicationController
     params.require(:training).permit(
       :duration, :date, :place, :workout_type, :min_people, :max_people, :status, :photo, :description
     )
+  end
+
+  def update_params
+    params.require(:training).permit(:date, :place, :duration)
   end
 
   def price_in_cents

@@ -209,13 +209,14 @@
   position: relative;
   display: grid;
   grid-template-columns: 76px 1fr auto;
-  gap: 12px;
+  column-gap: 12px;
+  row-gap: 10px;
   align-items: start;
 
   background: #ffffff;
-  border-radius: 12px;
+  border-radius: 16px;
   border: none;
-  padding: 10px;
+  padding: 12px;
 
   box-shadow: 0 8px 22px rgba(80, 40, 25, 0.08);
 }
@@ -280,7 +281,7 @@
 }
 
 .trainings-index-coach {
-  font-size: 10px;
+  font-size: 12px;
   color: #b13a13;
   margin-bottom: 5px;
 }
@@ -300,9 +301,24 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: 10px;
+  font-size: 12px;
   color: #2f1d17;
   margin-bottom: 4px;
+}
+
+.trainings-index-datetime {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #5c4038;
+  margin-bottom: 4px;
+
+  i {
+    color: #ff6428;
+    font-size: 11px;
+  }
 }
 
 .trainings-index-participants {
@@ -323,35 +339,11 @@
   border-radius: 999px;
 }
 
-.trainings-index-price {
-  color: #b83700;
-  font-size: 15px;
-  font-weight: 900;
-  margin: 0;
-}
-
-.trainings-index-fullprice {
-  color: #a7a09d;
-  font-size: 12px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.trainings-index-price::after {
-  content: "/person";
-  font-size: 10px;
-  color: #3b241d;
-  font-weight: 500;
-}
-
 .trainings-index-side {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-content: space-between;
-  gap: 8px;
-  height: 100%;
-  min-width: 64px;
+  gap: 6px;
 }
 
 .trainings-index-heart {
@@ -359,25 +351,135 @@
   font-size: 18px;
 }
 
-.trainings-index-spots {
+.trainings-index-price-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 12px;
+}
+
+.trainings-index-price {
+  color: #ff6428;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.trainings-index-price-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #a07060;
+  margin-top: 2px;
+}
+
+.trainings-index-min-price {
+  font-size: 10px;
+  font-weight: 700;
+  color: #166534;
+  background: #dcfce7;
+  border-radius: 999px;
+  padding: 2px 7px;
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+.trainings-index-card-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 8px;
+  padding-top: 2px;
+  border-top: 1px solid #f5ece8;
+}
+
+.trainings-index-share-wrap {
+  flex: 1;
+  position: relative;
+}
+
+.trainings-index-share-btn {
+  width: 100%;
+  background: #f5ece8;
+  color: #5c4038;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  i { color: #ff6428; font-size: 11px; }
+
+  &:hover { background: #edddd6; }
+}
+
+.share-dropdown {
   display: none;
+  flex-direction: column;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  background: #fffaf7;
+  border: 1px solid #f0d6cd;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(45, 26, 21, 0.14);
+  padding: 6px;
+  z-index: 20;
+  min-width: 170px;
+
+  &--open { display: flex; }
+}
+
+.share-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2d1a15;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+
+  .fa-whatsapp  { color: #25d366; font-size: 16px; }
+  .fa-x-twitter { color: #000;    font-size: 14px; }
+  .fa-facebook  { color: #1877f2; font-size: 15px; }
+  .fa-ellipsis  { color: #a07060; font-size: 14px; }
+
+  &:hover { background: #f5ece8; }
+
+  &--more { color: #7a5048; }
+}
+
+.share-dropdown__divider {
+  height: 1px;
+  background: #f0d6cd;
+  margin: 4px 0;
 }
 
 .trainings-index-view-btn {
-  display: block;
+  flex: 1;
   background: #ff6428;
   color: #ffffff;
   border: none;
   border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 10px;
+  padding: 8px 10px;
+  font-size: 11px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
   text-decoration: none;
   text-align: center;
   white-space: nowrap;
-  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background: #e0521a;

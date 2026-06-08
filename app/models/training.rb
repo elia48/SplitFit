@@ -22,4 +22,8 @@ class Training < ApplicationRecord
 
     coach_price_cents / divisor
   end
+
+  def min_price_cents
+    coach_price_cents / max_people
+  end
 end

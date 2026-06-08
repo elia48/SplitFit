@@ -1,0 +1,28 @@
+<div class="chat-show"
+     data-controller="chat-form"
+     data-chat-form-current-user-value="<%= current_user.id %>">
+
+  <div class="chat-show__header">
+    <%= link_to messages_path, class: "chat-show__back" do %>
+      <i class="fa-solid fa-arrow-left"></i>
+    <% end %>
+    <div class="chat-show__avatar-circle">
+      <%= @other_user.name.first.upcase %>
+    </div>
+    <div class="chat-show__info">
+      <span class="chat-show__title"><%= @other_user.name %></span>
+      <span class="chat-show__subtitle">Direct message</span>
+    </div>
+  </div>
+
+  <%= turbo_stream_from "private_chat_#{@private_chat.id}" %>
+
+  <div class="chat-show__messages" id="messages">
+    <%= render @messages %>
+  </div>
+
+  <div class="chat-show__compose">
+    <%= render "private_messages/form", private_message: @new_message, private_chat: @private_chat %>
+  </div>
+
+</div>

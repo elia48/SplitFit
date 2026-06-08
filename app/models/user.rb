@@ -9,6 +9,9 @@ class User < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :trainings, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :sent_private_chats, class_name: "PrivateChat", foreign_key: :sender_id, dependent: :destroy
+  has_many :received_private_chats, class_name: "PrivateChat", foreign_key: :recipient_id, dependent: :destroy
+  has_many :private_messages, dependent: :destroy
   validates :name, presence: true
 
   def average_rating
@@ -22,6 +25,10 @@ class User < ApplicationRecord
     coach_ids = trainings.joins(:bookings).where(bookings: { status: "paid" }).distinct.pluck(:id)
     member_ids = Training.joins(:bookings).where(bookings: { user: self, status: "paid" }).pluck(:id)
     Training.where(id: (coach_ids + member_ids).uniq).includes(:user, :messages)
+  end
+
+  def private_chats
+    PrivateChat.where(sender: self).or(PrivateChat.where(recipient: self))
   end
 
   def chat_count

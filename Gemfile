@@ -80,3 +80,6 @@ gem "pundit"
 gem "stripe"
 gem "stripe_event"
 gem "money-rails"
+
+# cloudinary integration
+gem 'cloudinary'

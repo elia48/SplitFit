@@ -2,9 +2,9 @@
 
   <%# ── Hero ──────────────────────────────────────────────────────── %>
   <div class="training-show__hero">
-    <img class="training-show__hero-img"
-         src="<%= training_image(@training) %>"
-         alt="<%= @training.workout_type %>">
+    <% if (hero_src = training_image(@training)) %>
+      <img class="training-show__hero-img" src="<%= hero_src %>" alt="<%= @training.workout_type %>">
+    <% end %>
     <div class="training-show__hero-overlay"></div>
 
     <div class="training-show__coach-actions">
@@ -131,8 +131,11 @@
     <div class="training-show__card">
       <p class="training-show__card-title">Coach</p>
       <div class="training-show__coach-card">
-        <% avatar_src = @coach.avatar.present? ? asset_path(@coach.avatar) : "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200" %>
-        <img class="training-show__coach-avatar" src="<%= avatar_src %>" alt="<%= @coach.name %>">
+        <% if @coach.avatar.attached? %>
+          <img class="training-show__coach-avatar" src="<%= url_for(@coach.avatar) %>" alt="<%= @coach.name %>">
+        <% else %>
+          <div class="training-show__coach-avatar training-show__coach-avatar--placeholder"><%= @coach.name[0].upcase %></div>
+        <% end %>
         <div class="training-show__coach-info">
           <h3><%= @coach.name %></h3>
           <p><%= @coach.speciality.presence || "Personal Trainer" %></p>

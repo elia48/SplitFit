@@ -4,9 +4,9 @@
   <div class="training-new-card">
     <h2>Session Photo</h2>
     <div class="training-new-photo-field">
-      <% if training.photo.present? %>
+      <% if training.photo.attached? %>
         <%= image_tag training.photo, class: "training-new-photo-preview", alt: "Session photo" %>
-      <% elsif training.user&.avatar.present? %>
+      <% elsif training.user&.avatar&.attached? %>
         <%= image_tag training.user.avatar, class: "training-new-photo-preview training-new-photo-preview--fallback", alt: "Coach photo (fallback)" %>
         <p class="training-new-hint">No session photo — your profile photo will be shown.</p>
       <% else %>
@@ -16,10 +16,10 @@
         </div>
       <% end %>
       <%= f.input :photo,
-          label: "Photo filename",
-          placeholder: "e.g. my_workout.jpg",
-          hint: "Upload the file to app/assets/images/ and enter its filename here.",
-          input_html: { class: "form-control" } %>
+          as: :file,
+          label: "Session Photo",
+          hint: "Upload a photo for this session. If none, your profile photo will be shown.",
+          input_html: { class: "form-control", accept: "image/*" } %>
     </div>
   </div>
 

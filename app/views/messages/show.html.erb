@@ -5,6 +5,9 @@
     <%= link_to messages_path, class: "chat-show__back" do %>
       <i class="fa-solid fa-arrow-left"></i>
     <% end %>
+    <% if (chat_img = training_image(@training)) %>
+      <img src="<%= chat_img %>" alt="<%= @training.workout_type %>" class="chat-show__header-img">
+    <% end %>
     <div class="chat-show__info">
       <span class="chat-show__title"><%= @training.workout_type %></span>
       <span class="chat-show__subtitle">

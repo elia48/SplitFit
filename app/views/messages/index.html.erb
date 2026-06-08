@@ -13,7 +13,11 @@
       <% @chats.each do |training| %>
         <%= link_to training_messages_path(training), class: "chat-item" do %>
           <div class="chat-item__icon">
-            <i class="fa-solid fa-dumbbell"></i>
+            <% if (chat_img = training_image(training)) %>
+              <img src="<%= chat_img %>" alt="<%= training.workout_type %>" class="chat-item__icon-img">
+            <% else %>
+              <i class="fa-solid fa-dumbbell"></i>
+            <% end %>
           </div>
           <div class="chat-item__body">
             <div class="chat-item__top">

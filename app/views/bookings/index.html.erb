@@ -14,9 +14,11 @@
           <div class="booking-card-wrap">
             <%= link_to booking_path(booking), class: "trainings-index-card-link" do %>
               <div class="trainings-index-card">
-                <img class="trainings-index-card-image"
-                     src="<%= training_image(booking.training) %>"
-                     alt="<%= booking.training.workout_type %>">
+                <% if (card_img = training_image(booking.training)) %>
+                  <img class="trainings-index-card-image" src="<%= card_img %>" alt="<%= booking.training.workout_type %>">
+                <% else %>
+                  <div class="trainings-index-card-image trainings-index-card-image--placeholder"></div>
+                <% end %>
 
                 <div class="trainings-index-card-content">
                   <h2><%= booking.training.workout_type %></h2>

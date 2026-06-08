@@ -225,6 +225,11 @@
   height: 76px;
   object-fit: cover;
   border-radius: 8px;
+
+  &--placeholder {
+    background: linear-gradient(135deg, #ffe8df 0%, #f0d6cd 100%);
+    flex-shrink: 0;
+  }
 }
 
 .trainings-index-card-top-row {

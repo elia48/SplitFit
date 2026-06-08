@@ -47,7 +47,7 @@ class BookingsController < ApplicationController
   end
 
   def index
-    @bookings = policy_scope(Booking)
+    @bookings = policy_scope(Booking).includes(training: [:photo_attachment, user: :avatar_attachment])
   end
 
   def destroy

@@ -251,7 +251,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_120001) do
     t.integer "duration"
     t.integer "max_people"
     t.integer "min_people"
-    t.string "photo"
     t.string "place"
     t.string "status"
     t.datetime "updated_at", null: false

@@ -1,5 +1,6 @@
 class Training < ApplicationRecord
   belongs_to :user
+  has_one_attached :photo
   has_many :bookings, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :participants, through: :bookings, source: :user

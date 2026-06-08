@@ -30,7 +30,7 @@ class TrainingsController < ApplicationController
     @trainings = @trainings.where("coach_price_cents <= ?", params[:max_price].to_i * 100)
     end
 
-    @trainings = @trainings.includes(:bookings, user: :received_reviews)
+    @trainings = @trainings.includes(:bookings, :photo_attachment, user: %i[received_reviews avatar_attachment])
     @my_booked_training_ids = current_user.bookings.where(training_id: @trainings).pluck(:training_id).to_set
   end
 

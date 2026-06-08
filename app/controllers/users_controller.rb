@@ -8,22 +8,24 @@ class UsersController < ApplicationController
     @own_profile = current_user == @user
 
     if @user.is_coach?
-      @draft_trainings = @user.trainings.where(status: "draft")
-      @trainings       = @user.trainings.where.not(status: %w[closed cancelled draft]).where("date > ?", Time.current)
-      @past_trainings  = @user.trainings.where("date <= ?", Time.current).where.not(status: "draft").order(date: :desc)
+      training_includes = [:photo_attachment, user: :avatar_attachment]
+      @draft_trainings = @user.trainings.where(status: "draft").includes(training_includes)
+      @trainings       = @user.trainings.where.not(status: %w[closed cancelled draft]).where("date > ?", Time.current).includes(training_includes)
+      @past_trainings  = @user.trainings.where("date <= ?", Time.current).where.not(status: "draft").order(date: :desc).includes(training_includes)
     else
       now = Time.current
+      booking_includes = { training: [:photo_attachment, user: :avatar_attachment] }
       @confirmed_bookings = @user.bookings.joins(:training)
                                  .where(status: "confirmed")
                                  .where("trainings.date > ?", now)
-                                 .includes(:training)
+                                 .includes(booking_includes)
       @pending_bookings   = @user.bookings.joins(:training)
                                  .where(status: "pending")
                                  .where("trainings.date > ?", now)
-                                 .includes(:training)
+                                 .includes(booking_includes)
       @past_bookings      = @user.bookings.joins(:training)
                                  .where("trainings.date <= ?", now)
-                                 .includes(:training)
+                                 .includes(booking_includes)
     end
   end
 

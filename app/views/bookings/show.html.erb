@@ -1,9 +1,9 @@
 <div class="booking-show">
 
   <div class="booking-show__hero">
-    <img class="booking-show__hero-img"
-         src="<%= training_image(@booking.training) %>"
-         alt="<%= @booking.training.workout_type %>">
+    <% if (hero_src = training_image(@booking.training)) %>
+      <img class="booking-show__hero-img" src="<%= hero_src %>" alt="<%= @booking.training.workout_type %>">
+    <% end %>
     <div class="booking-show__hero-overlay"></div>
     <div class="booking-show__hero-content">
       <h1 class="booking-show__type"><%= @booking.training.workout_type %></h1>

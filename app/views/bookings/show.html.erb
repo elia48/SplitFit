@@ -42,44 +42,13 @@
         </div>
       </div>
 
-      <div class="booking-show__row booking-show__row--participants">
+      <div class="booking-show__row">
         <i class="fa-solid fa-users"></i>
         <div class="booking-show__row-content">
-          <% if @booking.status == "paid" %>
-            <details class="participants-details">
-              <summary class="participants-summary">
-                <span class="booking-show__row-label">Participants</span>
-                <span class="participants-summary__right">
-                  <span class="booking-show__row-value">
-                    <%= @booking.training.bookings.paid.count %> / <%= @booking.training.max_people %>
-                  </span>
-                  <i class="fa-solid fa-chevron-down participants-chevron"></i>
-                </span>
-              </summary>
-              <% others = @booking.training.bookings.paid.includes(:user).reject { |b| b.user == current_user } %>
-              <% if others.any? %>
-                <% others.each do |b| %>
-                  <div class="participant-item">
-                    <span class="participant-item__avatar"><i class="fa-solid fa-user"></i></span>
-                    <span class="participant-item__name"><%= b.user.name %></span>
-                    <%= link_to private_chats_path(recipient_id: b.user.id),
-                          data: { turbo_method: :post },
-                          class: "participant-item__chat-btn",
-                          title: "Message #{b.user.name}" do %>
-                      <i class="fa-regular fa-comment"></i>
-                    <% end %>
-                  </div>
-                <% end %>
-              <% else %>
-                <p class="participants-empty">No other participants yet.</p>
-              <% end %>
-            </details>
-          <% else %>
-            <span class="booking-show__row-label">Participants</span>
-            <span class="booking-show__row-value">
-              <%= @booking.training.bookings.paid.count %> / <%= @booking.training.max_people %>
-            </span>
-          <% end %>
+          <span class="booking-show__row-label">Participants</span>
+          <span class="booking-show__row-value">
+            <%= @booking.training.bookings.paid.count %> / <%= @booking.training.max_people %>
+          </span>
         </div>
       </div>
     </div>

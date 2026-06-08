@@ -10,9 +10,6 @@ class MessagesController < ApplicationController
       render :show
     else
       @chats = current_user.accessible_chat_trainings
-      @private_chats = current_user.private_chats
-                                   .includes(:sender, :recipient, :private_messages)
-                                   .order(updated_at: :desc)
     end
   end
 

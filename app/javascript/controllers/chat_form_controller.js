@@ -19,8 +19,6 @@ export default class extends Controller {
     msg.classList.add(isOwn ? "chat-message--own" : "chat-message--other")
     const avatar = msg.querySelector("[data-avatar]")
     if (avatar) avatar.style.display = isOwn ? "none" : ""
-    const authorWrap = msg.querySelector(".chat-message__author-wrap")
-    if (authorWrap) authorWrap.style.display = isOwn ? "none" : ""
   }
 
   scrollToBottom() {

@@ -5,22 +5,7 @@
     <%= message.user.name.first.upcase %>
   </div>
   <div class="chat-message__bubble">
-    <div class="chat-message__author-wrap"
-         data-controller="author-popover"
-         data-action="click@window->author-popover#hide">
-      <span class="chat-message__author"
-            data-action="click->author-popover#toggle">
-        <%= message.user.name.split.first %>
-      </span>
-      <div class="author-popover" data-author-popover-target="menu">
-        <span class="author-popover__name"><%= message.user.name %></span>
-        <%= link_to private_chats_path(recipient_id: message.user_id),
-              data: { turbo_method: :post },
-              class: "author-popover__btn" do %>
-          <i class="fa-regular fa-comment"></i> Chat
-        <% end %>
-      </div>
-    </div>
+    <span class="chat-message__author"><%= message.user.name.split.first %></span>
     <p class="chat-message__content"><%= message.content %></p>
     <span class="chat-message__time"><%= message.created_at.strftime("%H:%M") %></span>
   </div>

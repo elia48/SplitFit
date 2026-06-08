@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_08_120001) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_08_104011) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -66,26 +66,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_120001) do
     t.bigint "user_id", null: false
     t.index ["training_id"], name: "index_messages_on_training_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
-  end
-
-  create_table "private_chats", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.bigint "recipient_id", null: false
-    t.bigint "sender_id", null: false
-    t.datetime "updated_at", null: false
-    t.index ["recipient_id"], name: "index_private_chats_on_recipient_id"
-    t.index ["sender_id", "recipient_id"], name: "index_private_chats_on_sender_id_and_recipient_id", unique: true
-    t.index ["sender_id"], name: "index_private_chats_on_sender_id"
-  end
-
-  create_table "private_messages", force: :cascade do |t|
-    t.text "content", null: false
-    t.datetime "created_at", null: false
-    t.bigint "private_chat_id", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["private_chat_id"], name: "index_private_messages_on_private_chat_id"
-    t.index ["user_id"], name: "index_private_messages_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -284,10 +264,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_120001) do
   add_foreign_key "bookings", "users"
   add_foreign_key "messages", "trainings"
   add_foreign_key "messages", "users"
-  add_foreign_key "private_chats", "users", column: "recipient_id"
-  add_foreign_key "private_chats", "users", column: "sender_id"
-  add_foreign_key "private_messages", "private_chats"
-  add_foreign_key "private_messages", "users"
   add_foreign_key "reviews", "trainings"
   add_foreign_key "reviews", "users"
   add_foreign_key "reviews", "users", column: "coach_id"

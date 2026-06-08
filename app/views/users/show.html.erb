@@ -56,7 +56,11 @@
           <div class="coach-show-trainings">
             <% @draft_trainings.each do |training| %>
               <%= link_to training_path(training), class: "coach-show-training-card" do %>
-                <img src="<%= training_image(training) %>" alt="Training">
+                <% if (img = training_image(training)) %>
+                  <img src="<%= img %>" alt="Training">
+                <% else %>
+                  <div class="coach-show-training-card__placeholder"></div>
+                <% end %>
                 <div class="coach-show-training-content">
                   <h3><%= training.workout_type %></h3>
                   <p><%= training.place %></p>
@@ -80,7 +84,11 @@
         <div class="coach-show-trainings">
           <% @trainings.each do |training| %>
             <%= link_to training_path(training), class: "coach-show-training-card" do %>
-              <img src="<%= training_image(training) %>" alt="Training">
+              <% if (img = training_image(training)) %>
+                <img src="<%= img %>" alt="Training">
+              <% else %>
+                <div class="coach-show-training-card__placeholder"></div>
+              <% end %>
               <div class="coach-show-training-content">
                 <h3><%= training.workout_type %></h3>
                 <p><%= training.place %></p>
@@ -101,7 +109,11 @@
         <div class="coach-show-trainings">
           <% @past_trainings.each do |training| %>
             <%= link_to training_path(training), class: "coach-show-training-card" do %>
-              <img src="<%= training_image(training) %>" alt="Training">
+              <% if (img = training_image(training)) %>
+                <img src="<%= img %>" alt="Training">
+              <% else %>
+                <div class="coach-show-training-card__placeholder"></div>
+              <% end %>
               <div class="coach-show-training-content">
                 <h3><%= training.workout_type %></h3>
                 <p><%= training.place %></p>
@@ -123,7 +135,11 @@
         <div class="coach-show-trainings">
           <% @confirmed_bookings.each do |booking| %>
             <%= link_to training_path(booking.training), class: "coach-show-training-card" do %>
-              <img src="<%= training_image(booking.training) %>" alt="Training">
+              <% if (img = training_image(booking.training)) %>
+                <img src="<%= img %>" alt="Training">
+              <% else %>
+                <div class="coach-show-training-card__placeholder"></div>
+              <% end %>
               <div class="coach-show-training-content">
                 <h3><%= booking.training.workout_type %></h3>
                 <p><%= booking.training.place %></p>
@@ -143,7 +159,11 @@
         <div class="coach-show-trainings">
           <% @pending_bookings.each do |booking| %>
             <%= link_to training_path(booking.training), class: "coach-show-training-card" do %>
-              <img src="<%= training_image(booking.training) %>" alt="Training">
+              <% if (img = training_image(booking.training)) %>
+                <img src="<%= img %>" alt="Training">
+              <% else %>
+                <div class="coach-show-training-card__placeholder"></div>
+              <% end %>
               <div class="coach-show-training-content">
                 <h3><%= booking.training.workout_type %></h3>
                 <p><%= booking.training.place %></p>
@@ -163,7 +183,11 @@
         <div class="coach-show-trainings">
           <% @past_bookings.each do |booking| %>
             <%= link_to training_path(booking.training), class: "coach-show-training-card" do %>
-              <img src="<%= training_image(booking.training) %>" alt="Training">
+              <% if (img = training_image(booking.training)) %>
+                <img src="<%= img %>" alt="Training">
+              <% else %>
+                <div class="coach-show-training-card__placeholder"></div>
+              <% end %>
               <div class="coach-show-training-content">
                 <h3><%= booking.training.workout_type %></h3>
                 <p><%= booking.training.place %></p>

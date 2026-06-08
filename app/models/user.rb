@@ -16,12 +16,11 @@ class User < ApplicationRecord
 
     received_reviews.average(:score).round(1)
   end
-  
 
   def accessible_chat_trainings
     coach_ids = trainings.joins(:bookings).where(bookings: { status: "paid" }).distinct.pluck(:id)
     member_ids = Training.joins(:bookings).where(bookings: { user: self, status: "paid" }).pluck(:id)
-    Training.where(id: (coach_ids + member_ids).uniq).includes(:user, :messages)
+    Training.where(id: (coach_ids + member_ids).uniq).includes(:user, :messages, :photo_attachment, user: :avatar_attachment)
   end
 
   def chat_count

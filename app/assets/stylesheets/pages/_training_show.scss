@@ -288,6 +288,16 @@
   object-fit: cover;
   border: 2px solid #f0d6cd;
   flex-shrink: 0;
+
+  &--placeholder {
+    background: linear-gradient(135deg, #ffe8df 0%, #f0d6cd 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 20px;
+    color: #ff6428;
+  }
 }
 
 .training-show__coach-info {

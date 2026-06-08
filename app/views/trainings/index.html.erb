@@ -65,11 +65,11 @@
         <% already_joined = @my_booked_training_ids.include?(training.id) %>
         <div class="trainings-index-card">
 
-          <img
-            class="trainings-index-card-image"
-            src="<%= training_image(training) %>"
-            alt="Training image"
-          >
+          <% if (card_img = training_image(training)) %>
+            <img class="trainings-index-card-image" src="<%= card_img %>" alt="Training image">
+          <% else %>
+            <div class="trainings-index-card-image trainings-index-card-image--placeholder"></div>
+          <% end %>
 
           <div class="trainings-index-card-content">
             <div class="trainings-index-card-top-row">

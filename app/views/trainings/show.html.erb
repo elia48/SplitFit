@@ -1,3 +1,4 @@
+<div class="training-show-page">
 <div class="training-show">
 
   <%# ── Hero ──────────────────────────────────────────────────────── %>
@@ -63,7 +64,7 @@
         <div class="training-show__stat-icon"><i class="fa-solid fa-location-dot"></i></div>
         <div class="training-show__stat-content">
           <span class="training-show__stat-label">Location</span>
-          <span class="training-show__stat-value"><%= @training.place %></span>
+          <span class="training-show__stat-value"><%= @training.place.split(",").first(2).join(",").strip %></span>
         </div>
       </div>
 
@@ -191,4 +192,5 @@
     </div>
 
   </div>
+</div>
 </div>

@@ -28,6 +28,10 @@ class Training < ApplicationRecord
     coach_price_cents / divisor
   end
 
+  def min_price_cents
+    coach_price_cents / max_people
+  end
+
   private
 
   def should_reschedule_close?
@@ -42,7 +46,5 @@ class Training < ApplicationRecord
     run_at = date + duration.minutes
     job = CloseTrainingJob.set(wait_until: run_at).perform_later(id)
     update_column(:close_job_id, job.job_id)
-  def min_price_cents
-    coach_price_cents / max_people
   end
 end

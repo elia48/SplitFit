@@ -110,11 +110,14 @@
             </div>
 
             <h2><%= training.workout_type %></h2>
-
-            <div class="trainings-index-datetime">
-              <i class="fa-regular fa-calendar-days"></i>
-              <%= training.date.strftime("%a %d %b") %> · <%= training.duration %> min
-            </div>
+            <p class="trainings-index-coach">
+              with <%= link_to coach.name, user_path(coach), class: "trainings-index-coach-link" %>
+              </p>
+              <div class="trainings-index-meta">
+                <% avg = coach.average_rating %>
+                <span>⭐ <%= avg ? "#{avg}/5" : "No reviews" %></span>
+              <span>📍 <%= training.place %></span>
+              </div>
 
             <div class="trainings-index-participants">
               <span><%= paid_count %> / <%= training.max_people %> joined</span>

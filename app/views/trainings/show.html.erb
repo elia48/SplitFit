@@ -20,11 +20,7 @@
             data: { turbo_confirm: "Cancel this session?" },
             class: "training-show__coach-btn training-show__coach-btn--cancel" %>
       <% end %>
-      <% if policy(@training).reopen? %>
-        <%= button_to "Reopen", reopen_training_path(@training), method: :patch,
-            class: "training-show__coach-btn training-show__coach-btn--reopen" %>
-      <% end %>
-      <% if policy(@training).close? %>
+<% if policy(@training).close? %>
         <%= button_to "Close & refund", close_training_path(@training), method: :patch,
             data: { turbo_confirm: "Close this session and process refunds?" },
             class: "training-show__coach-btn training-show__coach-btn--close" %>
@@ -86,6 +82,13 @@
       <p class="training-show__about-text">
         <%= @training.description.presence || "No description provided yet." %>
       </p>
+    </div>
+
+    <%# ── Map ──────────────────────────────────────────────────── %>
+    <div style="width: 100%; height: 300px;"
+        data-controller="map"
+        data-map-markers-value="<%= @markers.to_json %>"
+        data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
     </div>
 
     <%# ── Pricing & booking ──────────────────────────────────────── %>

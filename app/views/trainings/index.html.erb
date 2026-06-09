@@ -22,6 +22,22 @@
         <label>Location</label>
         <%= text_field_tag :location, params[:location], placeholder: "Current location", class: "trainings-filter-input" %>
 
+        <label>Distance</label>
+        <%= select_tag :distance,
+            options_for_select(
+              [["1 km", 1], ["2 km", 2], ["5 km", 5], ["10 km", 10], ["20 km", 20], ["50 km", 50]],
+              params[:distance] || 5
+            ),
+            class: "trainings-filter-select" %>
+
+        <label>Time range</label>
+        <%= select_tag :within_hours,
+            options_for_select(
+              [["Any time", ""], ["Next 24h", 24], ["Next 48h", 48], ["Next 72h", 72], ["Next week", 168]],
+              params[:within_hours]
+            ),
+            class: "trainings-filter-select" %>
+
         <label>Workout type</label>
         <%= select_tag :workout_type,
             options_for_select(["", "Strength", "HIIT", "Yoga", "Pilates", "Crossfit"], params[:workout_type]),
@@ -58,7 +74,24 @@
       <% end %>
     </div>
 
-    <div class="trainings-index-list">
+    <div class="trainings-view-toggle">
+  <%= link_to "List view",
+      trainings_path(request.query_parameters.merge(view: "list")),
+      class: "btn btn-outline-primary" %>
+
+  <%= link_to "Map view",
+      trainings_path(request.query_parameters.merge(view: "map")),
+      class: "btn btn-outline-primary" %>
+</div>
+
+    <% if params[:view] == "map" %>
+        <div style="width: 100%; height: 600px;"
+            data-controller="map"
+            data-map-markers-value="<%= @markers.to_json %>"
+            data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+        </div>
+      <% else %>
+        <div class="trainings-index-list">
       <% @trainings.each do |training| %>
         <% coach = training.user %>
         <% paid_count = training.bookings.count { |b| b.status == "paid" } %>
@@ -77,16 +110,6 @@
             </div>
 
             <h2><%= training.workout_type %></h2>
-
-            <p class="trainings-index-coach">
-              with <%= link_to coach.name, user_path(coach), class: "trainings-index-coach-link" %>
-            </p>
-
-            <div class="trainings-index-meta">
-              <% avg = coach.average_rating %>
-              <span>⭐ <%= avg ? "#{avg}/5" : "No reviews" %></span>
-              <span>📍 <%= training.place %></span>
-            </div>
 
             <div class="trainings-index-datetime">
               <i class="fa-regular fa-calendar-days"></i>
@@ -143,12 +166,14 @@
             </div>
             <%= link_to training_path(training), class: "trainings-index-view-btn" do %>
               View session
-            <% end %>
+           <% end %>
           </div>
 
-        </div>
-      <% end %>
-    </div>
+        </div> <!-- trainings-index-card -->
+      <% end %> <!-- @trainings.each -->
 
-  </div>
-</div>
+    </div> <!-- trainings-index-list -->
+  <% end %> <!-- if params[:view] == "map" -->
+
+  </div> <!-- trainings-index-container -->
+</div> <!-- trainings-index-page -->

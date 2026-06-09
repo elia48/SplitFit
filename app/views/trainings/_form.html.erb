@@ -1,3 +1,4 @@
+<% editing ||= false %>
 <%= simple_form_for training do |f| %>
   <%= f.error_notification message: "Please fix the errors below:" %>
 
@@ -26,15 +27,20 @@
   <div class="training-new-card">
     <h2>Session Details</h2>
 
+    <% unless editing %>
     <%= f.input :workout_type,
         as: :select,
         collection: ["HIIT", "Yoga", "CrossFit", "Boxing", "Pilates", "Strength", "Running", "Cycling"],
         include_blank: "Select type",
         label: "Workout Type" %>
+    <% end %>
 
-    <%= f.input :place,
-        label: "Location",
-        placeholder: "e.g. Central Park, Chelsea Studio, Online..." %>
+    <div data-controller="address-autocomplete"
+         data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>">
+      <label class="form-label">Location</label>
+      <div data-address-autocomplete-target="map"></div>
+      <%= f.hidden_field :place, data: { address_autocomplete_target: "address" } %>
+    </div>
 
     <%= f.input :date,
         as: :string,
@@ -50,13 +56,16 @@
         placeholder: "e.g. 60",
         input_html: { min: 1 } %>
 
+    <% unless editing %>
     <%= f.input :description,
         as: :text,
         label: "About this session",
         placeholder: "Describe what clients will do, the intensity level, what to bring...",
         input_html: { rows: 4 } %>
+    <% end %>
   </div>
 
+  <% unless editing %>
   <div class="training-new-card">
     <h2>Pricing & Capacity</h2>
 
@@ -87,6 +96,7 @@
         placeholder: "e.g. 10",
         input_html: { min: 1 } %>
   </div>
+  <% end %>
 
   <%= f.hidden_field :status, value: training.status.presence || "draft" %>
 

@@ -16,7 +16,7 @@ class TrainingPolicy < ApplicationPolicy
   end
 
   def update?
-    user.is_coach && record.user == user && record.status == "draft"
+    user.is_coach && record.user == user && !%w[cancelled closed].include?(record.status)
   end
 
   def publish?
@@ -25,10 +25,6 @@ class TrainingPolicy < ApplicationPolicy
 
   def cancel?
     user.is_coach && record.user == user && record.status != "cancelled" && record.status != "draft"
-  end
-
-  def reopen?
-    user.is_coach && record.user == user && record.status == "cancelled"
   end
 
   def access_chat?

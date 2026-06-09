@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   resources :trainings, except: [:destroy] do
     member do
       patch :cancel
-      patch :reopen
       patch :publish
       patch :close
     end
@@ -39,4 +38,8 @@ Rails.application.routes.draw do
   end
 
   mount StripeEvent::Engine, at: "/stripe-webhooks"
+
+  get "stripe/onboard", to: "stripe_connect#onboard", as: :stripe_connect_onboard
+  get "stripe/return",  to: "stripe_connect#return",  as: :stripe_connect_return
+  get "stripe/refresh", to: "stripe_connect#refresh", as: :stripe_connect_refresh
 end

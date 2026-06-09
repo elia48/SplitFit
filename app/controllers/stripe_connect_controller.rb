@@ -1,4 +1,7 @@
 class StripeConnectController < ApplicationController
+  skip_after_action :verify_authorized
+  skip_after_action :verify_policy_scoped
+
   def onboard
     if current_user.stripe_account_id.present?
       account_id = current_user.stripe_account_id

@@ -116,7 +116,9 @@
               <div class="trainings-index-meta">
                 <% avg = coach.average_rating %>
                 <span>⭐ <%= avg ? "#{avg}/5" : "No reviews" %></span>
-              <span>📍 <%= training.place %></span>
+                <span>📍 <%= training.place.split(",").first(2).join(",").strip %></span>
+                <span>📅 <%= training.date.strftime("%d %b %Y, %H:%M") %></span>
+                <span>⏱ <%= training.duration %> min</span>
               </div>
 
             <div class="trainings-index-participants">

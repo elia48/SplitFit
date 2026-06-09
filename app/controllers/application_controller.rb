@@ -21,6 +21,10 @@ class ApplicationController < ActionController::Base
     redirect_to(root_path)
   end
 
+  def after_sign_up_path_for(_resource)
+    search_path
+  end
+
   private
 
   def skip_pundit?

@@ -1,15 +1,87 @@
-<p>
-  You are booking <strong><%= @booking.training.workout_type %></strong>
-  for <strong><%= @booking.amount_cents / 100.0 %>€</strong>.
-</p>
+<div class="payment-new">
 
-<button id="pay" class="btn btn-primary">Pay</button>
+  <div class="payment-new__hero">
+    <% if (hero_src = training_image(@booking.training)) %>
+      <img class="payment-new__hero-img" src="<%= hero_src %>" alt="<%= @booking.training.workout_type %>">
+    <% end %>
+    <div class="payment-new__hero-overlay"></div>
+    <div class="payment-new__hero-content">
+      <h1 class="payment-new__type"><%= @booking.training.workout_type %></h1>
+      <p class="payment-new__coach">with <%= @booking.training.user.name %></p>
+    </div>
+  </div>
+
+  <div class="payment-new__body">
+
+    <div class="payment-new__card">
+      <p class="payment-new__card-title">Session details</p>
+
+      <div class="payment-new__row">
+        <i class="fa-regular fa-calendar"></i>
+        <div class="payment-new__row-content">
+          <span class="payment-new__row-label">Date & time</span>
+          <span class="payment-new__row-value">
+            <%= @booking.training.date.strftime("%A, %d %b %Y · %H:%M") %>
+          </span>
+        </div>
+      </div>
+
+      <div class="payment-new__row">
+        <i class="fa-solid fa-location-dot"></i>
+        <div class="payment-new__row-content">
+          <span class="payment-new__row-label">Location</span>
+          <span class="payment-new__row-value"><%= @booking.training.place %></span>
+        </div>
+      </div>
+
+      <div class="payment-new__row">
+        <i class="fa-solid fa-clock"></i>
+        <div class="payment-new__row-content">
+          <span class="payment-new__row-label">Duration</span>
+          <span class="payment-new__row-value"><%= @booking.training.duration %> min</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-new__card payment-new__card--summary">
+      <p class="payment-new__card-title">Order summary</p>
+
+      <div class="payment-new__row">
+        <i class="fa-solid fa-dumbbell"></i>
+        <div class="payment-new__row-content">
+          <span class="payment-new__row-label"><%= @booking.training.workout_type %></span>
+          <span class="payment-new__row-value">€<%= format_price(@booking.amount_cents) %></span>
+        </div>
+      </div>
+
+      <div class="payment-new__divider"></div>
+
+      <div class="payment-new__total">
+        <span class="payment-new__total-label">Total</span>
+        <span class="payment-new__total-amount">€<%= format_price(@booking.amount_cents) %></span>
+      </div>
+    </div>
+
+    <button id="pay" class="payment-new__pay-btn">
+      <i class="fa-solid fa-lock"></i>
+      Pay €<%= format_price(@booking.amount_cents) %> securely
+    </button>
+
+    <p class="payment-new__stripe-note">
+      <i class="fa-brands fa-stripe"></i>
+      Powered by Stripe · Your payment info is encrypted and secure
+    </p>
+
+  </div>
+</div>
 
 <script src="https://js.stripe.com/v3/"></script>
 <script>
   const paymentButton = document.getElementById("pay");
 
   paymentButton.addEventListener("click", () => {
+    paymentButton.disabled = true;
+    paymentButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Redirecting…';
     const stripe = Stripe("<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>");
 
     stripe.redirectToCheckout({

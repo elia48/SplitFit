@@ -1,0 +1,183 @@
+.payment-new {
+  min-height: 100vh;
+  background: $background;
+
+  &__hero {
+    position: relative;
+    height: 220px;
+    background: $primary-dark;
+    overflow: hidden;
+  }
+
+  &__hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba($primary-dark, 0.3), rgba($primary-dark, 0.75));
+  }
+
+  &__hero-content {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    color: white;
+  }
+
+  &__type {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  &__coach {
+    margin: 0.25rem 0 0;
+    font-size: 0.9rem;
+    opacity: 0.85;
+  }
+
+  &__body {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__card {
+    background: $surface;
+    border-radius: 16px;
+    padding: 1.25rem 1.25rem 0.5rem;
+    box-shadow: $shadow-soft;
+    border: 1px solid $border;
+
+    &--summary {
+      background: $surface;
+    }
+  }
+
+  &__card-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $text-muted;
+    margin: 0 0 0.75rem;
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid $border;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    i {
+      color: $primary;
+      font-size: 0.95rem;
+      margin-top: 0.15rem;
+      width: 1rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+  }
+
+  &__row-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.15rem;
+  }
+
+  &__row-label {
+    font-size: 0.78rem;
+    color: $text-secondary;
+  }
+
+  &__row-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $text-primary;
+  }
+
+  &__divider {
+    height: 1px;
+    background: $border;
+    margin: 0.5rem 0;
+  }
+
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0 0.25rem;
+  }
+
+  &__total-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: $text-primary;
+  }
+
+  &__total-amount {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: $primary;
+  }
+
+  &__pay-btn {
+    width: 100%;
+    padding: 1rem;
+    background: $primary;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background 0.2s, transform 0.1s;
+
+    &:hover {
+      background: $primary-dark;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+  }
+
+  &__stripe-note {
+    text-align: center;
+    font-size: 0.75rem;
+    color: $text-muted;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+
+    i {
+      font-size: 1.1rem;
+    }
+  }
+}

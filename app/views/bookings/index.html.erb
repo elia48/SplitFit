@@ -39,7 +39,16 @@
               </div>
             <% end %>
 
-            <% if policy(booking).destroy? %>
+            <% if booking.status == "pending" %>
+              <div class="booking-cancel-row">
+                <%= link_to "Complete payment", new_booking_payment_path(booking),
+                      class: "booking-retry-btn" %>
+                <%= button_to "Cancel booking", booking_path(booking),
+                      method: :delete,
+                      data: { turbo_confirm: "Cancel this pending booking?" },
+                      class: "booking-cancel-btn" %>
+              </div>
+            <% elsif policy(booking).destroy? %>
               <div class="booking-cancel-row">
                 <%= button_to "Cancel booking", booking_path(booking),
                       method: :delete,

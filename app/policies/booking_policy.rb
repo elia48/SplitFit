@@ -16,7 +16,9 @@ class BookingPolicy < ApplicationPolicy
   end
 
   def destroy?
-    record.user == user && record.training.bookings.size < record.training.min_people
+    return false unless record.user == user
+    return true if record.status == "pending"
+    record.training.bookings.paid.count < record.training.min_people
   end
 
   class Scope < ApplicationPolicy::Scope

@@ -57,7 +57,6 @@
 }
 
 .trainings-filter-dropdown {
-  position: relative;
   flex-shrink: 0;
 }
 
@@ -86,7 +85,8 @@
 .trainings-filter-panel {
   position: absolute;
   top: 46px;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 100;
 
   width: 340px;

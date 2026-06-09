@@ -3,6 +3,12 @@ class BookingsController < ApplicationController
   def create
     @training = Training.find(params[:training_id])
 
+    existing_pending = current_user.bookings.pending.find_by(training: @training)
+    if existing_pending
+      return redirect_to new_booking_payment_path(existing_pending),
+                         notice: "You already have a pending booking — complete your payment to confirm it."
+    end
+
     @booking = Booking.new(training: @training, user: current_user, status: "pending",
                            amount_cents: @training.current_price_cents, 
                            estimated_people_count_at_payment: @training.bookings.paid.count + 1)

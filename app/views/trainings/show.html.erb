@@ -125,7 +125,20 @@
         <p>The more people join, the lower the price per person. Final price locks 2 hours before the session or where the maximum number of people is reached.</p>
       </div>
 
-      <% if policy(Booking.new(training: @training)).create? %>
+      <% if @pending_booking %>
+        <div class="training-show__pending-notice">
+          <i class="fa-solid fa-clock"></i>
+          <p>You have a pending booking — your spot is not confirmed until payment is completed.</p>
+        </div>
+        <div class="training-show__pending-actions">
+          <%= link_to "Complete payment", new_booking_payment_path(@pending_booking),
+              class: "training-show__book-btn" %>
+          <%= button_to "Cancel booking", booking_path(@pending_booking),
+              method: :delete,
+              data: { turbo_confirm: "Cancel this pending booking?" },
+              class: "training-show__cancel-pending-btn" %>
+        </div>
+      <% elsif policy(Booking.new(training: @training)).create? %>
         <%= button_to "Book this session", training_bookings_path(@training),
             method: :post, class: "training-show__book-btn" %>
       <% end %>

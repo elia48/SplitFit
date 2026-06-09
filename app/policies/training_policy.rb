@@ -29,6 +29,7 @@ class TrainingPolicy < ApplicationPolicy
 
   def access_chat?
     return true if record.user == user
+
     record.bookings.paid.exists?(user: user)
   end
 
@@ -36,6 +37,10 @@ class TrainingPolicy < ApplicationPolicy
     record.user == user &&
       record.date + record.duration.minutes < Time.current &&
       record.status != "closed"
+  end
+
+  def ai_fill?
+    create?
   end
 
   class Scope < ApplicationPolicy::Scope

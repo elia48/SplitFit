@@ -269,6 +269,45 @@
   background: #fdf5f0;
 }
 
+.coach-show-create-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  background: #2d1a15;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 16px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  i { font-size: 18px; }
+  &:hover { background: darken(#2d1a15, 6%); color: white; }
+}
+
+.coach-show-logout-btn {
+  display: block;
+  width: 100%;
+  background: transparent;
+  color: #a07060;
+  border: 1.5px solid #e8d5cc;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 12px;
+  cursor: pointer;
+
+  &:hover { background: #fdecea; color: #c0392b; border-color: #c0392b; }
+}
+
 @media (min-width: 768px) {
   .coach-show-page {
     max-width: 430px;

@@ -23,10 +23,12 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body><%= render "shared/header" %>
-<%= render "shared/flashes" %>
-<%= render "shared/bottom_nav" %>
-
+  <body class="<%= 'body--fullscreen' if content_for?(:fullscreen) %>">
+    <% unless content_for?(:fullscreen) %>
+      <%= render "shared/header" %>
+      <%= render "shared/bottom_nav" %>
+    <% end %>
+    <%= render "shared/flashes" %>
     <%= yield %>
   </body>
 </html>

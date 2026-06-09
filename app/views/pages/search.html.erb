@@ -1,0 +1,50 @@
+<% content_for :fullscreen, true %>
+
+<div class="sl-page">
+<div class="sl-page__inner">
+
+  <%# ── Hero ──────────────────────────────────────────────────────── %>
+  <section class="sl-hero">
+
+    <span class="sl-hero__logo">SplitFit</span>
+    <h1 class="sl-hero__tagline">Train like a Pro,<br>Pay&nbsp;like a Group.</h1>
+
+    <%= form_with url: trainings_path, method: :get, class: "sl-hero__form" do %>
+
+      <div class="sl-hero__inputs" data-controller="search-landing">
+        <div class="sl-hero__field">
+          <i class="fa-solid fa-location-dot sl-hero__field-icon"></i>
+          <%= text_field_tag :location, params[:location],
+              placeholder: "Location",
+              class: "sl-hero__input",
+              data: { "search_landing_target": "location" } %>
+          <button type="button" class="sl-hero__locate"
+                  data-action="click->search-landing#locate">
+            <i class="fa-solid fa-crosshairs"></i>
+          </button>
+        </div>
+        <div class="sl-hero__divider"></div>
+        <div class="sl-hero__field">
+          <i class="fa-solid fa-dumbbell sl-hero__field-icon"></i>
+          <%= text_field_tag :query, params[:query],
+              placeholder: "Workout type",
+              class: "sl-hero__input" %>
+        </div>
+      </div>
+
+      <%= submit_tag "Look for a coach to share", class: "sl-hero__cta" %>
+
+    <% end %>
+
+  </section>
+
+  <%# ── About ─────────────────────────────────────────────────────── %>
+  <section class="sl-about">
+    <p class="sl-about__body">
+      Book a training with SplitFit and split the cost with other members.
+      The more people join, the less everyone pays.
+    </p>
+  </section>
+
+</div>
+</div>

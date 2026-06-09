@@ -1,0 +1,160 @@
+body.body--fullscreen {
+  padding-top: 0;
+}
+
+.sl-page {
+  min-height: 100vh;
+  background: $background;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 26px;
+}
+
+.sl-page__inner {
+  width: 100%;
+  max-width: 430px;
+  display: flex;
+  flex-direction: column;
+}
+
+// ── Hero ──────────────────────────────────────────────────────────────
+.sl-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  .sl-hero__logo {
+    margin-bottom: -28px;
+  }
+}
+
+.sl-hero__logo {
+  font-family: $headers-font;
+  font-size: clamp(68px, 20vw, 88px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $primary;
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.sl-hero__tagline {
+  font-family: $headers-font;
+  font-size: 40px;
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  color: $text-primary;
+  margin: 0;
+}
+
+// ── Form ──────────────────────────────────────────────────────────────
+.sl-hero__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.sl-hero__inputs {
+  background: $surface;
+  border: 1.5px solid $border;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba($text-primary, 0.05);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.sl-hero__field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 16px;
+  min-width: 0;
+  transition: background 0.15s;
+
+  &:focus-within { background: #fffaf8; }
+}
+
+.sl-hero__field-icon {
+  color: $primary;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.sl-hero__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: $text-primary;
+  min-width: 0;
+
+  &::placeholder {
+    color: $text-muted;
+  }
+}
+
+.sl-hero__locate {
+  background: none;
+  border: none;
+  color: $text-muted;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  flex-shrink: 0;
+  transition: color 0.15s;
+
+  &:hover { color: $primary; }
+  &:focus { outline: none; }
+}
+
+.sl-hero__divider {
+  width: 1px;
+  background: $border;
+  flex-shrink: 0;
+  align-self: stretch;
+  margin: 12px 0;
+}
+
+.sl-hero__cta {
+  width: 100%;
+  background: $primary;
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 18px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  box-shadow: 0 6px 20px rgba($primary, 0.25);
+
+  &:hover  { background: $primary-dark; }
+  &:active { transform: scale(0.99); }
+  &:focus  { outline: none; }
+}
+
+// ── About ─────────────────────────────────────────────────────────────
+.sl-about {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid $border;
+}
+
+.sl-about__body {
+  font-size: 18px;
+  color: $text-secondary;
+  line-height: 1.7;
+  margin: 0;
+}

@@ -16,6 +16,16 @@
 
   <% end %>
 
+  <% if user_signed_in? && current_user.is_coach? %>
+    <%= link_to new_training_path,
+        class: "bottom-nav-item #{'active' if controller_name == 'trainings' && action_name == 'new'}" do %>
+
+      <i class="fa-solid fa-plus"></i>
+      <span>Create</span>
+
+    <% end %>
+  <% end %>
+
   <%= link_to messages_path,
       class: "bottom-nav-item #{'active' if controller_name == 'messages'}" do %>
 

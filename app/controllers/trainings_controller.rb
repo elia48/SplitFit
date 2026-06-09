@@ -13,11 +13,20 @@ class TrainingsController < ApplicationController
       }
     end
 
-    if params[:query].present?
-    @trainings = @trainings.where(
-      "workout_type ILIKE :query OR place ILIKE :query",
-      query: "%#{params[:query]}%"
-    )
+    types = Array(params[:workout_type]).reject(&:blank?)
+    query = params[:query].presence
+
+    if types.any? && query
+      @trainings = @trainings.where(
+        "workout_type IN (:types) OR workout_type ILIKE :q OR place ILIKE :q",
+        types: types, q: "%#{query}%"
+      )
+    elsif types.any?
+      @trainings = @trainings.where(workout_type: types)
+    elsif query
+      @trainings = @trainings.where(
+        "workout_type ILIKE :q OR place ILIKE :q", q: "%#{query}%"
+      )
     end
 
     if params[:location].present?
@@ -33,16 +42,49 @@ class TrainingsController < ApplicationController
       )
     end
 
-    if params[:workout_type].present?
-      @trainings = @trainings.where(workout_type: params[:workout_type])
-    end
-
     if params[:min_price].present?
       @trainings = @trainings.where("coach_price_cents >= ?", params[:min_price].to_i * 100)
     end
 
     if params[:max_price].present?
       @trainings = @trainings.where("coach_price_cents <= ?", params[:max_price].to_i * 100)
+    end
+
+    if params[:time_of_day].present?
+      case params[:time_of_day]
+      when "morning"
+        @trainings = @trainings.where("EXTRACT(HOUR FROM date) >= 6 AND EXTRACT(HOUR FROM date) < 12")
+      when "afternoon"
+        @trainings = @trainings.where("EXTRACT(HOUR FROM date) >= 12 AND EXTRACT(HOUR FROM date) < 18")
+      when "evening"
+        @trainings = @trainings.where("EXTRACT(HOUR FROM date) >= 18")
+      end
+    end
+
+    if params[:duration].present?
+      @trainings = @trainings.where(duration: params[:duration].to_i)
+    end
+
+    if params[:group_size].present?
+      case params[:group_size]
+      when "duo"
+        @trainings = @trainings.where(max_people: 2)
+      when "small"
+        @trainings = @trainings.where("max_people BETWEEN 3 AND 5")
+      when "medium"
+        @trainings = @trainings.where("max_people BETWEEN 6 AND 10")
+      when "large"
+        @trainings = @trainings.where("max_people >= 11")
+      end
+    end
+
+    if params[:min_rating].present?
+      min = params[:min_rating].to_f
+      ids = @trainings.joins(user: :received_reviews)
+                      .group("trainings.id")
+                      .having("AVG(reviews.score) >= ?", min)
+                      .pluck("trainings.id")
+      @trainings = @trainings.where(id: ids)
     end
 
     booked_scope = @trainings.unscope(:select, :order).select(:id)
@@ -129,6 +171,19 @@ class TrainingsController < ApplicationController
     redirect_to @training, notice: "Session closed, refunds and payout processed."
   rescue Stripe::StripeError => e
     redirect_to @training, alert: "Stripe error: #{e.message}"
+  end
+
+  # AI filling assistant
+  def ai_fill
+    authorize Training
+
+    result = TrainingAiParserService.new(params[:prompt]).call
+
+    render json: result
+  rescue JSON::ParserError
+    render json: { error: "AI response could not be parsed." }, status: :unprocessable_entity
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   private

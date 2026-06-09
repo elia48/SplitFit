@@ -204,6 +204,15 @@
 
     <% end %>
 
+    <% if @own_profile && @user.is_coach? %>
+      <section class="coach-show-card">
+        <%= link_to new_training_path, class: "coach-show-create-btn" do %>
+          <i class="fa-solid fa-plus"></i>
+          Create new session
+        <% end %>
+      </section>
+    <% end %>
+
     <% if @own_profile %>
       <section class="coach-show-card coach-show-private-card">
         <h2>Personal Data</h2>
@@ -240,6 +249,8 @@
         <% end %>
 
         <%= link_to "Edit profile", edit_user_path(@user), class: "coach-show-main-btn" %>
+
+        <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "coach-show-logout-btn" %>
       </section>
     <% end %>
 

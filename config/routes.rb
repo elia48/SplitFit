@@ -23,6 +23,11 @@ Rails.application.routes.draw do
       patch :publish
       patch :close
     end
+
+    collection do
+      post :ai_fill
+    end
+    
     resources :bookings, only: [:create]
     resources :reviews, only: [:create]
     resources :messages, only: [:create, :index]

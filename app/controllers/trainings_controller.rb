@@ -130,6 +130,19 @@ class TrainingsController < ApplicationController
     redirect_to @training, alert: "Stripe error: #{e.message}"
   end
 
+  # AI filling assistant
+  def ai_fill
+    authorize Training
+
+    result = TrainingAiParserService.new(params[:prompt]).call
+
+    render json: result
+  rescue JSON::ParserError
+    render json: { error: "AI response could not be parsed." }, status: :unprocessable_entity
+  rescue StandardError => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   private
 
   def set_training

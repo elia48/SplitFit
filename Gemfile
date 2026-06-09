@@ -86,3 +86,6 @@ gem 'cloudinary'
 
 # geocoder integration
 gem "geocoder"
+
+# AI vocal assistant integration
+gem "ruby_llm"

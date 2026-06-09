@@ -92,63 +92,88 @@
         </div>
       <% else %>
         <div class="trainings-index-list">
-          <% @trainings.each do |training| %>
-          <% coach = training.user %>
-          <% paid_count = training.bookings.count { |b| b.status == "paid" } %>
-          <% already_joined = @my_booked_training_ids.include?(training.id) %>
-          <div class="trainings-index-card">
+      <% @trainings.each do |training| %>
+        <% coach = training.user %>
+        <% paid_count = training.bookings.count { |b| b.status == "paid" } %>
+        <% already_joined = @my_booked_training_ids.include?(training.id) %>
+        <div class="trainings-index-card">
 
-            <% if (card_img = training_image(training)) %>
-              <img class="trainings-index-card-image" src="<%= card_img %>" alt="Training image">
-            <% else %>
-              <div class="trainings-index-card-image trainings-index-card-image--placeholder"></div>
-            <% end %>
+          <% if (card_img = training_image(training)) %>
+            <img class="trainings-index-card-image" src="<%= card_img %>" alt="Training image">
+          <% else %>
+            <div class="trainings-index-card-image trainings-index-card-image--placeholder"></div>
+          <% end %>
 
-            <div class="trainings-index-card-content">
-              <div class="trainings-index-card-top-row">
-                <span class="trainings-index-badge"><%= training.workout_type %></span>
-                <span class="trainings-index-status-badge trainings-index-status-<%= training.status %>"><%= training.status.capitalize %></span>
-              </div>
-
-              <h2><%= training.workout_type %></h2>
-
-              <p class="trainings-index-coach">
-                with <%= link_to coach.name, user_path(coach), class: "trainings-index-coach-link" %>
-              </p>
-
-              <div class="trainings-index-meta">
-                <% avg = coach.average_rating %>
-                <span>⭐ <%= avg ? "#{avg}/5" : "No reviews" %></span>
-                <span>📍 <%= training.place %></span>
-              </div>
-
-              <div class="trainings-index-participants">
-                <span><%= paid_count %> / <%= training.max_people %> joined</span>
-                <% if already_joined %>
-                  <span class="trainings-index-joined-badge">You're in!</span>
-                <% end %>
-              </div>
-
-              <p class="trainings-index-price">
-                €<%= sprintf("%.2f", training.current_price_cents / 100.0) %>
-              </p>
-              <p class="trainings-index-fullprice"><s>€<%= sprintf("%.2f", training.coach_price_cents / 100.0) %></s></p>
+          <div class="trainings-index-card-content">
+            <div class="trainings-index-card-top-row">
+              <span class="trainings-index-status-badge trainings-index-status-<%= training.status %>"><%= training.status.capitalize %></span>
             </div>
 
-            <div class="trainings-index-side">
-              <i class="fa-regular fa-heart trainings-index-heart"></i>
+            <h2><%= training.workout_type %></h2>
 
-              <p class="trainings-index-spots">
-                <%= training.min_people %>-<%= training.max_people %> people
-              </p>
-
-              <%= link_to "View session", training_path(training), class: "trainings-index-view-btn" %>
+            <div class="trainings-index-datetime">
+              <i class="fa-regular fa-calendar-days"></i>
+              <%= training.date.strftime("%a %d %b") %> · <%= training.duration %> min
             </div>
 
+            <div class="trainings-index-participants">
+              <span><%= paid_count %> / <%= training.max_people %> joined</span>
+              <% if already_joined %>
+                <span class="trainings-index-joined-badge">You're in!</span>
+              <% end %>
+            </div>
           </div>
-        <% end %>
-      <% end %>
-    </div>
 
-  </div>
-</div>
+          <div class="trainings-index-side">
+            <div class="trainings-index-price-block">
+              <span class="trainings-index-price">€<%= sprintf("%.2f", training.current_price_cents / 100.0) %></span>
+              <span class="trainings-index-price-label">/person</span>
+              <% if training.min_price_cents < training.current_price_cents %>
+                <span class="trainings-index-min-price">
+                  Could reach €<%= sprintf("%.2f", training.min_price_cents / 100.0) %>
+                </span>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="trainings-index-card-footer">
+            <div class="trainings-index-share-wrap"
+                 data-controller="share"
+                 data-action="click@window->share#closeDropdown"
+                 data-share-url-value="<%= training_url(training) %>"
+                 data-share-title-value="<%= training.workout_type %> on SplitFit"
+                 data-share-text-value="Join me for <%= training.workout_type %> with <%= coach.name %>! From €<%= sprintf('%.2f', training.min_price_cents / 100.0) %>/person.">
+              <button type="button"
+                      class="trainings-index-share-btn"
+                      data-action="click->share#share">
+                <i class="fa-solid fa-share-nodes"></i> Share the training
+              </button>
+              <div class="share-dropdown" data-share-target="dropdown">
+                <button type="button" class="share-dropdown__item" data-action="click->share#whatsapp">
+                  <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                </button>
+                <button type="button" class="share-dropdown__item" data-action="click->share#twitter">
+                  <i class="fa-brands fa-x-twitter"></i> Twitter / X
+                </button>
+                <button type="button" class="share-dropdown__item" data-action="click->share#facebook">
+                  <i class="fa-brands fa-facebook"></i> Facebook
+                </button>
+                <div class="share-dropdown__divider"></div>
+                <button type="button" class="share-dropdown__item share-dropdown__item--more" data-action="click->share#native">
+                  <i class="fa-solid fa-ellipsis"></i> More options
+                </button>
+              </div>
+            </div>
+            <%= link_to training_path(training), class: "trainings-index-view-btn" do %>
+              View session
+           <% end %>
+          </div>
+
+        </div> <!-- trainings-index-card -->
+      <% end %> <!-- @trainings.each -->
+
+    </div> <!-- trainings-index-list -->
+  <% end %> <!-- if params[:view] == "map" -->
+
+  </div> <!-- trainings-index-container -->
+</div> <!-- trainings-index-page -->

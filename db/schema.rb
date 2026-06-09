@@ -68,6 +68,26 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_144520) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
+  create_table "private_chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "recipient_id", null: false
+    t.bigint "sender_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_id"], name: "index_private_chats_on_recipient_id"
+    t.index ["sender_id", "recipient_id"], name: "index_private_chats_on_sender_id_and_recipient_id", unique: true
+    t.index ["sender_id"], name: "index_private_chats_on_sender_id"
+  end
+
+  create_table "private_messages", force: :cascade do |t|
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.bigint "private_chat_id", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["private_chat_id"], name: "index_private_messages_on_private_chat_id"
+    t.index ["user_id"], name: "index_private_messages_on_user_id"
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.bigint "coach_id"
     t.datetime "created_at", null: false
@@ -269,6 +289,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_08_144520) do
   add_foreign_key "bookings", "users"
   add_foreign_key "messages", "trainings"
   add_foreign_key "messages", "users"
+  add_foreign_key "private_chats", "users", column: "recipient_id"
+  add_foreign_key "private_chats", "users", column: "sender_id"
+  add_foreign_key "private_messages", "private_chats"
+  add_foreign_key "private_messages", "users"
   add_foreign_key "reviews", "trainings"
   add_foreign_key "reviews", "users"
   add_foreign_key "reviews", "users", column: "coach_id"

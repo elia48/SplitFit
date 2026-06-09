@@ -3,49 +3,83 @@
     <h1 class="chat-index__title">Chats</h1>
   </div>
 
-  <% if @chats.empty? %>
+  <% if @chats.empty? && @private_chats.empty? %>
     <div class="chat-index__empty">
       <i class="fa-regular fa-comment fa-2x mb-3"></i>
       <p>No chats yet. Once you book and pay for a session, the group chat will appear here.</p>
     </div>
   <% else %>
-    <div class="chat-index__list">
-      <% @chats.each do |training| %>
-        <%= link_to training_messages_path(training), class: "chat-item" do %>
-          <div class="chat-item__icon">
-            <% if (chat_img = training_image(training)) %>
-              <img src="<%= chat_img %>" alt="<%= training.workout_type %>" class="chat-item__icon-img">
-            <% else %>
-              <i class="fa-solid fa-dumbbell"></i>
-            <% end %>
-          </div>
-          <div class="chat-item__body">
-            <div class="chat-item__top">
-              <span class="chat-item__name"><%= training.workout_type %></span>
-              <% if training.messages.any? %>
-                <span class="chat-item__time"><%= training.messages.last.created_at.strftime("%d/%m") %></span>
-              <% end %>
+
+    <% if @private_chats.any? %>
+      <p class="chat-index__section-label">Direct Messages</p>
+      <div class="chat-index__list">
+        <% @private_chats.each do |chat| %>
+          <% other = chat.other_participant(current_user) %>
+          <%= link_to private_chat_path(chat), class: "chat-item" do %>
+            <div class="chat-item__icon chat-item__icon--dm">
+              <%= other.name.first.upcase %>
             </div>
-            <div class="chat-item__bottom">
-              <% if training.messages.any? %>
-                <span class="chat-item__preview">
-                  <strong><%= training.messages.last.user.name.split.first %>:</strong>
-                  <%= truncate(training.messages.last.content, length: 40) %>
-                </span>
-              <% else %>
-                <span class="chat-item__preview chat-item__preview--empty">No messages yet</span>
-              <% end %>
-              <span class="chat-item__role">
-                <% if training.user == current_user %>
-                  <span class="chat-badge chat-badge--coach">Coach</span>
-                <% else %>
-                  <span class="chat-badge chat-badge--member">Member</span>
+            <div class="chat-item__body">
+              <div class="chat-item__top">
+                <span class="chat-item__name"><%= other.name %></span>
+                <% if chat.private_messages.any? %>
+                  <span class="chat-item__time"><%= chat.private_messages.last.created_at.strftime("%d/%m") %></span>
                 <% end %>
-              </span>
+              </div>
+              <div class="chat-item__bottom">
+                <% if chat.private_messages.any? %>
+                  <% last = chat.private_messages.last %>
+                  <span class="chat-item__preview">
+                    <strong><%= last.user == current_user ? "You" : last.user.name.split.first %>:</strong>
+                    <%= truncate(last.content, length: 40) %>
+                  </span>
+                <% else %>
+                  <span class="chat-item__preview chat-item__preview--empty">No messages yet</span>
+                <% end %>
+              </div>
             </div>
-          </div>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
+
+    <% if @chats.any? %>
+      <p class="chat-index__section-label">Sessions</p>
+      <div class="chat-index__list">
+        <% @chats.each do |training| %>
+          <%= link_to training_messages_path(training), class: "chat-item" do %>
+            <div class="chat-item__icon">
+              <i class="fa-solid fa-dumbbell"></i>
+            </div>
+            <div class="chat-item__body">
+              <div class="chat-item__top">
+                <span class="chat-item__name"><%= training.workout_type %></span>
+                <% if training.messages.any? %>
+                  <span class="chat-item__time"><%= training.messages.last.created_at.strftime("%d/%m") %></span>
+                <% end %>
+              </div>
+              <div class="chat-item__bottom">
+                <% if training.messages.any? %>
+                  <span class="chat-item__preview">
+                    <strong><%= training.messages.last.user.name.split.first %>:</strong>
+                    <%= truncate(training.messages.last.content, length: 40) %>
+                  </span>
+                <% else %>
+                  <span class="chat-item__preview chat-item__preview--empty">No messages yet</span>
+                <% end %>
+                <span class="chat-item__role">
+                  <% if training.user == current_user %>
+                    <span class="chat-badge chat-badge--coach">Coach</span>
+                  <% else %>
+                    <span class="chat-badge chat-badge--member">Member</span>
+                  <% end %>
+                </span>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
   <% end %>
 </div>

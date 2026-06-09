@@ -42,5 +42,7 @@ class Training < ApplicationRecord
     run_at = date + duration.minutes
     job = CloseTrainingJob.set(wait_until: run_at).perform_later(id)
     update_column(:close_job_id, job.job_id)
+  def min_price_cents
+    coach_price_cents / max_people
   end
 end

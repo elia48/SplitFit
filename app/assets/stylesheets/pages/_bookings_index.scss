@@ -43,6 +43,7 @@
 .booking-cancel-row {
   display: flex;
   justify-content: flex-end;
+  gap: 8px;
   padding: 4px 10px 8px;
 }
 
@@ -57,6 +58,21 @@
   cursor: pointer;
 
   &:hover { background: #fdf0ee; }
+}
+
+.booking-retry-btn {
+  display: inline-block;
+  background: #ff6428;
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 14px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover { background: #e0541f; color: white; }
 }
 
 // ── Participants dropdown ─────────────────────────────────────────────

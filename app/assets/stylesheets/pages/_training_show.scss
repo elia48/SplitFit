@@ -256,8 +256,47 @@
   transition: width 0.3s;
 }
 
+.training-show__pending-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: #fff8e1;
+  border: 1.5px solid #ffe082;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+  color: #7a5c00;
+  font-size: 13px;
+  line-height: 1.5;
+
+  i { margin-top: 2px; flex-shrink: 0; }
+  p { margin: 0; }
+}
+
+.training-show__pending-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.training-show__cancel-pending-btn {
+  flex: 1;
+  background: none;
+  border: 1.5px solid #f0d6cd;
+  border-radius: 12px;
+  color: #c0564a;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 16px;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover { background: #fdf0ee; }
+}
+
 .training-show__book-btn {
   display: block;
+  flex: 1;
   width: 100%;
   background: #ff6428;
   color: white;

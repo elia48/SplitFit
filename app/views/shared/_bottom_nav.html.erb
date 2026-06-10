@@ -1,7 +1,7 @@
 <div class="bottom-nav">
 
   <%= link_to trainings_path,
-      class: "bottom-nav-item #{'active' if controller_name == 'trainings'}" do %>
+      class: "bottom-nav-item #{'active' if controller_name == 'trainings' && action_name == 'index'}" do %>
 
     <i class="fa-solid fa-magnifying-glass"></i>
     <span>Explore</span>

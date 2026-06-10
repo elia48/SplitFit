@@ -1,12 +1,18 @@
 <% editing ||= false %>
+
+<% form_controllers = ["training-form"] %>
+<% form_controllers << "training-voice" unless editing %>
+
 <%= simple_form_for training,
     html: {
-      data: (editing ? {} : { controller: "training-voice" }) 
+      data: { controller: form_controllers.join(" ") }
     } do |f| %>
+
   <%= f.error_notification message: "Please fix the errors below:" %>
 
   <div class="training-new-card">
     <h2>Session Photo</h2>
+
     <div class="training-new-photo-field">
       <% if training.photo.attached? %>
         <%= image_tag training.photo, class: "training-new-photo-preview", alt: "Session photo" %>
@@ -19,6 +25,7 @@
           <span>No photo yet</span>
         </div>
       <% end %>
+
       <%= f.input :photo,
           as: :file,
           label: "Session Photo",
@@ -34,6 +41,7 @@
         <div class="training-ai-icon-wrap">
           <i class="fa-solid fa-microphone"></i>
         </div>
+
         <div>
           <h2 class="mb-0">AI Voice Assistant</h2>
           <p class="training-new-hint mb-0">Describe your session out loud — AI fills the form for you.</p>
@@ -76,37 +84,46 @@
     <h2>Session Details</h2>
 
     <% unless editing %>
-    <%= f.input :workout_type,
-      as: :select,
-      collection: ["HIIT", "Yoga", "CrossFit", "Boxing", "Pilates", "Strength", "Running", "Cycling"],
-      include_blank: "Select type",
-      label: "Workout Type",
-      input_html: { data: { training_voice_target: "workoutType" } } %>
+      <%= f.input :workout_type,
+          as: :select,
+          collection: ["HIIT", "Yoga", "CrossFit", "Boxing", "Pilates", "Strength", "Running", "Cycling"],
+          include_blank: "Select type",
+          label: "Workout Type",
+          input_html: {
+            data: {
+              training_form_target: "field",
+              training_voice_target: "workoutType"
+            }
+          } %>
     <% end %>
 
     <div data-controller="address-autocomplete"
-        data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>">
+         data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"
+         data-action="submit->address-autocomplete#requirePlace">
       <label class="form-label">Location</label>
 
       <div data-address-autocomplete-target="map"></div>
 
+      <div data-address-autocomplete-target="error"
+           class="invalid-feedback"
+           style="display: none;">
+        Please select a location.
+      </div>
+
       <%= f.hidden_field :place,
           data: {
             address_autocomplete_target: "address",
+            training_form_target: "address",
             training_voice_target: "place"
           } %>
 
-      <input type="text"
-            class="form-control mt-2"
-            placeholder="AI selected location will appear here"
-            readonly
-            data-training-voice-target="placeDisplay">
-
-      <div class="invalid-feedback d-block"
-          data-address-autocomplete-target="error"
-          style="display: none;">
-        Please select a location.
-      </div>
+      <% unless editing %>
+        <input type="text"
+               class="form-control mt-2"
+               placeholder="AI selected location will appear here"
+               readonly
+               data-training-voice-target="placeDisplay">
+      <% end %>
     </div>
 
     <%= f.input :date,
@@ -114,9 +131,12 @@
         label: "Date & Time",
         input_html: {
           type: "datetime-local",
-          min: Time.current.strftime("%Y-%m-%dT%H:%M"),
+          min: 2.hours.from_now.strftime("%Y-%m-%dT%H:%M"),
           value: training.date&.strftime("%Y-%m-%dT%H:%M"),
-          data: { training_voice_target: "date" }
+          data: {
+            training_form_target: "field",
+            training_voice_target: "date"
+          }
         } %>
 
     <%= f.input :duration,
@@ -124,65 +144,91 @@
         placeholder: "e.g. 60",
         input_html: {
           min: 1,
-          data: { training_voice_target: "duration" }
+          data: {
+            training_form_target: "field",
+            training_voice_target: "duration"
+          }
         } %>
 
     <% unless editing %>
-    <%= f.input :description,
-        as: :text,
-        label: "About this session",
-        placeholder: "Describe what clients will do, the intensity level, what to bring...",
-        input_html: {
-          rows: 4,
-          data: { training_voice_target: "description" }
-        } %>
-        <% end %>
+      <%= f.input :description,
+          as: :text,
+          label: "About this session",
+          placeholder: "Describe what clients will do, the intensity level, what to bring...",
+          input_html: {
+            rows: 4,
+            data: {
+              training_form_target: "field",
+              training_voice_target: "description"
+            }
+          } %>
+    <% end %>
   </div>
 
   <% unless editing %>
-  <div class="training-new-card">
-    <h2>Pricing & Capacity</h2>
+    <div class="training-new-card">
+      <h2>Pricing & Capacity</h2>
 
-    <div class="training-new-price-group">
-      <label class="training-new-label">Price per session (€)</label>
-      <div class="training-new-price-wrap">
-        <span class="training-new-currency">€</span>
-        <input
-          type="number"
-          name="training[price]"
-          step="0.01"
-          min="0"
-          placeholder="85.00"
-          value="<%= training.coach_price_cents.to_i > 0 ? sprintf('%.2f', training.coach_price_cents / 100.0) : '' %>"
-          class="form-control training-new-price-input"
-          data-training-voice-target="price"
-        >
+      <div class="training-new-price-group">
+        <label class="training-new-label">Price per session (€)</label>
+
+        <div class="training-new-price-wrap">
+          <span class="training-new-currency">€</span>
+
+          <input
+            type="number"
+            name="training[price]"
+            step="0.01"
+            min="0.01"
+            placeholder="85.00"
+            value="<%= training.coach_price_cents.to_i > 0 ? sprintf('%.2f', training.coach_price_cents / 100.0) : '' %>"
+            class="form-control training-new-price-input"
+            data-training-form-target="field"
+            data-training-voice-target="price"
+          >
+        </div>
+
+        <small class="training-new-hint">Clients split this equally — more participants means lower price per person.</small>
       </div>
-      <small class="training-new-hint">Clients split this equally — more participants means lower price per person.</small>
+
+      <div data-controller="capacity" data-action="submit->capacity#validate">
+        <%= f.input :min_people,
+            label: "Minimum participants",
+            placeholder: "e.g. 2",
+            input_html: {
+              min: 2,
+              data: {
+                capacity_target: "min",
+                training_form_target: "field",
+                training_voice_target: "minPeople",
+                action: "input->capacity#syncMax"
+              }
+            } %>
+
+        <%= f.input :max_people,
+            label: "Maximum participants",
+            placeholder: "e.g. 10",
+            input_html: {
+              min: 2,
+              data: {
+                capacity_target: "max",
+                training_form_target: "field",
+                training_voice_target: "maxPeople"
+              }
+            } %>
+      </div>
     </div>
-
-    <%= f.input :min_people,
-        label: "Minimum participants",
-        placeholder: "e.g. 2",
-        input_html: {
-          min: 2,
-          data: { training_voice_target: "minPeople" }
-        } %>
-
-    <%= f.input :max_people,
-        label: "Maximum participants",
-        placeholder: "e.g. 10",
-        input_html: {
-          min: 2,
-          data: { training_voice_target: "maxPeople" }
-        } %>
-  </div>
   <% end %>
 
   <%= f.hidden_field :status, value: training.status.presence || "draft" %>
 
   <div class="training-new-actions">
-    <%= f.button :submit, submit_label, class: "training-new-submit" %>
+    <%= f.button :submit,
+        submit_label,
+        class: "training-new-submit",
+        disabled: true,
+        data: { training_form_target: "submit" } %>
+
     <%= link_to "Cancel", cancel_path, class: "training-new-cancel" %>
   </div>
 <% end %>

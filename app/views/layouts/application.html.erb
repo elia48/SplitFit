@@ -1,13 +1,31 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Split Fit" %></title>
+    <title><%= content_for(:title) || "SplitFit" %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Split Fit">
+    <meta name="application-name" content="SplitFit">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <%# Open Graph defaults — overridden per-page via content_for :og_* %>
+    <meta property="og:site_name" content="SplitFit">
+    <meta property="og:type"      content="website">
+    <meta property="og:title"     content="<%= content_for?(:og_title) ? yield(:og_title) : "SplitFit — Train like a Pro, Pay like a Group" %>">
+    <meta property="og:description" content="<%= content_for?(:og_description) ? yield(:og_description) : "Book group fitness sessions and split the cost. The more people join, the less everyone pays." %>">
+    <meta property="og:url"       content="<%= content_for?(:og_url) ? yield(:og_url) : request.original_url %>">
+    <% if content_for?(:og_image) %>
+      <meta property="og:image" content="<%= yield(:og_image) %>">
+    <% end %>
+
+    <%# Twitter / X card %>
+    <meta name="twitter:card"        content="summary_large_image">
+    <meta name="twitter:title"       content="<%= content_for?(:og_title) ? yield(:og_title) : "SplitFit — Train like a Pro, Pay like a Group" %>">
+    <meta name="twitter:description" content="<%= content_for?(:og_description) ? yield(:og_description) : "Book group fitness sessions and split the cost. The more people join, the less everyone pays." %>">
+    <% if content_for?(:og_image) %>
+      <meta name="twitter:image" content="<%= yield(:og_image) %>">
+    <% end %>
 
     <%= yield :head %>
 

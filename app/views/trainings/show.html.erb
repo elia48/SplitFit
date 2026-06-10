@@ -1,3 +1,10 @@
+<% content_for :og_title, "#{@training.workout_type} with #{@coach.name} — SplitFit" %>
+<% content_for :og_description, "Join #{@training.workout_type} in #{@training.place.split(',').first.strip} on #{@training.date.strftime('%d %b %Y')}. From €#{format_price(@training.min_price_cents)}/person — the more people join, the less you pay." %>
+<% content_for :og_url, training_url(@training) %>
+<% if (img = training_image(@training)) %>
+  <% content_for :og_image, img %>
+<% end %>
+
 <div class="training-show-page">
 <div class="training-show">
 
@@ -48,7 +55,7 @@
         <div class="training-show__stat-icon"><i class="fa-regular fa-calendar"></i></div>
         <div class="training-show__stat-content">
           <span class="training-show__stat-label">Date</span>
-          <span class="training-show__stat-value"><%= @training.date.strftime("%d %b %Y") %></span>
+          <span class="training-show__stat-value"><%= @training.date.strftime("%d/%m/%Y") %></span>
         </div>
       </div>
 
@@ -61,18 +68,18 @@
       </div>
 
       <div class="training-show__stat">
-        <div class="training-show__stat-icon"><i class="fa-solid fa-location-dot"></i></div>
-        <div class="training-show__stat-content">
-          <span class="training-show__stat-label">Location</span>
-          <span class="training-show__stat-value"><%= @training.place.split(",").first(2).join(",").strip %></span>
-        </div>
-      </div>
-
-      <div class="training-show__stat">
         <div class="training-show__stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
         <div class="training-show__stat-content">
           <span class="training-show__stat-label">Duration</span>
           <span class="training-show__stat-value"><%= @training.duration %> min</span>
+        </div>
+      </div>
+
+      <div class="training-show__stat training-show__stat--full">
+        <div class="training-show__stat-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="training-show__stat-content">
+          <span class="training-show__stat-label">Location</span>
+          <span class="training-show__stat-value"><%= @training.place.split(",").first(2).join(",").strip %></span>
         </div>
       </div>
     </div>

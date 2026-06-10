@@ -141,6 +141,12 @@
   &:hover {
     background: $primary-dark;
   }
+
+  &:disabled {
+    background: #e0d0c8;
+    color: #b0a09a;
+    cursor: not-allowed;
+  }
 }
 
 .training-new-cancel {

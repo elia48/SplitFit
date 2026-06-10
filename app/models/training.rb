@@ -8,11 +8,17 @@ class Training < ApplicationRecord
   validates :coach_price_cents, :duration, :date, :place, :workout_type, :status, :min_people, :max_people,
             presence: true
   validates :min_people, numericality: { greater_than_or_equal_to: 2 }
+  validate :date_at_least_two_hours_from_now, if: -> { date.present? && new_record? }
+  validates :max_people, numericality: { greater_than_or_equal_to: :min_people }, if: -> { min_people.present? }
 
   geocoded_by :place
   after_validation :geocode, if: :will_save_change_to_place?
 
   after_commit :schedule_close_job, if: :should_reschedule_close?
+
+  def locked?
+    date.present? && Time.current >= date - 1.hour && Time.current < date
+  end
 
   def current_price_cents
     people_count = bookings.paid.count + 1
@@ -33,6 +39,10 @@ class Training < ApplicationRecord
   end
 
   private
+
+  def date_at_least_two_hours_from_now
+    errors.add(:date, "must be at least 2 hours from now") if date <= 2.hours.from_now
+  end
 
   def should_reschedule_close?
     status == "open" &&

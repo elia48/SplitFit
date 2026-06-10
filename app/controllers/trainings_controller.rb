@@ -3,12 +3,14 @@ class TrainingsController < ApplicationController
   def index
     @trainings = policy_scope(Training).where(status: %w[open full]).where("date > ?", Time.current)
     @markers = @trainings.geocoded.map do |training|
+      own = training.user_id == current_user.id
       {
         lat: training.latitude,
         lng: training.longitude,
+        is_own: own,
         info_window_html: render_to_string(
           partial: "info_window",
-          locals: { training: training }
+          locals: { training: training, is_own: own }
         )
       }
     end
@@ -109,13 +111,15 @@ class TrainingsController < ApplicationController
       user: current_user,
       coach: @training.user
     )
+    own = @training.user_id == current_user.id
     @markers = [
       {
         lat: @training.latitude,
         lng: @training.longitude,
+        is_own: own,
         info_window_html: render_to_string(
           partial: "info_window",
-          locals: { training: @training }
+          locals: { training: @training, is_own: own }
         )
       }
     ]
@@ -132,7 +136,7 @@ class TrainingsController < ApplicationController
     @training.coach_price_cents = price_in_cents
     authorize @training
     if @training.save
-      redirect_to trainings_path, notice: "Training created."
+      redirect_to @training, notice: "Training created."
     else
       render :new, status: :unprocessable_entity
     end

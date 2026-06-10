@@ -34,7 +34,7 @@ class RetellController < ApplicationController
     response = http.request(request)
 
     Rails.logger.info("Retell status: #{response.code}")
-    Rails.logger.info("Retell body: #{response.body}")
+    # Rails.logger.info("Retell body: #{response.body}")
 
     body = JSON.parse(response.body)
 

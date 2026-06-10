@@ -1,12 +1,47 @@
-<h5><%= training.workout_type %></h5>
+<div class="map-popup">
+  <% if (img = training_image(training)) %>
+    <div class="map-popup__img-wrap">
+      <img src="<%= img %>" class="map-popup__img" alt="<%= training.workout_type %>">
+      <div class="map-popup__img-overlay"></div>
+      <span class="map-popup__type"><%= training.workout_type %></span>
+      <% if is_own %>
+        <span class="map-popup__own-badge">Your session</span>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="map-popup__no-img">
+      <span class="map-popup__type"><%= training.workout_type %></span>
+      <% if is_own %>
+        <span class="map-popup__own-badge">Your session</span>
+      <% end %>
+    </div>
+  <% end %>
 
-<p>
-  with <%= training.user.name %>
-</p>
+  <div class="map-popup__body">
+    <p class="map-popup__coach">with <%= training.user.name %></p>
 
-<p>
-  €<%= sprintf("%.2f", training.current_price_cents / 100.0) %>
-</p>
+    <div class="map-popup__details">
+      <div class="map-popup__detail">
+        <i class="fa-regular fa-calendar"></i>
+        <%= training.date.strftime("%-d %b · %H:%M") %>
+      </div>
+      <div class="map-popup__detail">
+        <i class="fa-solid fa-hourglass-half"></i>
+        <%= training.duration %> min
+      </div>
+      <div class="map-popup__detail">
+        <i class="fa-solid fa-users"></i>
+        <%= training.bookings.paid.count %> / <%= training.max_people %> spots filled
+      </div>
+    </div>
 
-<%= link_to "View session",
-            training_path(training) %>
+    <div class="map-popup__footer">
+      <div class="map-popup__price">
+        €<%= sprintf("%.0f", training.current_price_cents / 100.0) %><span>/person</span>
+      </div>
+      <%= link_to training_path(training), class: "map-popup__btn" do %>
+        View <i class="fa-solid fa-arrow-right"></i>
+      <% end %>
+    </div>
+  </div>
+</div>

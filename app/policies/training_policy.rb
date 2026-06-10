@@ -39,10 +39,6 @@ class TrainingPolicy < ApplicationPolicy
       record.status != "closed"
   end
 
-  def ai_fill?
-    create?
-  end
-
   class Scope < ApplicationPolicy::Scope
     def resolve
       scope.where.not(status: "draft")

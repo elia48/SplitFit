@@ -1,0 +1,35 @@
+<% content_for :fullscreen, true %>
+
+<div class="sl-page">
+<div class="sl-page__inner">
+
+  <%# ── Hero ──────────────────────────────────────────────────────── %>
+  <section class="sl-hero">
+
+    <span class="sl-hero__logo">SplitFit</span>
+    <h1 class="sl-hero__tagline">Train like a Pro,<br>Pay&nbsp;like a Group.</h1>
+
+    <div class="sl-coach__card">
+    <div class="sl-coach__actions">
+      <%= link_to new_training_path, class: "sl-hero__cta sl-coach__cta--primary" do %>
+        <i class="fa-solid fa-plus"></i> Create a new session
+      <% end %>
+
+      <%= link_to trainings_path, class: "sl-coach__cta--share" do %>
+        <i class="fa-solid fa-magnifying-glass"></i> See all trainings
+      <% end %>
+    </div>
+    </div>
+
+  </section>
+
+  <%# ── About ─────────────────────────────────────────────────────── %>
+  <section class="sl-about">
+    <p class="sl-about__body">
+      Create group sessions and let clients split the cost.
+      The more people join, the more attractive your session becomes.
+    </p>
+  </section>
+
+</div>
+</div>

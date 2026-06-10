@@ -6,4 +6,7 @@ class PagesController < ApplicationController
 
   def search
   end
+
+  def coach_welcome
+  end
 end

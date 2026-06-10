@@ -219,6 +219,10 @@
   padding: 12px;
 
   box-shadow: 0 8px 22px rgba(80, 40, 25, 0.08);
+
+  &--own {
+    box-shadow: 0 8px 22px rgba(80, 40, 25, 0.08), 0 0 0 2px rgba(255, 100, 40, 0.35), 0 6px 24px rgba(255, 100, 40, 0.22);
+  }
 }
 
 .trainings-index-card-image {

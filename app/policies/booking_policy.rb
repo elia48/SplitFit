@@ -4,6 +4,7 @@ class BookingPolicy < ApplicationPolicy
   end
 
   def create?
+    return false if record.training.locked?
     return false if record.training.user == user
     return false if record.training.bookings.paid.count >= record.training.max_people
     return false if Booking.exists?(user: user, training: record.training)

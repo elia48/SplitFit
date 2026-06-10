@@ -114,8 +114,12 @@
 // ── Stats strip ──────────────────────────────────────────────────────
 .training-show__stats {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 10px;
+
+  &--full, .training-show__stat--full {
+    grid-column: 1 / -1;
+  }
 }
 
 .training-show__stat {

@@ -1,7 +1,7 @@
 class TrainingsController < ApplicationController
   before_action :set_training, only: %i[show edit update cancel publish close]
   def index
-    @trainings = policy_scope(Training).where(status: %w[open full])
+    @trainings = policy_scope(Training).where(status: %w[open full]).where("date > ?", Time.current)
     @markers = @trainings.geocoded.map do |training|
       {
         lat: training.latitude,
@@ -42,12 +42,20 @@ class TrainingsController < ApplicationController
       )
     end
 
+    price_per_person_sql = <<~SQL
+      coach_price_cents / GREATEST(
+        (SELECT COUNT(*) FROM bookings b
+         WHERE b.training_id = trainings.id AND b.status = 'paid') + 1,
+        min_people
+      )
+    SQL
+
     if params[:min_price].present?
-      @trainings = @trainings.where("coach_price_cents >= ?", params[:min_price].to_i * 100)
+      @trainings = @trainings.where("(#{price_per_person_sql}) >= ?", params[:min_price].to_i * 100)
     end
 
     if params[:max_price].present?
-      @trainings = @trainings.where("coach_price_cents <= ?", params[:max_price].to_i * 100)
+      @trainings = @trainings.where("(#{price_per_person_sql}) <= ?", params[:max_price].to_i * 100)
     end
 
     if params[:time_of_day].present?
@@ -124,7 +132,7 @@ class TrainingsController < ApplicationController
     @training.coach_price_cents = price_in_cents
     authorize @training
     if @training.save
-      redirect_to @training, notice: "Training created."
+      redirect_to trainings_path, notice: "Training created."
     else
       render :new, status: :unprocessable_entity
     end

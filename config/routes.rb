@@ -24,10 +24,6 @@ Rails.application.routes.draw do
       patch :publish
       patch :close
     end
-
-    collection do
-      post :ai_fill
-    end
     
     resources :bookings, only: [:create]
     resources :reviews, only: [:create]
@@ -48,4 +44,9 @@ Rails.application.routes.draw do
   get "stripe/onboard", to: "stripe_connect#onboard", as: :stripe_connect_onboard
   get "stripe/return",  to: "stripe_connect#return",  as: :stripe_connect_return
   get "stripe/refresh", to: "stripe_connect#refresh", as: :stripe_connect_refresh
+  
+  namespace :retell do
+    post "web_call"
+    post "call_data"
+  end
 end

@@ -1,5 +1,8 @@
 <% editing ||= false %>
-<%= simple_form_for training do |f| %>
+<%= simple_form_for training,
+    html: {
+      data: (editing ? {} : { controller: "training-voice" }) 
+    } do |f| %>
   <%= f.error_notification message: "Please fix the errors below:" %>
 
   <div class="training-new-card">
@@ -24,22 +27,86 @@
     </div>
   </div>
 
+  <% unless editing %>
+    <div class="training-new-card training-ai-card"
+         data-training-voice-target="card">
+      <div class="training-ai-header">
+        <div class="training-ai-icon-wrap">
+          <i class="fa-solid fa-microphone"></i>
+        </div>
+        <div>
+          <h2 class="mb-0">AI Voice Assistant</h2>
+          <p class="training-new-hint mb-0">Describe your session out loud — AI fills the form for you.</p>
+        </div>
+      </div>
+
+      <div class="training-ai-controls">
+        <button type="button"
+                class="training-ai-start-btn"
+                data-training-voice-target="startBtn"
+                data-action="click->training-voice#startCall">
+          <i class="fa-solid fa-microphone"></i>
+          Start Voice Assistant
+        </button>
+
+        <button type="button"
+                class="training-ai-stop-btn"
+                data-training-voice-target="stopBtn"
+                data-action="click->training-voice#stopCall"
+                disabled>
+          <i class="fa-solid fa-stop"></i>
+          Stop
+        </button>
+      </div>
+
+      <div class="training-ai-status-row">
+        <span class="training-ai-status-dot"></span>
+        <span class="training-ai-status-text" data-training-voice-target="status">Idle</span>
+      </div>
+
+      <textarea class="form-control training-ai-transcript"
+                data-training-voice-target="transcript"
+                rows="5"
+                readonly
+                placeholder="Your conversation with the AI will appear here…"></textarea>
+    </div>
+  <% end %>
+
   <div class="training-new-card">
     <h2>Session Details</h2>
 
     <% unless editing %>
     <%= f.input :workout_type,
-        as: :select,
-        collection: ["HIIT", "Yoga", "CrossFit", "Boxing", "Pilates", "Strength", "Running", "Cycling"],
-        include_blank: "Select type",
-        label: "Workout Type" %>
+      as: :select,
+      collection: ["HIIT", "Yoga", "CrossFit", "Boxing", "Pilates", "Strength", "Running", "Cycling"],
+      include_blank: "Select type",
+      label: "Workout Type",
+      input_html: { data: { training_voice_target: "workoutType" } } %>
     <% end %>
 
     <div data-controller="address-autocomplete"
-         data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>">
+        data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>">
       <label class="form-label">Location</label>
+
       <div data-address-autocomplete-target="map"></div>
-      <%= f.hidden_field :place, data: { address_autocomplete_target: "address" } %>
+
+      <%= f.hidden_field :place,
+          data: {
+            address_autocomplete_target: "address",
+            training_voice_target: "place"
+          } %>
+
+      <input type="text"
+            class="form-control mt-2"
+            placeholder="AI selected location will appear here"
+            readonly
+            data-training-voice-target="placeDisplay">
+
+      <div class="invalid-feedback d-block"
+          data-address-autocomplete-target="error"
+          style="display: none;">
+        Please select a location.
+      </div>
     </div>
 
     <%= f.input :date,
@@ -48,21 +115,28 @@
         input_html: {
           type: "datetime-local",
           min: Time.current.strftime("%Y-%m-%dT%H:%M"),
-          value: training.date&.strftime("%Y-%m-%dT%H:%M")
+          value: training.date&.strftime("%Y-%m-%dT%H:%M"),
+          data: { training_voice_target: "date" }
         } %>
 
     <%= f.input :duration,
         label: "Duration (minutes)",
         placeholder: "e.g. 60",
-        input_html: { min: 1 } %>
+        input_html: {
+          min: 1,
+          data: { training_voice_target: "duration" }
+        } %>
 
     <% unless editing %>
     <%= f.input :description,
         as: :text,
         label: "About this session",
         placeholder: "Describe what clients will do, the intensity level, what to bring...",
-        input_html: { rows: 4 } %>
-    <% end %>
+        input_html: {
+          rows: 4,
+          data: { training_voice_target: "description" }
+        } %>
+        <% end %>
   </div>
 
   <% unless editing %>
@@ -81,6 +155,7 @@
           placeholder="85.00"
           value="<%= training.coach_price_cents.to_i > 0 ? sprintf('%.2f', training.coach_price_cents / 100.0) : '' %>"
           class="form-control training-new-price-input"
+          data-training-voice-target="price"
         >
       </div>
       <small class="training-new-hint">Clients split this equally — more participants means lower price per person.</small>
@@ -89,12 +164,18 @@
     <%= f.input :min_people,
         label: "Minimum participants",
         placeholder: "e.g. 2",
-        input_html: { min: 2 } %>
+        input_html: {
+          min: 2,
+          data: { training_voice_target: "minPeople" }
+        } %>
 
     <%= f.input :max_people,
         label: "Maximum participants",
         placeholder: "e.g. 10",
-        input_html: { min: 1 } %>
+        input_html: {
+          min: 2,
+          data: { training_voice_target: "maxPeople" }
+        } %>
   </div>
   <% end %>
 

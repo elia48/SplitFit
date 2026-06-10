@@ -1,8 +1,10 @@
 <% content_for :og_title, "#{@training.workout_type} with #{@coach.name} — SplitFit" %>
 <% content_for :og_description, "Join #{@training.workout_type} in #{@training.place.split(',').first.strip} on #{@training.date.strftime('%d %b %Y')}. From €#{format_price(@training.min_price_cents)}/person — the more people join, the less you pay." %>
 <% content_for :og_url, training_url(@training) %>
-<% if (img = training_image(@training)) %>
+<% if (img = training_og_image_url(@training)) %>
   <% content_for :og_image, img %>
+  <% content_for :og_image_width, "1200" %>
+  <% content_for :og_image_height, "630" %>
 <% end %>
 
 <div class="training-show-page">
@@ -55,7 +57,7 @@
         <div class="training-show__stat-icon"><i class="fa-regular fa-calendar"></i></div>
         <div class="training-show__stat-content">
           <span class="training-show__stat-label">Date</span>
-          <span class="training-show__stat-value"><%= @training.date.strftime("%d/%m/%Y") %></span>
+          <span class="training-show__stat-value"><%= @training.date.strftime("%-d %b %Y") %></span>
         </div>
       </div>
 

@@ -149,7 +149,9 @@ export default class extends Controller {
     const location = variables.location || ""
     
     this.workoutTypeTarget.value = variables.workout_type || ""
-    this.placeTarget.value = location
+    if (this.hasPlaceDisplayTarget) {
+      this.placeDisplayTarget.value = location
+    }
     this.placeDisplayTarget.value = location
     this.dateTarget.value = variables.date_time || ""
     this.durationTarget.value = variables.duration_minutes || ""
@@ -172,7 +174,6 @@ dispatchInputEvents() {
   const targets = [
     this.workoutTypeTarget,
     this.placeTarget,
-    this.placeDisplayTarget,
     this.dateTarget,
     this.durationTarget,
     this.descriptionTarget,
@@ -180,6 +181,10 @@ dispatchInputEvents() {
     this.minPeopleTarget,
     this.maxPeopleTarget
   ]
+
+  if (this.hasPlaceDisplayTarget) {
+    targets.push(this.placeDisplayTarget)
+  }
 
   targets.forEach((target) => {
     target.dispatchEvent(new Event("input", { bubbles: true }))
@@ -234,4 +239,5 @@ async parseResponse(response) {
       this.cardTarget.dataset.voiceState = state
     }
   }
+}
 }

@@ -131,6 +131,7 @@
   align-items: center;
   gap: 10px;
   box-shadow: 0 2px 8px rgba(59,36,29,0.04);
+  min-width: 0;
 }
 
 .training-show__stat-icon {
@@ -161,12 +162,11 @@
 }
 
 .training-show__stat-value {
+  display: block;
   font-size: 13px;
   font-weight: 800;
   color: #2d1a15;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 // ── Card ─────────────────────────────────────────────────────────────

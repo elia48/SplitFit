@@ -96,7 +96,7 @@
         <% coach = training.user %>
         <% paid_count = training.bookings.count { |b| b.status == "paid" } %>
         <% already_joined = @my_booked_training_ids.include?(training.id) %>
-        <div class="trainings-index-card">
+        <div class="trainings-index-card <%= 'trainings-index-card--own' if training.user == current_user %>">
 
           <% if (card_img = training_image(training)) %>
             <img class="trainings-index-card-image" src="<%= card_img %>" alt="Training image">
@@ -106,7 +106,9 @@
 
           <div class="trainings-index-card-content">
             <div class="trainings-index-card-top-row">
-              <span class="trainings-index-status-badge trainings-index-status-<%= training.status %>"><%= training.status.capitalize %></span>
+              <span class="trainings-index-status-badge trainings-index-status-<%= training.locked? ? 'closed' : training.status %>">
+                <%= training.locked? ? "Closed" : training.status.capitalize %>
+              </span>
             </div>
 
             <h2><%= training.workout_type %></h2>

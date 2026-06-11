@@ -1,11 +1,11 @@
 class TrainingsController < ApplicationController
   before_action :set_training, only: %i[show edit update cancel publish close]
-  skip_before_action :authenticate_user!, only: [:show]
+  skip_before_action :authenticate_user!, only: %i[show index]
 
   def index
     @trainings = policy_scope(Training).where(status: %w[open full]).where("date > ?", 2.hours.from_now)
     @markers = @trainings.geocoded.map do |training|
-      own = training.user_id == current_user.id
+      own = user_signed_in? && training.user_id == current_user.id
       {
         lat: training.latitude,
         lng: training.longitude,
@@ -100,7 +100,7 @@ class TrainingsController < ApplicationController
     end
 
     booked_scope = @trainings.unscope(:select, :order).select(:id)
-    @my_booked_training_ids = current_user.bookings.where(training_id: booked_scope).pluck(:training_id).to_set
+    @my_booked_training_ids = user_signed_in? ? current_user.bookings.where(training_id: booked_scope).pluck(:training_id).to_set : Set.new
     @trainings = @trainings.includes(:bookings, :photo_attachment, user: %i[received_reviews avatar_attachment])
   end
 

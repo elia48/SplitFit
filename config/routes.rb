@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   
   resources :users, only: [:show, :edit, :update]
 
-  root to: "trainings#index"
+  authenticated :user do
+    root to: "trainings#index", as: :authenticated_root
+  end
+  devise_scope :user do
+    root to: "devise/sessions#new"
+  end
   get "search", to: "pages#search", as: :search
   get "coach-welcome", to: "pages#coach_welcome", as: :coach_welcome
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

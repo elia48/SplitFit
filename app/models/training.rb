@@ -8,7 +8,7 @@ class Training < ApplicationRecord
   validates :coach_price_cents, :duration, :date, :place, :workout_type, :status, :min_people, :max_people,
             presence: true
   validates :min_people, numericality: { greater_than_or_equal_to: 2 }
-  validate :date_at_least_two_hours_from_now, if: -> { date.present? && new_record? }
+  # validate :date_at_least_two_hours_from_now, if: -> { date.present? && new_record? }
   validates :max_people, numericality: { greater_than_or_equal_to: :min_people }, if: -> { min_people.present? }
 
   geocoded_by :place

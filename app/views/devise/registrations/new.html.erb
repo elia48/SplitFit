@@ -1,30 +1,77 @@
-<h2>Sign up</h2>
+<% content_for :fullscreen, true %>
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= f.error_notification %>
+<div class="auth-page">
+  <div class="auth-page__inner">
 
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
-    <%= f.input :name,
-                required: true,
-                input_html: { autocomplete: "name" }%>
-    <%= f.input :is_coach, label:"Are you a coach?"%>
-    <%= f.input :avatar, as: :file, label:"upload your picture" %>
-    <%= f.input :password,
-                required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
-                input_html: { autocomplete: "new-password" } %>
-    <%= f.input :password_confirmation,
-                required: true,
-                input_html: { autocomplete: "new-password" } %>
+    <div class="auth-page__brand">
+      <span class="auth-page__logo">SplitFit</span>
+      <p class="auth-page__tagline">Train like a Pro, Pay like a Group.</p>
+    </div>
+
+    <div class="auth-card">
+      <h1 class="auth-card__title">Create your account</h1>
+      <p class="auth-card__subtitle">Join the community</p>
+
+      <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |f| %>
+        <%= f.error_notification message: "Please fix the errors below:" %>
+
+        <%= f.input :email,
+            label: "Email",
+            required: true,
+            autofocus: true,
+            input_html: { autocomplete: "email", class: "auth-input", placeholder: "you@example.com" },
+            label_html: { class: "auth-label" },
+            wrapper_html: { class: "auth-field" } %>
+
+        <%= f.input :name,
+            label: "Full name",
+            required: true,
+            input_html: { autocomplete: "name", class: "auth-input", placeholder: "Your name" },
+            label_html: { class: "auth-label" },
+            wrapper_html: { class: "auth-field" } %>
+
+        <%= f.input :password,
+            label: "Password",
+            required: true,
+            hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+            input_html: { autocomplete: "new-password", class: "auth-input", placeholder: "••••••••" },
+            label_html: { class: "auth-label" },
+            wrapper_html: { class: "auth-field" } %>
+
+        <%= f.input :password_confirmation,
+            label: "Confirm password",
+            required: true,
+            input_html: { autocomplete: "new-password", class: "auth-input", placeholder: "••••••••" },
+            label_html: { class: "auth-label" },
+            wrapper_html: { class: "auth-field" } %>
+
+        <div class="auth-field">
+          <label class="auth-label">Profile photo <span class="auth-label__optional">(optional)</span></label>
+          <%= f.input :avatar, as: :file,
+              label: false,
+              input_html: { class: "auth-file-input", accept: "image/*" },
+              wrapper_html: { class: "auth-field--no-margin" } %>
+        </div>
+
+        <label class="auth-coach-toggle" for="user_is_coach">
+          <%= f.input :is_coach,
+              as: :boolean,
+              label: false,
+              input_html: { class: "auth-coach-toggle__checkbox", id: "user_is_coach" },
+              wrapper_html: { class: "auth-coach-toggle__wrapper" } %>
+          <div>
+            <span class="auth-coach-toggle__label">I'm a coach</span>
+            <span class="auth-coach-toggle__hint">I want to create and host sessions</span>
+          </div>
+        </label>
+
+        <%= f.button :submit, "Create account", class: "auth-btn" %>
+      <% end %>
+
+      <div class="auth-links">
+        <%= link_to "Already have an account? Log in", new_session_path(resource_name), class: "auth-link" %>
+      </div>
+    </div>
+
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

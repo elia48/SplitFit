@@ -1,0 +1,257 @@
+.auth-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: $background;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+}
+
+.auth-page__inner {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+// ── Brand ──────────────────────────────────────────────────────────────
+.auth-page__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.auth-page__logo {
+  font-family: $headers-font;
+  font-size: clamp(64px, 20vw, 88px);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $primary;
+  line-height: 1;
+}
+
+.auth-page__tagline {
+  font-size: 17px;
+  color: $text-secondary;
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+// ── Card ───────────────────────────────────────────────────────────────
+.auth-card {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 24px;
+  padding: 28px 24px;
+  box-shadow: 0 4px 24px rgba(59, 36, 29, 0.06);
+}
+
+.auth-card__title {
+  font-size: 22px;
+  font-weight: 800;
+  color: $text-primary;
+  margin: 0 0 4px;
+}
+
+.auth-card__subtitle {
+  font-size: 14px;
+  color: $text-secondary;
+  margin: 0 0 24px;
+}
+
+// ── Form ───────────────────────────────────────────────────────────────
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+
+  &--no-margin { margin-bottom: 0; }
+
+  // Remove simple_form default wrapper margin
+  .form-group { margin-bottom: 0; }
+}
+
+.auth-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.auth-label__optional {
+  font-weight: 400;
+  color: $text-muted;
+}
+
+.auth-input {
+  width: 100%;
+  background: $background;
+  border: 1.5px solid $border;
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-size: 15px;
+  color: $text-primary;
+  outline: none;
+  transition: border-color 0.15s;
+
+  &::placeholder { color: $text-muted; }
+  &:focus { border-color: $primary; background: #fff; }
+}
+
+.auth-file-input {
+  font-size: 13px;
+  color: $text-secondary;
+  width: 100%;
+}
+
+.auth-checkbox-field {
+  margin-bottom: 14px;
+  label { font-size: 13px; color: $text-secondary; }
+}
+
+// ── Coach toggle ───────────────────────────────────────────────────────
+.auth-coach-toggle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  background: $background;
+  border: 1.5px solid $border;
+  border-radius: 10px;
+  padding: 7px 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+
+  &:hover { border-color: $primary; }
+
+  &:has(input:checked) {
+    border-color: $primary;
+    background: $primary-light;
+  }
+}
+
+.auth-coach-toggle__content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-coach-toggle__icon {
+  font-size: 20px;
+  color: $primary;
+  width: 36px;
+  height: 36px;
+  background: $primary-light;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.auth-coach-toggle__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.auth-coach-toggle__hint {
+  display: block;
+  font-size: 11px;
+  color: $text-secondary;
+}
+
+.auth-coach-toggle__wrapper {
+  flex-shrink: 0;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+
+  input[type="hidden"] { display: none; }
+
+  input[type="checkbox"] {
+    display: block;
+    width: 16px;
+    height: 18px;
+    accent-color: $primary;
+    cursor: pointer;
+    appearance: auto;
+    margin: auto;
+    flex-shrink: 0;
+  }
+}
+
+// ── Button ─────────────────────────────────────────────────────────────
+.auth-btn {
+  width: 100%;
+  background: $primary;
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.15s;
+  box-shadow: 0 6px 20px rgba($primary, 0.25);
+  margin-top: 4px;
+
+  &:hover  { background: $primary-dark; }
+  &:active { transform: scale(0.99); }
+}
+
+// ── Links ──────────────────────────────────────────────────────────────
+.auth-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.auth-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: $primary;
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+
+  &--muted {
+    color: $text-muted;
+    font-weight: 400;
+  }
+}
+
+// ── Error messages ─────────────────────────────────────────────────────
+.auth-card {
+  #error_explanation, .error-notification {
+    background: #fdecea;
+    border: 1px solid #f5c6c6;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: $danger;
+  }
+
+  .field_with_errors .auth-input {
+    border-color: $danger;
+  }
+}

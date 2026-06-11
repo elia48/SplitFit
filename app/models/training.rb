@@ -54,7 +54,7 @@ class Training < ApplicationRecord
     SolidQueue::Job.find_by(active_job_id: close_job_id)&.destroy if close_job_id.present?
 
     run_at = date + duration.minutes
-    job = CloseTrainingJob.set(wait_until: run_at).perform_later(id)
+    # job = CloseTrainingJob.set(wait_until: run_at).perform_later(id)
     update_column(:close_job_id, job.job_id)
   end
 end

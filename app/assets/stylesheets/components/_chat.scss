@@ -155,7 +155,8 @@
 .chat-show {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 144px); // 72px top header + 72px bottom nav
+  height: calc(100vh - 144px);
+  height: calc(100dvh - 144px); // dvh fixes iOS Safari viewport inconsistency
   max-width: 430px;
   margin: 0 auto;
 }
@@ -415,6 +416,10 @@
   font-size: 14px;
   color: #2d1a15;
   outline: none;
+  resize: none;
+  height: 20px;
+  line-height: 20px;
+  overflow: hidden;
 
   &::placeholder {
     color: #a07060;

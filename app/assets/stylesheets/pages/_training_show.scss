@@ -115,9 +115,9 @@
 .training-show__stats {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
 
-  &--full, .training-show__stat--full {
+  .training-show__stat--full {
     grid-column: 1 / -1;
   }
 }
@@ -125,48 +125,53 @@
 .training-show__stat {
   background: #fffaf7;
   border: 1px solid #f0d6cd;
-  border-radius: 14px;
-  padding: 14px;
+  border-radius: 12px;
+  padding: 10px 8px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
   box-shadow: 0 2px 8px rgba(59,36,29,0.04);
   min-width: 0;
 }
 
 .training-show__stat-icon {
-  width: 36px;
-  height: 36px;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
   background: #ffe8df;
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ff6428;
-  font-size: 16px;
+  font-size: 12px;
   flex-shrink: 0;
 }
 
 .training-show__stat-content {
   min-width: 0;
+  overflow: hidden;
 }
 
 .training-show__stat-label {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   color: #a07060;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
+  white-space: nowrap;
 }
 
 .training-show__stat-value {
   display: block;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
   color: #2d1a15;
-  word-break: break-word;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 // ── Card ─────────────────────────────────────────────────────────────

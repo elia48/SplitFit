@@ -240,4 +240,3 @@ async parseResponse(response) {
     }
   }
 }
-}

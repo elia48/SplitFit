@@ -67,13 +67,14 @@
 .coach-show-score {
   display: inline-flex;
   gap: 6px;
-  background: rgba(255,250,247,0.18);
-  color: white;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
   border-radius: 999px;
-  padding: 6px 10px;
-  font-size: 12px;
+  padding: 6px 12px;
+  font-size: 13px;
   font-weight: 800;
   margin-bottom: 10px;
+  text-shadow: none;
 }
 
 .coach-show-speciality {

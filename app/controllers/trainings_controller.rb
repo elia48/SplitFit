@@ -3,7 +3,7 @@ class TrainingsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:show]
 
   def index
-    @trainings = policy_scope(Training).where(status: %w[open full]).where("date > ?", Time.current)
+    @trainings = policy_scope(Training).where(status: %w[open full]).where("date > ?", 2.hours.from_now)
     @markers = @trainings.geocoded.map do |training|
       own = training.user_id == current_user.id
       {
@@ -159,7 +159,6 @@ class TrainingsController < ApplicationController
     authorize @training
 
     TrainingCancellationService.new(@training).call
-    SolidQueue::Job.find_by(active_job_id: @training.close_job_id)&.destroy if @training.close_job_id.present?
     @training.update!(status: "cancelled")
 
     redirect_to @training, notice: "Session cancelled and all members fully refunded."
@@ -191,6 +190,7 @@ class TrainingsController < ApplicationController
 
   def set_training
     @training = Training.find(params[:id])
+    @training.close_if_due!
   end
 
   def training_params

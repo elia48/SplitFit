@@ -9,23 +9,16 @@ class UsersController < ApplicationController
 
     if @user.is_coach?
       training_includes = [:photo_attachment, user: :avatar_attachment]
-      @draft_trainings = @user.trainings.where(status: "draft").includes(training_includes)
+      @recent_reviews  = @user.received_reviews.order(created_at: :desc).limit(5).includes(:user)
+      @draft_trainings = @own_profile ? @user.trainings.where(status: "draft").includes(training_includes) : []
       @trainings       = @user.trainings.where.not(status: %w[closed cancelled draft]).where("date > ?", Time.current).includes(training_includes)
-      @past_trainings  = @user.trainings.where("date <= ?", Time.current).where.not(status: "draft").order(date: :desc).includes(training_includes)
+      @past_trainings  = @own_profile ? @user.trainings.where("date <= ?", Time.current).where.not(status: "draft").order(date: :desc).includes(training_includes) : []
     else
       now = Time.current
       booking_includes = { training: [:photo_attachment, user: :avatar_attachment] }
-      @confirmed_bookings = @user.bookings.joins(:training)
-                                 .where(status: "confirmed")
-                                 .where("trainings.date > ?", now)
-                                 .includes(booking_includes)
-      @pending_bookings   = @user.bookings.joins(:training)
-                                 .where(status: "pending")
-                                 .where("trainings.date > ?", now)
-                                 .includes(booking_includes)
-      @past_bookings      = @user.bookings.joins(:training)
-                                 .where("trainings.date <= ?", now)
-                                 .includes(booking_includes)
+      @confirmed_bookings = @own_profile ? @user.bookings.joins(:training).where(status: "confirmed").where("trainings.date > ?", now).includes(booking_includes) : []
+      @pending_bookings   = @own_profile ? @user.bookings.joins(:training).where(status: "pending").where("trainings.date > ?", now).includes(booking_includes) : []
+      @past_bookings      = @own_profile ? @user.bookings.joins(:training).where("trainings.date <= ?", now).includes(booking_includes) : []
     end
   end
 

@@ -19,7 +19,6 @@
       <div class="coach-show-hero-content">
         <% if @user.is_coach? %>
           <div class="coach-show-score">
-            <i class="fa-solid fa-star"></i>
             <span>
               <% if @user.average_rating.present? %>
                 <p>⭐ <%= @user.average_rating %>/5</p>
@@ -94,7 +93,6 @@
                 <p><%= training.place %></p>
                 <span>€<%= format_price(training.coach_price_cents) %>/pp</span>
               </div>
-              <i class="fa-regular fa-heart" style="margin-right:12px; color:#e8b4a0;"></i>
             <% end %>
           <% end %>
 
@@ -104,6 +102,27 @@
         </div>
       </section>
 
+      <section class="coach-show-card">
+        <h2>Reviews (<%= @user.received_reviews.count %>)</h2>
+        <% if @recent_reviews.any? %>
+          <% @recent_reviews.each do |review| %>
+            <div class="training-show__review-card">
+              <div class="training-show__review-header">
+                <span class="training-show__review-author"><%= review.user&.name&.split&.first || "Member" %></span>
+                <div class="training-show__review-stars">
+                  <% review.score.times do %><i class="fa-solid fa-star"></i><% end %>
+                  <% (5 - review.score).times do %><i class="fa-regular fa-star"></i><% end %>
+                </div>
+              </div>
+              <p class="training-show__review-text"><%= review.description %></p>
+            </div>
+          <% end %>
+        <% else %>
+          <p class="coach-show-empty">No reviews yet.</p>
+        <% end %>
+      </section>
+
+      <% if @own_profile %>
       <section class="coach-show-card">
         <h2>Training History</h2>
         <div class="coach-show-trainings">
@@ -127,6 +146,7 @@
           <% end %>
         </div>
       </section>
+      <% end %>
 
     <% else %>
 
@@ -178,6 +198,7 @@
         </div>
       </section>
 
+      <% if @own_profile %>
       <section class="coach-show-card">
         <h2>Training History</h2>
         <div class="coach-show-trainings">
@@ -201,6 +222,7 @@
           <% end %>
         </div>
       </section>
+      <% end %>
 
     <% end %>
 

@@ -8,13 +8,17 @@ class Training < ApplicationRecord
   validates :coach_price_cents, :duration, :date, :place, :workout_type, :status, :min_people, :max_people,
             presence: true
   validates :min_people, numericality: { greater_than_or_equal_to: 2 }
-  # validate :date_at_least_two_hours_from_now, if: -> { date.present? && new_record? }
+  validate :date_at_least_two_hours_from_now, if: -> { date.present? && (new_record? || will_save_change_to_date?) }
   validates :max_people, numericality: { greater_than_or_equal_to: :min_people }, if: -> { min_people.present? }
 
   geocoded_by :place
   after_validation :geocode, if: :will_save_change_to_place?
 
-  after_commit :schedule_close_job, if: :should_reschedule_close?
+  def close_if_due!
+    return unless %w[open full].include?(status)
+    return unless date.present? && Time.current >= date - 2.hours
+    update!(status: "closed")
+  end
 
   def locked?
     date.present? && Time.current >= date - 1.hour && Time.current < date
@@ -42,19 +46,5 @@ class Training < ApplicationRecord
 
   def date_at_least_two_hours_from_now
     errors.add(:date, "must be at least 2 hours from now") if date <= 2.hours.from_now
-  end
-
-  def should_reschedule_close?
-    status == "open" &&
-      date.present? && duration.present? &&
-      (saved_changes.keys & %w[status date duration]).any?
-  end
-
-  def schedule_close_job
-    SolidQueue::Job.find_by(active_job_id: close_job_id)&.destroy if close_job_id.present?
-
-    run_at = date + duration.minutes
-    # job = CloseTrainingJob.set(wait_until: run_at).perform_later(id)
-    # update_column(:close_job_id, job.job_id)
   end
 end

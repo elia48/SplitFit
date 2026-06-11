@@ -2,6 +2,11 @@ class BookingsController < ApplicationController
   before_action :set_booking, only: [:destroy]
   def create
     @training = Training.find(params[:training_id])
+    @training.close_if_due!
+
+    if @training.status == "closed"
+      return redirect_to training_path(@training), alert: "This session is no longer accepting bookings."
+    end
 
     existing_pending = current_user.bookings.pending.find_by(training: @training)
     if existing_pending

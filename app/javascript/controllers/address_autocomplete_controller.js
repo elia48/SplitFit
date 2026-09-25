@@ -30,6 +30,13 @@ export default class extends Controller {
     })
   }
 
+  setPlace(event) {
+    const place = event.detail.place || ""
+    this.addressTarget.value = place
+    this.geocoder.setInput(place)
+    if (place) this.hideError()
+  }
+
   requirePlace(event) {
     if (!this.addressTarget.value.trim()) {
       event.preventDefault()

@@ -99,7 +99,7 @@
 
     <div data-controller="address-autocomplete"
          data-address-autocomplete-api-key-value="<%= ENV["MAPBOX_API_KEY"] %>"
-         data-action="submit->address-autocomplete#requirePlace">
+         data-action="submit->address-autocomplete#requirePlace training-voice:place-filled->address-autocomplete#setPlace">
       <label class="form-label">Location</label>
 
       <div data-address-autocomplete-target="map"></div>

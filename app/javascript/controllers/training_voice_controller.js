@@ -149,10 +149,11 @@ export default class extends Controller {
     const location = variables.location || ""
     
     this.workoutTypeTarget.value = variables.workout_type || ""
+    // The hidden place field is what validation and submit read
+    this.placeTarget.value = location
     if (this.hasPlaceDisplayTarget) {
       this.placeDisplayTarget.value = location
     }
-    this.placeDisplayTarget.value = location
     this.dateTarget.value = variables.date_time || ""
     this.durationTarget.value = variables.duration_minutes || ""
     this.descriptionTarget.value = variables.description || ""
@@ -165,6 +166,8 @@ export default class extends Controller {
 }
 
 dispatchPlaceChanged() {
+  // Lets address-autocomplete show the AI location in the Mapbox search box
+  this.dispatch("place-filled", { target: this.placeTarget, detail: { place: this.placeTarget.value } })
   this.placeTarget.dispatchEvent(
     new CustomEvent("address-autocomplete:place-changed", { bubbles: true })
   )

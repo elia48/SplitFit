@@ -99,37 +99,6 @@ The goal is to make professional coaching affordable while allowing trainers to 
 
 ---
 
-## ⚙️ Installation
-
-Clone the repository
-
-```bash
-git clone https://github.com/elia48/SplitFit.git
-cd SplitFit
-```
-
-Install dependencies
-
-```bash
-bundle install
-```
-
-Create the database
-
-```bash
-rails db:create
-rails db:migrate
-rails db:seed
-```
-
-Run the server
-
-```bash
-bin/dev
-```
-
----
-
 ## 👥 Team
 
 Built by:

@@ -132,7 +132,7 @@ draft = Training.create!(
   place: "Parc de la Ciutadella, Barcelona",
   description: "A gentle morning yoga flow to start your week right. Bring your own mat and water bottle. Suitable for all levels.",
   status: "draft", coach_price_cents: 7000, duration: 60,
-  date: 18.days.from_now, min_people: 2, max_people: 10
+  date: 68.days.from_now, min_people: 2, max_people: 10
 )
 attach_image(draft, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013221/Alice_yoga_fzoriy.png", "alice_yoga.png")
 
@@ -147,7 +147,7 @@ open_few = Training.create!(
   place: "Barceloneta Beach, Barcelona",
   description: "High-intensity interval training on the beach. Expect sprints, burpees and circuit drills. Wear trainers suitable for sand.",
   status: "open", coach_price_cents: 6000, duration: 45,
-  date: 16.days.from_now, min_people: 2, max_people: 8
+  date: 66.days.from_now, min_people: 2, max_people: 8
 )
 attach_image(open_few, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013222/Alice_HIIT_njyoxd.png", "alice_hiit.png")
 
@@ -175,7 +175,7 @@ open_mid = Training.create!(
   place: "SportLife Diagonal, Avinguda Diagonal 534, Barcelona",
   description: "Full-body strength session focusing on compound lifts. All levels welcome — weights and equipment provided. Bring a towel.",
   status: "open", coach_price_cents: 9000, duration: 60,
-  date: 21.days.from_now, min_people: 3, max_people: 10
+  date: 71.days.from_now, min_people: 3, max_people: 10
 )
 attach_image(open_mid, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013221/Mario_strength_sjk4x7.png", "mario_strength_1.png")
 
@@ -200,7 +200,7 @@ full_training = Training.create!(
   place: "Boxing Club Barcelona, Carrer del Consell de Cent 310, Barcelona",
   description: "Boxing fundamentals: footwork, jab-cross combos and bag work. No experience needed. Gloves and wraps provided.",
   status: "full", coach_price_cents: 8000, duration: 60,
-  date: 14.days.from_now, min_people: 2, max_people: 4
+  date: 64.days.from_now, min_people: 2, max_people: 4
 )
 attach_image(full_training, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013647/Alice_boxing_m9tfph.png", "alice_boxing.png")
 
@@ -318,7 +318,7 @@ cancelled_training = Training.create!(
   place: "Studio Pilates Barcelona, Carrer de Provença 248, Barcelona",
   description: "Classic Pilates mat class focusing on breath, alignment and core control. Props and mats provided. Maximum 8 participants for personalised attention.",
   status: "cancelled", coach_price_cents: 6500, duration: 50,
-  date: 15.days.from_now, min_people: 2, max_people: 8
+  date: 65.days.from_now, min_people: 2, max_people: 8
 )
 attach_image(cancelled_training, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013221/Maria_pilates_io5et1.png", "maria_pilates.png")
 
@@ -328,7 +328,7 @@ open_felipe_hiit = Training.create!(
   place: "Barceloneta Beach, Barcelona",
   description: "Explosive beach HIIT — kettlebell swings, battle ropes and sprint intervals. All equipment provided. Wear sports shoes.",
   status: "open", coach_price_cents: 5500, duration: 45,
-  date: 19.days.from_now, min_people: 2, max_people: 12
+  date: 69.days.from_now, min_people: 2, max_people: 12
 )
 attach_image(open_felipe_hiit, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013649/Felipe_HIIT_crpwgv.png", "felipe_hiit.png")
 
@@ -338,7 +338,7 @@ open_maria_pilates = Training.create!(
   place: "Studio Pilates Barcelona, Carrer de Provença 248, Barcelona",
   description: "Reformer-inspired mat Pilates focusing on spinal articulation and hip stability. Suitable for all levels. Mats and props provided.",
   status: "open", coach_price_cents: 7000, duration: 55,
-  date: 17.days.from_now, min_people: 2, max_people: 8
+  date: 67.days.from_now, min_people: 2, max_people: 8
 )
 attach_image(open_maria_pilates, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013221/Maria_pilates_io5et1.png", "maria_pilates_2.png")
 
@@ -363,7 +363,7 @@ open_maria_yoga = Training.create!(
   place: "Parc de la Ciutadella, Barcelona",
   description: "Therapeutic yoga flow combining Pilates precision with yoga breath. Ideal for stress relief and postural correction. Bring a mat.",
   status: "open", coach_price_cents: 6500, duration: 60,
-  date: 24.days.from_now, min_people: 2, max_people: 10
+  date: 74.days.from_now, min_people: 2, max_people: 10
 )
 attach_image(open_maria_yoga, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013221/Alice_yoga_fzoriy.png", "maria_yoga.png")
 
@@ -373,7 +373,7 @@ open_felipe_strength = Training.create!(
   place: "Barna Gym, Carrer de Pallars 99, Poblenou, Barcelona",
   description: "Hypertrophy-focused strength session. We'll cover squat variations, Romanian deadlifts and upper-body pressing. All levels welcome.",
   status: "open", coach_price_cents: 8500, duration: 60,
-  date: 20.days.from_now, min_people: 2, max_people: 10
+  date: 70.days.from_now, min_people: 2, max_people: 10
 )
 attach_image(open_felipe_strength, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013221/Felipe_weigthlifting_jl5exn.png", "felipe_strength.png")
 
@@ -405,7 +405,7 @@ open_mario_functional = Training.create!(
   place: "SportLife Diagonal, Avinguda Diagonal 534, Barcelona",
   description: "Functional fitness circuit — kettlebells, box jumps, pull-ups and core work. Scaled variations available. Great for all fitness levels.",
   status: "open", coach_price_cents: 8000, duration: 60,
-  date: 25.days.from_now, min_people: 2, max_people: 8
+  date: 75.days.from_now, min_people: 2, max_people: 8
 )
 attach_image(open_mario_functional, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013646/Alice_crossfit_v3gneu.png", "mario_crossfit.png")
 
@@ -430,7 +430,7 @@ open_alice_mobility = Training.create!(
   place: "Parc de Montjuïc, Barcelona",
   description: "Mobility and flexibility session combining yoga flows with deep stretching. Perfect for athletes and office workers. Bring a mat and water.",
   status: "open", coach_price_cents: 5500, duration: 60,
-  date: 22.days.from_now, min_people: 2, max_people: 12
+  date: 72.days.from_now, min_people: 2, max_people: 12
 )
 attach_image(open_alice_mobility, :photo, "https://res.cloudinary.com/ds643xagk/image/upload/v1781013221/Alice_yoga_fzoriy.png", "alice_mobility.png")
 
